@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.2'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'sjspring.shop'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //spring-boot-starter
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //인메모리 데이터베이스
+    runtimeOnly 'com.h2database:h2'
+
+    //롬복
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+//
+//    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//
+//    //security
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+//    implementation 'org.springframework.security:spring-security-test'
+//
+//    testAnnotationProcessor 'org.projectlombok:lombok'
+//    testImplementation 'org.projectlombok:lombok'
+//    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+//    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+//
+//    //mysql
+//    implementation 'mysql:mysql-connector-java'
+}
+
+//jar{
+//    enabled = false
+//}
+
+test {
+    useJUnitPlatform()
+}
