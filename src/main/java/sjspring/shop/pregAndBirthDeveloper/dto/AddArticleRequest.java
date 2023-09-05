@@ -17,5 +17,6 @@ public class AddArticleRequest {
                 .title(title)
                 .content(content)
                 .build();
+
     }
 }

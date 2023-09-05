@@ -5,7 +5,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -16,7 +21,7 @@ public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_no", updatable = false)
-    private Long board_no;
+    private Long boardNo;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -27,11 +32,13 @@ public class Board {
 //    @Column(name = "views", nullable = false)
 //    private Long views;
 //
-//    @Column(name = "created", nullable = false)
-//    private Date created;
-//
-//    @Column(name = "updated", nullable = false)
-//    private Date updated;
+    @CreatedDate
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updatedAt")
+    private LocalDateTime updatedAt;
 
 
     @Builder

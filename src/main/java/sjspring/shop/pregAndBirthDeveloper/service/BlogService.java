@@ -26,19 +26,19 @@ public class BlogService {
     }
 
     //ReadOne
-    public Board findById(long board_id){
-        return boardRepository.findById(board_id)
-                .orElseThrow(()-> new IllegalArgumentException("not found:" + board_id));
+    public Board findById(long boardId){
+        return boardRepository.findById(boardId)
+                .orElseThrow(()-> new IllegalArgumentException("not found:" + boardId));
     }
 
-    public void delete(long board_id){
-        boardRepository.deleteById(board_id);
+    public void delete(long boardId){
+        boardRepository.deleteById(boardId);
     }
 
     @Transactional
-    public Board update(long board_id, UpdateArticleRequest request){
-        Board board = boardRepository.findById(board_id)
-                .orElseThrow(()-> new IllegalArgumentException("not found:" + board_id));
+    public Board update(long boardId, UpdateArticleRequest request){
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(()-> new IllegalArgumentException("not found:" + boardId));
 
         board.update(request.getTitle(), request.getContent());
 
