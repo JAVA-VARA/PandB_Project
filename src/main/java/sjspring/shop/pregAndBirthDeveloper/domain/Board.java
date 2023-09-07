@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
@@ -29,16 +28,19 @@ public class Board {
     @Column(name = "content", nullable = false)
     private String content;
 
-//    @Column(name = "views", nullable = false)
-//    private Long views;
-//
+    @Column(name = "author", nullable = false)
+    private String author;
+
     @CreatedDate
-    @Column(name = "createdAt")
+    @Column(name = "createdAt", nullable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
+
+    @Column(name = "views", nullable = false)
+    private Long views;
 
 
     @Builder

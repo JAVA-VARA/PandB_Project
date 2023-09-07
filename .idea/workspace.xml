@@ -4,25 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4537c4c-ec8c-4ca9-bb4c-185970a962a5" name="Changes" comment="- 프로젝트 생성&#10;- 게시판 기본 CRUD 기능 구현">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogViewController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/ArticleListViewResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/ArticleViewResponse.java" afterDir="false" />
+    <list default="true" id="f4537c4c-ec8c-4ca9-bb4c-185970a962a5" name="Changes" comment="- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가">
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/Example.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/config/WebSecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/UserApiController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/UserViewController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/AddUserRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserDetailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/static/blog.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/static/blog.rtl.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/templates/article.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/templates/articleList.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/templates/freeboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/signup.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/PregAndBirthDeveloperApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/PregAndBirthDeveloperApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/AddArticleRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/AddArticleRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/BlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/BlogService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogApiControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogApiControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +62,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
         <option value="Class" />
         <option value="HTML File" />
       </list>
@@ -279,7 +282,7 @@
       <workItem from="1693549493133" duration="4849000" />
       <workItem from="1693555513160" duration="19093000" />
       <workItem from="1693814715554" duration="619000" />
-      <workItem from="1693877538266" duration="1210000" />
+      <workItem from="1693877538266" duration="22366000" />
     </task>
     <task id="LOCAL-00001" summary="- 프로젝트 생성&#10;- 게시판 기본 CRUD 기능 구현">
       <option name="closed" value="true" />
@@ -289,7 +292,15 @@
       <option name="project" value="LOCAL" />
       <updated>1693472912134</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가">
+      <option name="closed" value="true" />
+      <created>1693887771613</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1693887771613</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -308,7 +319,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="- 프로젝트 생성&#10;- 게시판 기본 CRUD 기능 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="- 프로젝트 생성&#10;- 게시판 기본 CRUD 기능 구현" />
+    <MESSAGE value="- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;(dto)&#10;ArticleListViewResponse, ArticleViewResponse, &#10;비지니스 로직&#10;BlogViewController)&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
+    <MESSAGE value="- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

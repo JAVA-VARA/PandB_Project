@@ -47,7 +47,7 @@ class BlogApiControllerTest {
         boardRepository.deleteAll();
     }
 
-    @DisplayName("addArticle: 블로그 글 추가에 성공한다.")
+    @DisplayName("addArticle: 블로그 글 추가에 성공.")
     @Test
     public void addArticle() throws Exception{
         //given
@@ -110,7 +110,7 @@ class BlogApiControllerTest {
                 .build());
 
         //when
-        final ResultActions resultActions = mockMvc.perform(get(url, savedBoard.getBoard_no()));
+        final ResultActions resultActions = mockMvc.perform(get(url, savedBoard.getBoardNo()));
 
         //then
         resultActions
@@ -133,7 +133,7 @@ class BlogApiControllerTest {
                 .build());
 
         //when
-        mockMvc.perform(delete(url,savedBoard.getBoard_no()))
+        mockMvc.perform(delete(url,savedBoard.getBoardNo()))
                 .andExpect(status().isOk());
 
         //then
@@ -160,14 +160,14 @@ class BlogApiControllerTest {
         UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newContent);
 
         //WHEN
-        ResultActions result = mockMvc.perform(put(url, savedBoard.getBoard_no())
+        ResultActions result = mockMvc.perform(put(url, savedBoard.getBoardNo())
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(request)));
 
         //then
         result.andExpect(status().isOk());
 
-        Board board = boardRepository.findById(savedBoard.getBoard_no()).get();
+        Board board = boardRepository.findById(savedBoard.getBoardNo()).get();
 
         assertThat(board.getTitle()).isEqualTo(newTitle);
         assertThat(board.getContent()).isEqualTo(newContent);
