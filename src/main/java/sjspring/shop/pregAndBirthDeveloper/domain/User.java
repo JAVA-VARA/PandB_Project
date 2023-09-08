@@ -50,6 +50,7 @@ public class User implements UserDetails {
         this.hp = hp;
         this.password = password;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
         return List.of(new SimpleGrantedAuthority("user"));

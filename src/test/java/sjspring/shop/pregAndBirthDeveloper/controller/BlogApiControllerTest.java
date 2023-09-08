@@ -19,6 +19,7 @@ import sjspring.shop.pregAndBirthDeveloper.repository.BoardRepository;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -54,11 +55,16 @@ class BlogApiControllerTest {
         final String url = "/api/articles";
         final String title = "title";
         final String content = "content";
-        final AddArticleRequest userRequest = new AddArticleRequest(title, content);
+        final String author = "author";
+        final LocalDateTime createdAt = LocalDateTime.now();
+        final LocalDateTime updatedAt = LocalDateTime.now();
+        final Long views = 100L;
+
+        final AddArticleRequest userRequest = new AddArticleRequest(title, content,author, createdAt, updatedAt, views);
 
         final String requestBody = objectMapper.writeValueAsString(userRequest);
 
-        //when
+        //when: 설정한 내용을 바탕으로 요청 전송...
         ResultActions result = mockMvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(requestBody));
@@ -79,10 +85,19 @@ class BlogApiControllerTest {
         final String url = "/api/articles";
         final String title = "title";
         final String content = "content";
+        final String author = "author";
+        final LocalDateTime createdAt = LocalDateTime.now();
+        final LocalDateTime updatedAt = LocalDateTime.now();
+        final Long views = 100L;
+
 
         boardRepository.save(Board.builder()
                         .title(title)
                         .content(content)
+                        .author(author)
+                        .views(views)
+                        .createdAt(createdAt)
+                        .updatedAt(updatedAt)
                         .build());
 
         //when
@@ -103,10 +118,18 @@ class BlogApiControllerTest {
         final String url = "/api/articles/{board_id}";
         final String title = "title";
         final String content = "content";
+        final String author = "author";
+        final LocalDateTime createdAt = LocalDateTime.now();
+        final LocalDateTime updatedAt = LocalDateTime.now();
+        final Long views = 100L;
 
         Board savedBoard = boardRepository.save(Board.builder()
                 .title(title)
                 .content(content)
+                .author(author)
+                .views(views)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
                 .build());
 
         //when
@@ -126,10 +149,18 @@ class BlogApiControllerTest {
         final String url = "/api/articles/{board_id}";
         final String title = "title";
         final String content = "content";
+        final String author = "author";
+        final LocalDateTime createdAt = LocalDateTime.now();
+        final LocalDateTime updatedAt = LocalDateTime.now();
+        final Long views = 100L;
 
         Board savedBoard = boardRepository.save(Board.builder()
                 .title(title)
                 .content(content)
+                .author(author)
+                .views(views)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
                 .build());
 
         //when
@@ -148,10 +179,18 @@ class BlogApiControllerTest {
         final String url = "/api/articles/{board_id}";
         final String title = "title";
         final String content = "content";
+        final String author = "author";
+        final LocalDateTime createdAt = LocalDateTime.now();
+        final LocalDateTime updatedAt = LocalDateTime.now();
+        final Long views = 100L;
 
         Board savedBoard = boardRepository.save(Board.builder()
                 .title(title)
                 .content(content)
+                .author(author)
+                .views(views)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
                 .build());
 
         final String newTitle = "new title";

@@ -4,28 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4537c4c-ec8c-4ca9-bb4c-185970a962a5" name="Changes" comment="- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가">
+    <list default="true" id="f4537c4c-ec8c-4ca9-bb4c-185970a962a5" name="Changes" comment="[config]&#10;-jwt token 관련 설정 추가&#10;[controller]&#10;UserApiController: User 회원가입, 로그아웃 기능&#10;UserViewController: 로그인, 회원 가입 기능&#10;&#10;[domain]&#10;Board:author, view entity 추가 및 entity 명칭과 db 명칭 통일&#10;User: DB의 User내 colmn entity로 추가&#10;[dto]&#10;AddUserRequest: 사용자 email, pw 정보 dto로 만들어 service / controller간 데이터 전달&#10;[Repository]&#10;인터페이스를 통해 이메일로 사용자 정보 가져오는 기능 추가&#10;&#10;[Service]&#10;UserDetailService: 사용자 인증을 위해 repository에서  이메일 정보 가져오는 서비스(없는 경우 예외 발생)&#10;UserService: dto에서 가져온 사용자 정보를 저장하는 기능&#10;&#10;[templates]&#10;로그인, 회원가입 관련 view 작성&#10;&#10;[application]&#10;DB연결 설정: H2 -&gt; MySql로 설정 변경&#10;&#10;[test]&#10;유저 정보를 가져와 토큰 생성 하는 test&#10;- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가">
       <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/Example.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/config/WebSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/UserApiController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/UserViewController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/AddUserRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserDetailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/static/blog.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/static/blog.rtl.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/templates/article.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/templates/articleList.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/templates/freeboard.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/signup.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/config/jwt/JwtFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/config/jwt/TokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/config/jwt/TokenProvider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/AddArticleRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/AddArticleRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogApiControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogApiControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/config/jwt/TokenProviderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/config/jwt/TokenProviderTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,8 +58,8 @@
       <list>
         <option value="JUnit5 Test Class" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -111,6 +106,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -149,7 +145,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.PregAndBirthDeveloperApplication">
-    <configuration name="BlogApiControllerTest.deleteArticle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BlogApiControllerTest.addArticle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -162,7 +158,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;sjspring.shop.pregAndBirthDeveloper.controller.BlogApiControllerTest.deleteArticle&quot;" />
+            <option value="&quot;sjspring.shop.pregAndBirthDeveloper.controller.BlogApiControllerTest.addArticle&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -173,7 +169,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="BlogApiControllerTest.findAllArticles" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Tests in 'PandB_project.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -185,8 +181,6 @@
         <option name="taskNames">
           <list>
             <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;sjspring.shop.pregAndBirthDeveloper.controller.BlogApiControllerTest.findAllArticles&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -197,7 +191,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="BlogApiControllerTest.findArticle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="TokenProviderTest.validToken_invalidToken" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -210,7 +204,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;sjspring.shop.pregAndBirthDeveloper.controller.BlogApiControllerTest.findArticle&quot;" />
+            <option value="&quot;sjspring.shop.pregAndBirthDeveloper.controller.config.jwt.TokenProviderTest.validToken_invalidToken&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -221,7 +215,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="BlogApiControllerTest.updateArticle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="TokenProviderTest.validToken_validToken" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -234,7 +228,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;sjspring.shop.pregAndBirthDeveloper.controller.BlogApiControllerTest.updateArticle&quot;" />
+            <option value="&quot;sjspring.shop.pregAndBirthDeveloper.controller.config.jwt.TokenProviderTest.validToken_validToken&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -258,13 +252,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Gradle.BlogApiControllerTest.addArticle" />
+      <item itemvalue="Gradle.Tests in 'PandB_project.test'" />
+      <item itemvalue="Gradle.TokenProviderTest.validToken_invalidToken" />
+      <item itemvalue="Gradle.TokenProviderTest.validToken_validToken" />
+      <item itemvalue="Spring Boot.PregAndBirthDeveloperApplication" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.PregAndBirthDeveloperApplication" />
-        <item itemvalue="Gradle.BlogApiControllerTest.updateArticle" />
-        <item itemvalue="Gradle.BlogApiControllerTest.deleteArticle" />
-        <item itemvalue="Gradle.BlogApiControllerTest.findArticle" />
-        <item itemvalue="Gradle.BlogApiControllerTest.findAllArticles" />
+        <item itemvalue="Gradle.Tests in 'PandB_project.test'" />
+        <item itemvalue="Gradle.BlogApiControllerTest.addArticle" />
+        <item itemvalue="Gradle.TokenProviderTest.validToken_validToken" />
+        <item itemvalue="Gradle.TokenProviderTest.validToken_invalidToken" />
       </list>
     </recent_temporary>
   </component>
@@ -283,6 +284,9 @@
       <workItem from="1693555513160" duration="19093000" />
       <workItem from="1693814715554" duration="619000" />
       <workItem from="1693877538266" duration="22366000" />
+      <workItem from="1693984591456" duration="20561000" />
+      <workItem from="1694093765494" duration="2100000" />
+      <workItem from="1694146806136" duration="11229000" />
     </task>
     <task id="LOCAL-00001" summary="- 프로젝트 생성&#10;- 게시판 기본 CRUD 기능 구현">
       <option name="closed" value="true" />
@@ -300,7 +304,15 @@
       <option name="project" value="LOCAL" />
       <updated>1693887771613</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="[config]&#10;-jwt token 관련 설정 추가&#10;[controller]&#10;UserApiController: User 회원가입, 로그아웃 기능&#10;UserViewController: 로그인, 회원 가입 기능&#10;&#10;[domain]&#10;Board:author, view entity 추가 및 entity 명칭과 db 명칭 통일&#10;User: DB의 User내 colmn entity로 추가&#10;[dto]&#10;AddUserRequest: 사용자 email, pw 정보 dto로 만들어 service / controller간 데이터 전달&#10;[Repository]&#10;인터페이스를 통해 이메일로 사용자 정보 가져오는 기능 추가&#10;&#10;[Service]&#10;UserDetailService: 사용자 인증을 위해 repository에서  이메일 정보 가져오는 서비스(없는 경우 예외 발생)&#10;UserService: dto에서 가져온 사용자 정보를 저장하는 기능&#10;&#10;[templates]&#10;로그인, 회원가입 관련 view 작성&#10;&#10;[application]&#10;DB연결 설정: H2 -&gt; MySql로 설정 변경&#10;&#10;[test]&#10;유저 정보를 가져와 토큰 생성 하는 test&#10;&#10;- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가">
+      <option name="closed" value="true" />
+      <created>1694092405414</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1694092405414</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,7 +333,25 @@
     <MESSAGE value="- 프로젝트 생성&#10;- 게시판 기본 CRUD 기능 구현" />
     <MESSAGE value="- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;(dto)&#10;ArticleListViewResponse, ArticleViewResponse, &#10;비지니스 로직&#10;BlogViewController)&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
     <MESSAGE value="- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
+    <MESSAGE value="[config]&#10;-jwt token 관련 설정 추가&#10;[controller]&#10;UserApiController: User 회원가입, 로그아웃 기능&#10;UserViewController: 로그인, 회원 가입 기능&#10;&#10;[domain]&#10;Board:author, view entity 추가 및 entity 명칭과 db 명칭 통일&#10;User: DB의 User내 colmn entity로 추가&#10;[dto]&#10;AddUserRequest: 사용자 email, pw 정보 dto로 만들어 service / controller간 데이터 전달&#10;[Repository]&#10;인터페이스를 통해 이메일로 사용자 정보 가져오는 기능 추가&#10;&#10;[Service]&#10;UserDetailService: 사용자 인증을 위해 repository에서  이메일 정보 가져오는 서비스(없는 경우 예외 발생)&#10;UserService: dto에서 가져온 사용자 정보를 저장하는 기능&#10;&#10;[templates]&#10;crud 기능, 로그인, 회원가입 관련 view 작성&#10;&#10;[application]&#10;DB연결 설정: H2 -&gt; MySql로 설정 변경&#10;&#10;[test]&#10;유저 정보를 가져와 토큰 생성 하는 test&#10;&#10;- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
+    <MESSAGE value="[config]&#10;-jwt token 관련 설정 추가&#10;[controller]&#10;UserApiController: User 회원가입, 로그아웃 기능&#10;UserViewController: 로그인, 회원 가입 기능&#10;&#10;[domain]&#10;Board:author, view entity 추가 및 entity 명칭과 db 명칭 통일&#10;User: DB의 User내 colmn entity로 추가&#10;[dto]&#10;AddUserRequest: 사용자 email, pw 정보 dto로 만들어 service / controller간 데이터 전달&#10;[Repository]&#10;인터페이스를 통해 이메일로 사용자 정보 가져오는 기능 추가&#10;&#10;[Service]&#10;UserDetailService: 사용자 인증을 위해 repository에서  이메일 정보 가져오는 서비스(없는 경우 예외 발생)&#10;UserService: dto에서 가져온 사용자 정보를 저장하는 기능&#10;&#10;[templates]&#10;로그인, 회원가입 관련 view 작성&#10;&#10;[application]&#10;DB연결 설정: H2 -&gt; MySql로 설정 변경&#10;&#10;[test]&#10;유저 정보를 가져와 토큰 생성 하는 test&#10;&#10;- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="[config]&#10;-jwt token 관련 설정 추가&#10;[controller]&#10;UserApiController: User 회원가입, 로그아웃 기능&#10;UserViewController: 로그인, 회원 가입 기능&#10;&#10;[domain]&#10;Board:author, view entity 추가 및 entity 명칭과 db 명칭 통일&#10;User: DB의 User내 colmn entity로 추가&#10;[dto]&#10;AddUserRequest: 사용자 email, pw 정보 dto로 만들어 service / controller간 데이터 전달&#10;[Repository]&#10;인터페이스를 통해 이메일로 사용자 정보 가져오는 기능 추가&#10;&#10;[Service]&#10;UserDetailService: 사용자 인증을 위해 repository에서  이메일 정보 가져오는 서비스(없는 경우 예외 발생)&#10;UserService: dto에서 가져온 사용자 정보를 저장하는 기능&#10;&#10;[templates]&#10;로그인, 회원가입 관련 view 작성&#10;&#10;[application]&#10;DB연결 설정: H2 -&gt; MySql로 설정 변경&#10;&#10;[test]&#10;유저 정보를 가져와 토큰 생성 하는 test&#10;&#10;- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogApiControllerTest.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="GradleRunConfiguration">
+        <watch expression="userRepository" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

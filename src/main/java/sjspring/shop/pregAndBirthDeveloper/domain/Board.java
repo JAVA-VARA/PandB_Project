@@ -44,12 +44,13 @@ public class Board {
 
 
     @Builder
-    public Board(String title, String content, Long views, Date created, Date updated){
+    public Board(String title, String content,String author, Long views, LocalDateTime createdAt, LocalDateTime updatedAt){
         this.title = title;
         this.content = content;
-//        this.views = views;
-//        this.created = created;
-//        this.updated = updated;
+        this.author = author;
+        this.views = views;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public void update(String title, String content) {
