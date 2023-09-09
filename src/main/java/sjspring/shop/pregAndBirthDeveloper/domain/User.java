@@ -28,8 +28,8 @@ public class User implements UserDetails {
     @Column(name = "name", nullable = false)
     private String name;
 
-//    @Column(name = "nickName", nullable = false, unique = true)
-//    private String nickName;
+    @Column(name = "nickName", nullable = false, unique = true)
+    private String nickName;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -40,11 +40,11 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-//    @Column(name = "babydue")
-//    private Date babydue;
+    @Column(name = "baby-due")
+    private Date babyDue;
 
     @Builder
-    public User(String name, String email,String hp,String password, String auth){
+    public User(String name, String email,String hp,String password, String nickName){
         this.name = name;
         this.email = email;
         this.hp = hp;

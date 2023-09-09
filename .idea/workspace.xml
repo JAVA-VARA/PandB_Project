@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4537c4c-ec8c-4ca9-bb4c-185970a962a5" name="Changes" comment="[config]&#10;-jwt token 관련 설정 추가&#10;[controller]&#10;UserApiController: User 회원가입, 로그아웃 기능&#10;UserViewController: 로그인, 회원 가입 기능&#10;&#10;[domain]&#10;Board:author, view entity 추가 및 entity 명칭과 db 명칭 통일&#10;User: DB의 User내 colmn entity로 추가&#10;[dto]&#10;AddUserRequest: 사용자 email, pw 정보 dto로 만들어 service / controller간 데이터 전달&#10;[Repository]&#10;인터페이스를 통해 이메일로 사용자 정보 가져오는 기능 추가&#10;&#10;[Service]&#10;UserDetailService: 사용자 인증을 위해 repository에서  이메일 정보 가져오는 서비스(없는 경우 예외 발생)&#10;UserService: dto에서 가져온 사용자 정보를 저장하는 기능&#10;&#10;[templates]&#10;로그인, 회원가입 관련 view 작성&#10;&#10;[application]&#10;DB연결 설정: H2 -&gt; MySql로 설정 변경&#10;&#10;[test]&#10;유저 정보를 가져와 토큰 생성 하는 test&#10;- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가">
+    <list default="true" id="f4537c4c-ec8c-4ca9-bb4c-185970a962a5" name="Changes" comment="[Entity]&#10;Board entity에 column(author, views, createdAt, updatedAt) 추가&#10;&#10;[dto]&#10;entity에 추가한 column 추가&#10;&#10;[application]&#10;hibernate 설정: test 편의성을 위해&#10;ddl-auto: create으로 설정 변경">
       <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/Example.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/config/WebSecurityConfig.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/static/blog.css" afterDir="false" />
@@ -12,14 +12,11 @@
       <change afterPath="$PROJECT_DIR$/src/main/resources/templates/article.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/templates/articleList.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/templates/freeboard.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/config/jwt/JwtFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/config/jwt/TokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/config/jwt/TokenProvider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/AddArticleRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/AddArticleRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogApiControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogApiControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/signup.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/config/jwt/TokenProviderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/config/jwt/TokenProviderTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -286,7 +283,8 @@
       <workItem from="1693877538266" duration="22366000" />
       <workItem from="1693984591456" duration="20561000" />
       <workItem from="1694093765494" duration="2100000" />
-      <workItem from="1694146806136" duration="11229000" />
+      <workItem from="1694146806136" duration="11698000" />
+      <workItem from="1694168117766" duration="7119000" />
     </task>
     <task id="LOCAL-00001" summary="- 프로젝트 생성&#10;- 게시판 기본 CRUD 기능 구현">
       <option name="closed" value="true" />
@@ -312,7 +310,15 @@
       <option name="project" value="LOCAL" />
       <updated>1694092405414</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="[Entity]&#10;Board entity에 column(author, views, createdAt, updatedAt) 추가&#10;&#10;[dto]&#10;entity에 추가한 column 추가&#10;&#10;[application]&#10;hibernate 설정: test 편의성을 위해&#10;ddl-auto: create으로 설정 변경">
+      <option name="closed" value="true" />
+      <created>1694163005513</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1694163005513</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,7 +341,8 @@
     <MESSAGE value="- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
     <MESSAGE value="[config]&#10;-jwt token 관련 설정 추가&#10;[controller]&#10;UserApiController: User 회원가입, 로그아웃 기능&#10;UserViewController: 로그인, 회원 가입 기능&#10;&#10;[domain]&#10;Board:author, view entity 추가 및 entity 명칭과 db 명칭 통일&#10;User: DB의 User내 colmn entity로 추가&#10;[dto]&#10;AddUserRequest: 사용자 email, pw 정보 dto로 만들어 service / controller간 데이터 전달&#10;[Repository]&#10;인터페이스를 통해 이메일로 사용자 정보 가져오는 기능 추가&#10;&#10;[Service]&#10;UserDetailService: 사용자 인증을 위해 repository에서  이메일 정보 가져오는 서비스(없는 경우 예외 발생)&#10;UserService: dto에서 가져온 사용자 정보를 저장하는 기능&#10;&#10;[templates]&#10;crud 기능, 로그인, 회원가입 관련 view 작성&#10;&#10;[application]&#10;DB연결 설정: H2 -&gt; MySql로 설정 변경&#10;&#10;[test]&#10;유저 정보를 가져와 토큰 생성 하는 test&#10;&#10;- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
     <MESSAGE value="[config]&#10;-jwt token 관련 설정 추가&#10;[controller]&#10;UserApiController: User 회원가입, 로그아웃 기능&#10;UserViewController: 로그인, 회원 가입 기능&#10;&#10;[domain]&#10;Board:author, view entity 추가 및 entity 명칭과 db 명칭 통일&#10;User: DB의 User내 colmn entity로 추가&#10;[dto]&#10;AddUserRequest: 사용자 email, pw 정보 dto로 만들어 service / controller간 데이터 전달&#10;[Repository]&#10;인터페이스를 통해 이메일로 사용자 정보 가져오는 기능 추가&#10;&#10;[Service]&#10;UserDetailService: 사용자 인증을 위해 repository에서  이메일 정보 가져오는 서비스(없는 경우 예외 발생)&#10;UserService: dto에서 가져온 사용자 정보를 저장하는 기능&#10;&#10;[templates]&#10;로그인, 회원가입 관련 view 작성&#10;&#10;[application]&#10;DB연결 설정: H2 -&gt; MySql로 설정 변경&#10;&#10;[test]&#10;유저 정보를 가져와 토큰 생성 하는 test&#10;&#10;- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="[config]&#10;-jwt token 관련 설정 추가&#10;[controller]&#10;UserApiController: User 회원가입, 로그아웃 기능&#10;UserViewController: 로그인, 회원 가입 기능&#10;&#10;[domain]&#10;Board:author, view entity 추가 및 entity 명칭과 db 명칭 통일&#10;User: DB의 User내 colmn entity로 추가&#10;[dto]&#10;AddUserRequest: 사용자 email, pw 정보 dto로 만들어 service / controller간 데이터 전달&#10;[Repository]&#10;인터페이스를 통해 이메일로 사용자 정보 가져오는 기능 추가&#10;&#10;[Service]&#10;UserDetailService: 사용자 인증을 위해 repository에서  이메일 정보 가져오는 서비스(없는 경우 예외 발생)&#10;UserService: dto에서 가져온 사용자 정보를 저장하는 기능&#10;&#10;[templates]&#10;로그인, 회원가입 관련 view 작성&#10;&#10;[application]&#10;DB연결 설정: H2 -&gt; MySql로 설정 변경&#10;&#10;[test]&#10;유저 정보를 가져와 토큰 생성 하는 test&#10;&#10;- build : thymeleaf, mysql-connector 추가&#10;- DB: MySQL 연결, Jpa 설정 추가&#10;- 변수명 변경(board_no -&gt; boardId)&#10;- 게시긆 view 관련 기능(클래스) 추가&#10;[dto]&#10;ArticleListViewResponse,ArticleViewResponse, &#10;[비지니스 로직]&#10;BlogViewController&#10;- Entity: 생성 시간, 업데이트 시간 추가" />
+    <MESSAGE value="[Entity]&#10;Board entity에 column(author, views, createdAt, updatedAt) 추가&#10;&#10;[dto]&#10;entity에 추가한 column 추가&#10;&#10;[application]&#10;hibernate 설정: test 편의성을 위해&#10;ddl-auto: create으로 설정 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Entity]&#10;Board entity에 column(author, views, createdAt, updatedAt) 추가&#10;&#10;[dto]&#10;entity에 추가한 column 추가&#10;&#10;[application]&#10;hibernate 설정: test 편의성을 위해&#10;ddl-auto: create으로 설정 변경" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

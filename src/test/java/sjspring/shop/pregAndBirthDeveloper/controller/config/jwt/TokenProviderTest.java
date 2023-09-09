@@ -35,7 +35,7 @@ class TokenProviderTest {
         //given
         User testUser = userRepository.save(User.builder()
                 .name("왕밤빵")
-//                .nickName("쭈꾸미")
+                .nickName("쭈꾸미")
                 .email("user@gmail.com")
                 .hp("01042930092")
                 .password("test")
@@ -98,7 +98,7 @@ class TokenProviderTest {
         Authentication authentication = tokenProvider.getAuthentication(token);
 
         //then
-       // assertThat((UserDetails) authentication.getPrincipal()).getUser
+        assertThat(((UserDetails) authentication.getPrincipal()).getUsername()).isEqualTo(userEmail);
     }
 
 
