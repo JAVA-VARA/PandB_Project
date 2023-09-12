@@ -18,6 +18,9 @@ public class UserService {
     public Long save(AddUserRequest dto) {
         return userRepository.save(User.builder()
                 .email(dto.getEmail())
+                .name(dto.getName())
+                .nickName(dto.getNickName())
+                .hp(dto.getHp())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
                 .build()).getId();
     }
@@ -26,5 +29,7 @@ public class UserService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
+
+
 
 }

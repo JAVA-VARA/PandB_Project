@@ -30,11 +30,11 @@ public class Board {
     private String author;
 
     @CreatedDate
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "updatedAt")
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @Column(name = "views", nullable = false)

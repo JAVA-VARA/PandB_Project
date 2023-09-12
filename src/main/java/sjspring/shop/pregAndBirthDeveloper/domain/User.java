@@ -18,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor(access =  AccessLevel.PROTECTED)
 @Getter
 @Entity
+//UserDetails를 상속받아 인증 객체로 사용.
 public class User implements UserDetails {
 
     @Id
@@ -28,7 +29,7 @@ public class User implements UserDetails {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "nickName", nullable = false, unique = true)
+    @Column(name = "nick_Name", nullable = false, unique = true)
     private String nickName;
 
     @Column(name = "email", nullable = false, unique = true)
@@ -46,6 +47,7 @@ public class User implements UserDetails {
     @Builder
     public User(String name, String email,String hp,String password, String nickName){
         this.name = name;
+        this.nickName = nickName;
         this.email = email;
         this.hp = hp;
         this.password = password;
@@ -65,6 +67,7 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
