@@ -7,7 +7,7 @@
 
     <style>
         .gradient-custom {
-            background: linear-gradient(to right, rgb(17, 203, 101), rgb(37, 73, 252))
+            background: linear-gradient(to right, rgb(19, 206, 103), rgb(37, 55, 252))
         }
     </style>
 </head>
@@ -23,7 +23,7 @@
                     <form action="/login" method="POST">
                         <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
                         <div class="mb-3">
-                            <label class="form-label text-white">Email address</label>
+                            <label class="form-label text-white">Email</label>
                             <input type="email" class="form-control" name="username">
                         </div>
                         <div class="mb-3">
