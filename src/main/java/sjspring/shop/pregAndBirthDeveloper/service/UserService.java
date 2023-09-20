@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddUserRequest;
+import sjspring.shop.pregAndBirthDeveloper.dto.FindUserInfo;
 import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
 
 @RequiredArgsConstructor
@@ -29,7 +30,4 @@ public class UserService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
-
-
-
 }

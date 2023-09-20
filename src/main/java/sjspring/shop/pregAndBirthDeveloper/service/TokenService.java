@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import sjspring.shop.pregAndBirthDeveloper.config.jwt.TokenProvider;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
 
-import javax.swing.plaf.PanelUI;
 import java.time.Duration;
 
 @RequiredArgsConstructor

@@ -928,8 +928,8 @@ sj-baby|schema||sj||UPDATE|G</Grants>
     </schema>
     <schema id="290" parent="1" name="sj-baby">
       <Current>1</Current>
-      <IntrospectionTimestamp>2023-09-13.21:04:22</IntrospectionTimestamp>
-      <LocalIntrospectionTimestamp>2023-09-13.12:04:21</LocalIntrospectionTimestamp>
+      <IntrospectionTimestamp>2023-09-18.22:38:40</IntrospectionTimestamp>
+      <LocalIntrospectionTimestamp>2023-09-18.13:38:40</LocalIntrospectionTimestamp>
       <CollationName>utf8mb4_general_ci</CollationName>
     </schema>
     <user id="291" parent="1" name="sj"/>
@@ -1063,12 +1063,12 @@ sj-baby|schema||sj||UPDATE|G</Grants>
       <UnderlyingIndexName>UK_f95ixxe7pa48ryn1awmh2evt7</UnderlyingIndexName>
     </key>
     <column id="319" parent="295" name="user_no">
-      <AutoIncrement>2</AutoIncrement>
+      <AutoIncrement>3</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="320" parent="295" name="baby-due">
+    <column id="320" parent="295" name="baby_due">
       <DasType>datetime(6)|0s</DasType>
       <Position>2</Position>
     </column>

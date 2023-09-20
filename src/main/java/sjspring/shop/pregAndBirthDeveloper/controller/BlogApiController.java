@@ -17,7 +17,7 @@ import java.util.List;
 public class BlogApiController {
     private final BlogService blogService;
 
-    @PostMapping("/api/articles")
+    @PostMapping("/api/articles") //api/articles로 post 요청이 들어오면 아래 메서드 실행.
     public ResponseEntity<Board> addArticle(@RequestBody AddArticleRequest request){
         Board savedArticle = blogService.save(request);
 

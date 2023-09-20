@@ -10,9 +10,10 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "board")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 public class Board {
 
     @Id
@@ -40,7 +41,6 @@ public class Board {
     @Column(name = "views", nullable = false)
     private Long views;
 
-
     @Builder
     public Board(String title, String content,String author, Long views, LocalDateTime createdAt, LocalDateTime updatedAt){
         this.title = title;
@@ -50,7 +50,6 @@ public class Board {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-
     public void update(String title, String content) {
         this.title = title;
         this.content = content;

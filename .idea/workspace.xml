@@ -4,20 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4537c4c-ec8c-4ca9-bb4c-185970a962a5" name="Changes" comment="[JWT 인증 기반으로 회원가입, 로그인, 로그아웃 구현]&#10;&#10;[config]&#10;WebSecurityConfig 설정 변경: h2 db -&gt; sql 사용으로 일부 h2 관련 코드 삭제&#10;&#10;[controller]&#10;1. TokenApiController: TokenService의 RefreshToken()을 기반으로 새로운 액세스 토큰을 만들어준다.&#10;2.UserApiController: 사용되지않는 annotation 삭제&#10;&#10;[Entity]&#10;1. Board table의 column명 변경(createdAt, updatedAt)&#10;2. User table의 column명 변경(nickname)&#10;&#10;[DTO]&#10;1. AddUserRequest: NoArgsConstructor 추가, dto로 trnasfer할 정보 추가(hp, name, nickName)&#10;2. CreateAccessTokenRequest 추가: refreshToken 담는 dto&#10;3. CreateAccessTokenResponse 추가 : accessToken 담는 dto&#10;&#10;[Repository]&#10;RefreshToken관련 정보에 대한 db를 연결할 repository 추가&#10;&#10;[Service]&#10;1. RefreshTokenService: 전달받은 리프레시 토큰으로 리프레시 토큰 객체를 검색해서 전달&#10;2.TokenService: 토큰 유효성 검사&#10;3.UserService: name, nickName, hp 를 repository에 저장하는 메서드 추가&#10;[templates]&#10;signup.html: 업데이트.&#10;&#10;[application.yml]&#10;h2 console 사용: false로 변경&#10;&#10;[test]&#10;TokenApiControllerTest: 토큰 생성 여부 확인 test 추가">
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/config/WebJwtSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/RefreshToken.java" afterDir="false" />
+    <list default="true" id="f4537c4c-ec8c-4ca9-bb4c-185970a962a5" name="Changes" comment="[로그인 error 해결]&#10;로그인 시 비밀번호 인증 오류 해결&#10;&#10;- signup.html: pw 확인란 삭제&#10;- login.html: form tag 수정(email -&gt; username)&#10;&#10;RefreshToken entity와 DB 연동">
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/FindApiController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/FindViewController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/FindUserInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/FindUserService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/static/blog.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/static/blog.rtl.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/templates/article.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/articleList.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/freeboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/findId.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/findPwd.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/showId.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Practice/TestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/sjspring/shop/pregAndBirthDeveloper/controller/FindApiControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/7137e8db-e6be-4a84-b95b-16992d08f411.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7137e8db-e6be-4a84-b95b-16992d08f411.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/7137e8db-e6be-4a84-b95b-16992d08f411/storage_v2/_src_/schema/sj-baby.jHb2eg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7137e8db-e6be-4a84-b95b-16992d08f411/storage_v2/_src_/schema/sj-baby.jHb2eg.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/config/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/CreateAccessTokenRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/dto/CreateAccessTokenRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/BlogViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/BlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/BlogService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/TokenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserDetailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/signup.html" afterDir="false" />
@@ -57,9 +72,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
-        <option value="HTML File" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -92,40 +107,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "database.data.extractors.current.export.id": "SQL Inserts",
-    "database.data.extractors.current.id": "SQL Inserts",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "spring.configuration.checksum": "36083ef5f2232cdbf42ba3178c943d1c",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;SQL Inserts&quot;,
+    &quot;database.data.extractors.current.id&quot;: &quot;SQL Inserts&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;36083ef5f2232cdbf42ba3178c943d1c&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\sjyou\IdeaProjects\PandB_project\src\main\resources" />
@@ -147,54 +162,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.PregAndBirthDeveloperApplication">
-    <configuration name="BlogApiControllerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;sjspring.shop.pregAndBirthDeveloper.controller.BlogApiControllerTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="TokenApiControllerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;sjspring.shop.pregAndBirthDeveloper.controller.TokenApiControllerTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="TokenApiControllerTest.createNewAccessToken" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -243,6 +210,12 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="generated-requests | #6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="6" requestIdentifier="#6">
+      <method v="2" />
+    </configuration>
+    <configuration name="findId.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/PandB_project/src/main/resources/templates/findId.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
     <configuration name="PregAndBirthDeveloperApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="PandB_project.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="sjspring.shop.pregAndBirthDeveloper.PregAndBirthDeveloperApplication" />
@@ -257,10 +230,10 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Gradle.BlogApiControllerTest" />
       <item itemvalue="Gradle.TokenApiControllerTest.createNewAccessToken" />
       <item itemvalue="Gradle.TokenProviderTest.getUserId" />
-      <item itemvalue="Gradle.TokenApiControllerTest" />
+      <item itemvalue="HTTP Request.generated-requests | #6" />
+      <item itemvalue="JavaScript Debug.findId.html" />
       <item itemvalue="Spring Boot.PregAndBirthDeveloperApplication" />
     </list>
     <recent_temporary>
@@ -268,8 +241,6 @@
         <item itemvalue="Spring Boot.PregAndBirthDeveloperApplication" />
         <item itemvalue="Gradle.TokenApiControllerTest.createNewAccessToken" />
         <item itemvalue="Gradle.TokenProviderTest.getUserId" />
-        <item itemvalue="Gradle.TokenApiControllerTest" />
-        <item itemvalue="Gradle.BlogApiControllerTest" />
       </list>
     </recent_temporary>
   </component>
@@ -295,7 +266,13 @@
       <workItem from="1694413689724" duration="46333000" />
       <workItem from="1694586155101" duration="869000" />
       <workItem from="1694596600602" duration="5226000" />
-      <workItem from="1694667402072" duration="5127000" />
+      <workItem from="1694667402072" duration="24781000" />
+      <workItem from="1694700655769" duration="44000" />
+      <workItem from="1694757188738" duration="39998000" />
+      <workItem from="1695018627456" duration="5000" />
+      <workItem from="1695019083970" duration="24147000" />
+      <workItem from="1695104541010" duration="439000" />
+      <workItem from="1695105000514" duration="10626000" />
     </task>
     <task id="LOCAL-00001" summary="- 프로젝트 생성&#10;- 게시판 기본 CRUD 기능 구현">
       <option name="closed" value="true" />
@@ -345,7 +322,15 @@
       <option name="project" value="LOCAL" />
       <updated>1694525259639</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="[로그인 error 해결]&#10;로그인 시 비밀번호 인증 오류 해결&#10;&#10;- signup.html: pw 확인란 삭제&#10;- login.html: form tag 수정(email -&gt; username)&#10;&#10;RefreshToken entity와 DB 연동">
+      <option name="closed" value="true" />
+      <created>1694674112493</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1694674112493</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -372,7 +357,8 @@
     <MESSAGE value="[Entity]&#10;User entity에 column(nickname, baby-due) 추가&#10;&#10;[dto]&#10;entity에 추가한 column 추가&#10;&#10;[view]&#10;로그인, 회원가입 구성 화면 수정" />
     <MESSAGE value="[JWT 인증 기반으로 회원가입, 로그인, 로그아웃 구현]&#10;&#10;[config]&#10;WebSecurityConfig 설정 변경: h2 db -&gt; sql 사용으로 일부 h2 관련 코드 삭제&#10;&#10;[controller]&#10;1. TokenApiController: TokenService의 RefreshToken()을 기반으로 새로운 액세스 토큰을 만들어준다.&#10;2.UserApiController: 사용되지않는 annotation 삭제&#10;&#10;[Entity]&#10;1. Board table의 column명 변경(createdAt, updatedAt)&#10;2. User table의 column명 변경(nickname)&#10;3. RefreshToken entity 추가&#10;&#10;[DTO]&#10;1. AddUserRequest: NoArgsConstructor 추가, dto로 trnasfer할 정보 추가(hp, name, nickName)&#10;2. CreateAccessTokenRequest 추가: refreshToken 담는 dto&#10;3. CreateAccessTokenResponse 추가 : accessToken 담는 dto&#10;&#10;[Repository]&#10;RefreshToken관련 정보에 대한 db를 연결할 repository 추가&#10;&#10;[Service]&#10;1. RefreshTokenService: 전달받은 리프레시 토큰으로 리프레시 토큰 객체를 검색해서 전달&#10;2.TokenService: 토큰 유효성 검사&#10;3.UserService: name, nickName, hp 를 repository에 저장하는 메서드 추가&#10;[templates]&#10;signup.html: 업데이트.&#10;&#10;[application.yml]&#10;h2 console 사용: false로 변경&#10;&#10;[test]&#10;TokenApiControllerTest: 토큰 생성 여부 확인 test 추가" />
     <MESSAGE value="[JWT 인증 기반으로 회원가입, 로그인, 로그아웃 구현]&#10;&#10;[config]&#10;WebSecurityConfig 설정 변경: h2 db -&gt; sql 사용으로 일부 h2 관련 코드 삭제&#10;&#10;[controller]&#10;1. TokenApiController: TokenService의 RefreshToken()을 기반으로 새로운 액세스 토큰을 만들어준다.&#10;2.UserApiController: 사용되지않는 annotation 삭제&#10;&#10;[Entity]&#10;1. Board table의 column명 변경(createdAt, updatedAt)&#10;2. User table의 column명 변경(nickname)&#10;&#10;[DTO]&#10;1. AddUserRequest: NoArgsConstructor 추가, dto로 trnasfer할 정보 추가(hp, name, nickName)&#10;2. CreateAccessTokenRequest 추가: refreshToken 담는 dto&#10;3. CreateAccessTokenResponse 추가 : accessToken 담는 dto&#10;&#10;[Repository]&#10;RefreshToken관련 정보에 대한 db를 연결할 repository 추가&#10;&#10;[Service]&#10;1. RefreshTokenService: 전달받은 리프레시 토큰으로 리프레시 토큰 객체를 검색해서 전달&#10;2.TokenService: 토큰 유효성 검사&#10;3.UserService: name, nickName, hp 를 repository에 저장하는 메서드 추가&#10;[templates]&#10;signup.html: 업데이트.&#10;&#10;[application.yml]&#10;h2 console 사용: false로 변경&#10;&#10;[test]&#10;TokenApiControllerTest: 토큰 생성 여부 확인 test 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="[JWT 인증 기반으로 회원가입, 로그인, 로그아웃 구현]&#10;&#10;[config]&#10;WebSecurityConfig 설정 변경: h2 db -&gt; sql 사용으로 일부 h2 관련 코드 삭제&#10;&#10;[controller]&#10;1. TokenApiController: TokenService의 RefreshToken()을 기반으로 새로운 액세스 토큰을 만들어준다.&#10;2.UserApiController: 사용되지않는 annotation 삭제&#10;&#10;[Entity]&#10;1. Board table의 column명 변경(createdAt, updatedAt)&#10;2. User table의 column명 변경(nickname)&#10;&#10;[DTO]&#10;1. AddUserRequest: NoArgsConstructor 추가, dto로 trnasfer할 정보 추가(hp, name, nickName)&#10;2. CreateAccessTokenRequest 추가: refreshToken 담는 dto&#10;3. CreateAccessTokenResponse 추가 : accessToken 담는 dto&#10;&#10;[Repository]&#10;RefreshToken관련 정보에 대한 db를 연결할 repository 추가&#10;&#10;[Service]&#10;1. RefreshTokenService: 전달받은 리프레시 토큰으로 리프레시 토큰 객체를 검색해서 전달&#10;2.TokenService: 토큰 유효성 검사&#10;3.UserService: name, nickName, hp 를 repository에 저장하는 메서드 추가&#10;[templates]&#10;signup.html: 업데이트.&#10;&#10;[application.yml]&#10;h2 console 사용: false로 변경&#10;&#10;[test]&#10;TokenApiControllerTest: 토큰 생성 여부 확인 test 추가" />
+    <MESSAGE value="[로그인 error 해결]&#10;로그인 시 비밀번호 인증 오류 해결&#10;&#10;- signup.html: pw 확인란 삭제&#10;- login.html: form tag 수정(email -&gt; username)&#10;&#10;RefreshToken entity와 DB 연동" />
+    <option name="LAST_COMMIT_MESSAGE" value="[로그인 error 해결]&#10;로그인 시 비밀번호 인증 오류 해결&#10;&#10;- signup.html: pw 확인란 삭제&#10;- login.html: form tag 수정(email -&gt; username)&#10;&#10;RefreshToken entity와 DB 연동" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -383,44 +369,9 @@
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserDetailService.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/TokenService.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/TokenService.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/controller/FindViewController.java</url>
           <line>26</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserService.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserService.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserService.java</url>
-          <line>20</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserService.java</url>
-          <line>21</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/sjspring/shop/pregAndBirthDeveloper/service/UserService.java</url>
-          <line>22</line>
-          <option name="timeStamp" value="25" />
+          <option name="timeStamp" value="60" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

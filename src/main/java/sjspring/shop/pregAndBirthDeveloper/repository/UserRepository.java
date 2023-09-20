@@ -1,12 +1,18 @@
 package sjspring.shop.pregAndBirthDeveloper.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
 
 import java.util.Optional;
 
-//이메일로 사용자 정보 가져온다.
+//사용자 정보 가져온다.
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
+    Optional<User> findByNameAndHp(String name, String hp);
+
+    @Query("SELECT u.email FROM User u WHERE u.name = :name AND u.hp = :hp")
+    Optional<String> findEmailByNameAndHp(@Param("name") String name, @Param("hp") String hp);
 
 }
