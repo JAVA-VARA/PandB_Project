@@ -14,12 +14,11 @@ import sjspring.shop.pregAndBirthDeveloper.service.TokenService;
 @RequiredArgsConstructor
 @RestController
 public class TokenApiController {
+
     private final TokenService tokenService;
 
     @PostMapping("/api/token")
-    //액세스 토큰 생성.
-    public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken
-            (@RequestBody CreateAccessTokenRequest request){
+    public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(@RequestBody CreateAccessTokenRequest request) {
         String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
 
         return ResponseEntity.status(HttpStatus.CREATED)

@@ -21,20 +21,20 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring()
-                .requestMatchers("/static/**");
+                .requestMatchers("/images/**", "/js/**", "/css/**", "/font/**", "/error");
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests()
-                .requestMatchers("/login", "/signup", "/users", "/articles", "/findId", "/showId", "/findPwd").permitAll()
+                .requestMatchers("/login", "/signup", "/users", "/findId", "/showId", "/findPwd", "/showPwd").permitAll()
                 .requestMatchers("/static/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/articles")
+                .defaultSuccessUrl("/articles", true)
                 .and()
                 .logout()
                 .logoutSuccessUrl("/login")
@@ -42,6 +42,7 @@ public class WebSecurityConfig {
                 .and()
                 .build();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailService userDetailService) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
@@ -50,6 +51,7 @@ public class WebSecurityConfig {
                 .and()
                 .build();
     }
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();

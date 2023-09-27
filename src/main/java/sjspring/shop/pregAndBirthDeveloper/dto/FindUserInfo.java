@@ -12,9 +12,10 @@ import sjspring.shop.pregAndBirthDeveloper.domain.User;
 @Setter
 @NoArgsConstructor
 public class FindUserInfo {
-//    private String email;
+    private String email;
     private String name;
     private String hp;
+    private String password;
 
 
     public FindUserInfo(String name, String hp) {
@@ -22,14 +23,15 @@ public class FindUserInfo {
         this.hp = hp;
     }
 
-//    public FindUserInfo(String email) {
-//        this.email = email;
-//    }
-
-    public FindUserInfo(FindUserInfo findUserInfoDto) {
-        this.name = findUserInfoDto.getName();
-        this.hp = findUserInfoDto.getHp();;
+    public FindUserInfo(String email) {
+        this.email = email;
     }
 
+    public FindUserInfo(User user) {
+        this.email = user.getEmail();
+        this.name = user.getName();
+        this.hp = user.getHp();
+        this.password = user.getPassword();
+    }
 
 }

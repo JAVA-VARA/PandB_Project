@@ -17,17 +17,17 @@
         <div class="col-lg-8">
             <article>
                 <header class="mb-4">
-                    <h1 class = "fw-bolder mb-1" th:text="${board.title}"></h1>
-                    <div class="text-muted fst-italic mb-2" th:text = "|Posted on ${#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm')}|"></div>
+<!--                    <h1 class = "fw-bolder mb-1" th:text="${board.title}"></h1>-->
+<!--                    <div class="text-muted fst-italic mb-2" th:text = "|Posted on ${#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm')}|"></div>-->
 
                 </header>
 
                 <section class="mb-5">
-                    <p class="fs-5 mb-4" th:text="${board.content}"></p>
+<!--                    <p class="fs-5 mb-4" th:text="${board.content}"></p>-->
                 </section>
-                <button type="button" id="modify-btn"
-                        th:onclick="|location.href='@{/new-article?id={articleId}(articleId=${article.id})}'|"
-                        class="btn btn-primary btn-sm">수정</button>
+<!--                <button type="button" id="modify-btn"-->
+<!--                        th:onclick="|location.href='@{/new-article?id={articleId}(articleId=${article.id})}'|"-->
+<!--                        class="btn btn-primary btn-sm">수정</button>-->
                 <button type="button" id="delete-btn"
                         class="btn btn-secondary btn-sm">삭제</button>
             </article>
@@ -35,5 +35,5 @@
     </div>
 </div>
 
-<script src="/js/article.js"></script>
+<!--<script src="/js/article.js"></script>-->
 </body>

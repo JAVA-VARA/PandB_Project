@@ -1,14 +1,8 @@
 package sjspring.shop.pregAndBirthDeveloper.controller;
 
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import sjspring.shop.pregAndBirthDeveloper.dto.FindUserInfo;
-import sjspring.shop.pregAndBirthDeveloper.service.UserService;
-
 @Controller
 @NoArgsConstructor
 public class FindViewController {
@@ -31,8 +25,6 @@ public class FindViewController {
     public String findUser(){
         return "findId";
     }
-
-
 
     @GetMapping("/findPwd")
     public String findPwd() {

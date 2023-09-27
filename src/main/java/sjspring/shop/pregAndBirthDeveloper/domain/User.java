@@ -21,6 +21,7 @@ import java.util.List;
 //UserDetails를 상속받아 인증 객체로 사용.
 public class User implements UserDetails {
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_no", updatable = false)
@@ -52,6 +53,13 @@ public class User implements UserDetails {
         this.hp = hp;
         this.password = password;
     }
+
+    public void updatePassword(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){

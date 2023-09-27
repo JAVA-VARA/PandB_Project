@@ -17,22 +17,30 @@ import java.util.List;
 public class BlogViewController {
     private final BlogService blogService;
 
-    @GetMapping("/articles")
-    public String getArticles(Model model){
-        List<ArticleListViewResponse> articles = blogService.findAll().stream()
-                .map(ArticleListViewResponse::new)
-                .toList();
-        model.addAttribute("articles", articles);
+//    @GetMapping("/articles")
+//    public String getArticles(Model model){
+//        List<ArticleListViewResponse> articles = blogService.findAll().stream()
+//                .map(ArticleListViewResponse::new)
+//                .toList();
+//        model.addAttribute("articles", articles);
+//
+//        return "articleList";
+//    }
 
+    @GetMapping("/articles")
+    public String getArticles(){
         return "articleList";
     }
 
-    @GetMapping("/articles/{board_no}")
-    public String getArticle(@PathVariable Long board_no, Model model){
-        Board board = blogService.findById(board_no);
-        model.addAttribute("board", new ArticleViewResponse(board));
 
-        return "board";
-    }
+
+
+//    @GetMapping("/articles/{board_no}")
+//    public String getArticle(@PathVariable Long board_no, Model model){
+//        Board board = blogService.findById(board_no);
+//        model.addAttribute("board", new ArticleViewResponse(board));
+//
+//        return "board";
+//    }
 
 }

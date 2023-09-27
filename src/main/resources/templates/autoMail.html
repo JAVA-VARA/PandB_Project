@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>메일 발송</title>
+</head>
+<body>
+
+<h1>메일 발송</h1>
+<form th:action="@{mail}" method="POST">
+    <input name = "adress">
+    <br>
+    <input name="title">
+    <br>
+    <textarea name = "message" cols="60" rows="20"></textarea>
+
+    <button>발송</button>
+</form>
+
+
+</body>
+</html>
