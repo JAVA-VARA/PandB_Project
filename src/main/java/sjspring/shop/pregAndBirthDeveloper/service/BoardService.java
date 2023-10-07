@@ -2,6 +2,7 @@ package sjspring.shop.pregAndBirthDeveloper.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddArticleRequest;
@@ -12,12 +13,16 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class BlogService {
+public class BoardService {
     private final BoardRepository boardRepository;
 
     //Create
-    public Board save(AddArticleRequest request){
-        return boardRepository.save(request.toEntity());
+//    public Board save(AddArticleRequest request){
+//        return boardRepository.save(request.toEntity());
+//    }
+
+    public Board save(AddArticleRequest request, String userName){
+        return boardRepository.save(request.toEntity(userName));
     }
 
     //ReadAll
@@ -32,6 +37,11 @@ public class BlogService {
     }
 
     public void delete(long boardId){
+
+        Board board = boardRepository.findById(boardId)
+                        .orElseThrow(()-> new IllegalArgumentException("NOT FOUN :" + boardId));
+
+        authorizeArticleAuthor(board);
         boardRepository.deleteById(boardId);
     }
 
@@ -40,8 +50,18 @@ public class BlogService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()-> new IllegalArgumentException("not found:" + boardId));
 
-        board.update(request.getTitle(), request.getContent());
-
+        authorizeArticleAuthor(board);
+        board.update(request.getTitle(), request.getContent(), request.getUpdatedAt());
         return board;
     }
+
+    //게시글을 작성한 유저인지 확인
+    private static void authorizeArticleAuthor(Board board){
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if(!board.getAuthor().equals(userName)){
+            throw new IllegalArgumentException("not authorized");
+        }
+    }
+
 }

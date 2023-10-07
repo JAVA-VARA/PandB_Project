@@ -12,6 +12,7 @@ public class ArticleViewResponse {
     private Long boardNo;
     private String title;
     private String content;
+    private String author;
     private LocalDateTime createdAt;
 
 
@@ -19,6 +20,7 @@ public class ArticleViewResponse {
     public ArticleViewResponse(Board board){
         this.boardNo = board.getBoardNo();
         this.title = board.getTitle();
+        this.author = board.getAuthor();
         this.content = board.getContent();
         this.createdAt = board.getCreatedAt();
     }

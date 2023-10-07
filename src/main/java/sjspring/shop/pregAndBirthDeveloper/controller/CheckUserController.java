@@ -20,7 +20,6 @@ public class CheckUserController {
 
         //Repository에서 받아온 정보를 dto에 담음.
         FindUserInfo findUserInfoDto = new FindUserInfo(email);
-
         User userInfo = findUserService.findPwd(findUserInfoDto);
         String userEmail = userInfo.getEmail();
 

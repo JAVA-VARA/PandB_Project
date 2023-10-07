@@ -27,7 +27,7 @@ public class User implements UserDetails {
     @Column(name = "user_no", updatable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "nick_Name", nullable = false, unique = true)
@@ -36,7 +36,7 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "hp", nullable = false, unique = true)
+    @Column(name = "hp", unique = true)
     private String hp;
 
     @Column(name = "password")
@@ -46,7 +46,7 @@ public class User implements UserDetails {
     private Date babyDue;
 
     @Builder
-    public User(String name, String email,String hp,String password, String nickName){
+    public User(String name, String email, String nickName, String hp,String password){
         this.name = name;
         this.nickName = nickName;
         this.email = email;
@@ -54,9 +54,24 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+//    @Builder
+//    public User(String email, String password, String nickName){
+//        this.email = email;
+//        this.password = password;
+//        this.nickName = nickName;
+//    }
+
+
+
     public void updatePassword(String email, String password){
         this.email = email;
         this.password = password;
+    }
+
+    public User update(String nickName){
+        this.nickName = nickName;
+
+        return this;
     }
 
 

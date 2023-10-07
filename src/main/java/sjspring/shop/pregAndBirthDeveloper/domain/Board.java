@@ -27,31 +27,37 @@ public class Board {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "author", nullable = false)
+    @Column(name = "author")
     private String author;
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "views", nullable = false)
+    @Column(name = "views")
     private Long views;
 
     @Builder
-    public Board(String title, String content,String author, Long views, LocalDateTime createdAt, LocalDateTime updatedAt){
+    public Board(String title, String content, String author, Long views){
         this.title = title;
         this.content = content;
         this.author = author;
         this.views = views;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
-    public void update(String title, String content) {
+
+    public Board(String title, String content, LocalDateTime updatedAt){
         this.title = title;
         this.content = content;
+        this.updatedAt = updatedAt;
+    }
+
+    public void update(String title, String content,LocalDateTime updatedAt) {
+        this.title = title;
+        this.content = content;
+        this.updatedAt = updatedAt;
     }
 }

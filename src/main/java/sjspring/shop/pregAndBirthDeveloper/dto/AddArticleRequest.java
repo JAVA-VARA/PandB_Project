@@ -14,8 +14,6 @@ public class AddArticleRequest {
     private String title;
     private String content;
     private String author;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
     private Long views;
 
     public Board toEntity(){
@@ -24,10 +22,15 @@ public class AddArticleRequest {
                 .content(content)
                 .author(author)
                 .views(views)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
-                .views(views)
                 .build();
 
+    }
+
+    public Board toEntity(String author){
+        return Board.builder()
+                .title(title)
+                .content(content)
+                .author(author)
+                .build();
     }
 }

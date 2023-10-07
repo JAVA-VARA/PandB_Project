@@ -41,9 +41,12 @@ dependencies {
 //
     testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.projectlombok:lombok'
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+    implementation 'io.jsonwebtoken:jjwt:0.9.1' //java jwt library
+    implementation 'javax.xml.bind:jaxb-api:2.3.1' //xml 문서와 java 객체 간 매핑 자동화
 //
+    //oauth2 사용하기 위한 스타터
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 }
 
