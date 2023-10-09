@@ -1,12 +1,15 @@
 package sjspring.shop.pregAndBirthDeveloper.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import sjspring.shop.pregAndBirthDeveloper.config.jwt.TokenAuthenticationFilter;
 import sjspring.shop.pregAndBirthDeveloper.config.jwt.TokenProvider;
 import sjspring.shop.pregAndBirthDeveloper.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import sjspring.shop.pregAndBirthDeveloper.config.oauth.OAuth2SuccessHandler;
 import sjspring.shop.pregAndBirthDeveloper.config.oauth.OAuth2UserCustomService;
 import sjspring.shop.pregAndBirthDeveloper.repository.RefreshTokenRepository;
+import sjspring.shop.pregAndBirthDeveloper.service.UserDetailService;
 import sjspring.shop.pregAndBirthDeveloper.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,9 +44,9 @@ public class WebOAuthSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .httpBasic().disable()
-                .formLogin().disable()
                 .logout().disable();
 
+        //세션 로그인 사용X
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
@@ -51,11 +54,9 @@ public class WebOAuthSecurityConfig {
 
 
         http.authorizeHttpRequests()
-                .requestMatchers("/api/token").permitAll()
+                .requestMatchers("/api/token", "/login", "/signup", "/users", "/findId", "/showId", "/findPwd", "/showPwd").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
-
-
 
         http.oauth2Login()
                 .loginPage("/login")
@@ -66,9 +67,12 @@ public class WebOAuthSecurityConfig {
                 .userInfoEndpoint()
                 .userService(oAuth2UserCustomService);
 
+        http.formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/articles", true);
+
         http.logout()
                 .logoutSuccessUrl("/login");
-
 
         http.exceptionHandling()
                 .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
@@ -77,7 +81,6 @@ public class WebOAuthSecurityConfig {
 
         return http.build();
     }
-
 
     @Bean
     public OAuth2SuccessHandler oAuth2SuccessHandler() {
@@ -102,4 +105,5 @@ public class WebOAuthSecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

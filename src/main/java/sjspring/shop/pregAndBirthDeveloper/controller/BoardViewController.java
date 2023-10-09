@@ -43,11 +43,12 @@ public class BoardViewController {
 
     @GetMapping("/new-article")
     public String newArticle(@RequestParam(required = false) Long board_no, Model model){
+        System.out.println(board_no);
         if(board_no == null){
             model.addAttribute("article", new ArticleViewResponse());
         }else{
             Board board = boardService.findById(board_no);
-            model.addAttribute("board", new ArticleViewResponse(board));
+            model.addAttribute("article", new ArticleViewResponse(board));
         }
 
         return "newArticle";

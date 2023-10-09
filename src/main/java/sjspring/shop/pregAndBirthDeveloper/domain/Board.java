@@ -47,17 +47,18 @@ public class Board {
         this.content = content;
         this.author = author;
         this.views = views;
+        this.createdAt = getCreatedAt();
     }
 
-    public Board(String title, String content, LocalDateTime updatedAt){
-        this.title = title;
-        this.content = content;
-        this.updatedAt = updatedAt;
-    }
+//    public Board(String title, String content, LocalDateTime updatedAt){
+//        this.title = title;
+//        this.content = content;
+//        this.updatedAt = updatedAt;
+//    }
 
-    public void update(String title, String content,LocalDateTime updatedAt) {
+    public void update(String title, String content) {
         this.title = title;
         this.content = content;
-        this.updatedAt = updatedAt;
+        this.updatedAt = getUpdatedAt();
     }
 }

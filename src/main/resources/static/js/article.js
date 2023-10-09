@@ -23,8 +23,11 @@ const modifyButton = document.getElementById('modify-btn');
 
 if (modifyButton) {
     modifyButton.addEventListener('click', event => {
-        let params = new URLSearchParams(location.search);
-        let id = params.get('id');
+        // let params = new URLSearchParams(location.search);
+        // let boardNo=  params.get(article.boardNo);
+        //=> 안되는 이유가 뭡니까
+
+        let boardNo = document.getElementById('article-id').value;
 
         body = JSON.stringify({
             title: document.getElementById('title').value,
@@ -33,15 +36,15 @@ if (modifyButton) {
 
         function success() {
             alert('수정 완료되었습니다.');
-            location.replace(`/articles/${id}`);
+            location.replace("/articles/" + boardNo);
         }
 
         function fail() {
             alert('수정 실패했습니다.');
-            location.replace(`/articles/${id}`);
+            location.replace("/articles/" + boardNo);
         }
 
-        httpRequest('PUT',`/api/articles/${id}`, body, success, fail);
+        httpRequest('PUT',"/api/articles/" + boardNo, body, success, fail);
     });
 }
 

@@ -16,11 +16,6 @@ import java.util.List;
 public class BoardService {
     private final BoardRepository boardRepository;
 
-    //Create
-//    public Board save(AddArticleRequest request){
-//        return boardRepository.save(request.toEntity());
-//    }
-
     public Board save(AddArticleRequest request, String userName){
         return boardRepository.save(request.toEntity(userName));
     }
@@ -37,11 +32,11 @@ public class BoardService {
     }
 
     public void delete(long boardId){
-
         Board board = boardRepository.findById(boardId)
-                        .orElseThrow(()-> new IllegalArgumentException("NOT FOUN :" + boardId));
+                        .orElseThrow(()-> new IllegalArgumentException("NOT FOUNd :" + boardId));
 
         authorizeArticleAuthor(board);
+
         boardRepository.deleteById(boardId);
     }
 
@@ -51,9 +46,11 @@ public class BoardService {
                 .orElseThrow(()-> new IllegalArgumentException("not found:" + boardId));
 
         authorizeArticleAuthor(board);
-        board.update(request.getTitle(), request.getContent(), request.getUpdatedAt());
+
+        board.update(request.getTitle(), request.getContent());
         return board;
     }
+
 
     //게시글을 작성한 유저인지 확인
     private static void authorizeArticleAuthor(Board board){

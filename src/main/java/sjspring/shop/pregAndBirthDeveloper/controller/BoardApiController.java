@@ -44,6 +44,13 @@ public class BoardApiController {
         return ResponseEntity.ok()
                 .body(new FindArticle(board));
     }
+    @PutMapping("/api/articles/{board_id}")
+    public ResponseEntity<Board> updateArticle(@PathVariable long board_id, @RequestBody UpdateArticleRequest request){
+        Board updatedArticle = boardService.update(board_id, request);
+
+        return ResponseEntity.ok()
+                .body(updatedArticle);
+    }
 
     @DeleteMapping("/api/articles/{board_id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable long board_id){
@@ -53,12 +60,6 @@ public class BoardApiController {
                 .build();
     }
 
-    @PutMapping("/api/articles/{board_id}")
-    public ResponseEntity<Board> updateArticle(@PathVariable long board_id, @RequestBody UpdateArticleRequest request){
-        Board updatedArticle = boardService.update(board_id, request);
 
-        return ResponseEntity.ok()
-                .body(updatedArticle);
-    }
 
 }
