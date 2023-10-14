@@ -36,7 +36,7 @@ public class BoardViewController {
     @GetMapping("/articles/{board_no}")
     public String getArticle(@PathVariable Long board_no, Model model){
         Board board = boardService.findById(board_no);
-        model.addAttribute("board", new BoardListViewResponse(board));
+        model.addAttribute("board", new ArticleViewResponse(board));
 
         return "freeBoard";
     }

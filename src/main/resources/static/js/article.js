@@ -103,6 +103,7 @@ function httpRequest(method, url, body, success, fail) {
         if (response.status === 200 || response.status === 201) {
             return success();
         }
+
         const refresh_token = getCookie('refresh_token');
         if (response.status === 401 && refresh_token) {
             fetch('/api/token', {

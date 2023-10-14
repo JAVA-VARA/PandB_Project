@@ -14,17 +14,3 @@ public class JwtProperties {
     private String secretKey;
 }
 
-//@Setter, @Getter 어노테이션을 사용하지 않는 경우 아래와 같이 작성될 수 있다.
-
-/*
-* //Getter 메서드
-* public String getIssuer() {
-*       return issuer;
-* }
-*
-* //Setter 메서드
-* public String setIssuer(String issuer){
-*       this.issuer = issuer;
-* }
-*
-* */

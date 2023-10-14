@@ -3,6 +3,7 @@ package sjspring.shop.pregAndBirthDeveloper.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import sjspring.shop.pregAndBirthDeveloper.config.jwt.TokenAuthenticationFilter;
 import sjspring.shop.pregAndBirthDeveloper.config.jwt.TokenProvider;
 import sjspring.shop.pregAndBirthDeveloper.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
@@ -27,6 +28,7 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 
 @RequiredArgsConstructor
 @Configuration
+@EnableWebSecurity
 public class WebOAuthSecurityConfig {
 
     private final OAuth2UserCustomService oAuth2UserCustomService;
@@ -61,9 +63,14 @@ public class WebOAuthSecurityConfig {
         http.oauth2Login()
                 .loginPage("/login")
                 .authorizationEndpoint()
+                //사용자가 호출하는 클라이언트의 인증 시작 api에 대한 설정 ->
+                //이 api를 호출하면 소셜 로그인 페이지로 사용자를 redirect 한다.
+                //사용자의 인증 요청을 임시로 보관하는 리포지토리에 대한 설정
                 .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
                 .and()
+                //인증 및 유저 정보를 가져오는 것 까지 성공했을 때 호출되는 핸들러
                 .successHandler(oAuth2SuccessHandler())
+                //리소스 서버로부터 유저 정보를 가져올 때 사용되는 설정
                 .userInfoEndpoint()
                 .userService(oAuth2UserCustomService);
 
@@ -106,4 +113,12 @@ public class WebOAuthSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailService userDetailService) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailService)
+                .passwordEncoder(bCryptPasswordEncoder)
+                .and()
+                .build();
+    }
 }

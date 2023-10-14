@@ -18,8 +18,8 @@
 
                 <header class="mb-4">
                     <h1 class="fw-bolder mb-1" th:text="${board.title}"></h1>
-                    <div class="text-muted fst-italic mb-2" th:text="|Posted on ${#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm')} BY ${board.author}|"></div>
-
+                    <div class="text-muted fst-italic mb-2" th:text="|작성 시간 ${#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm')}|"></div>
+                    <div class="text-muted fst-italic mb-2" th:text="|작성자 ${board.author}|"></div>
                 </header>
 
                 <section class="mb-5">

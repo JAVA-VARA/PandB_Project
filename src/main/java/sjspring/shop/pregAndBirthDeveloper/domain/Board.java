@@ -7,9 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity(name = "board")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,6 +22,9 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_no", updatable = false)
     private Long boardNo;
+
+    @Column(name = "email", nullable = false)
+    private String email;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -38,27 +43,27 @@ public class Board {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "views")
-    private Long views;
+    @Column(name = "views", columnDefinition = "integer default 0", nullable = false)
+    private int views;
 
     @Builder
-    public Board(String title, String content, String author, Long views){
+    public Board(String title, String content, String author, int views, String email){
         this.title = title;
         this.content = content;
         this.author = author;
         this.views = views;
-        this.createdAt = getCreatedAt();
+        this.email = email;
     }
-
-//    public Board(String title, String content, LocalDateTime updatedAt){
-//        this.title = title;
-//        this.content = content;
-//        this.updatedAt = updatedAt;
-//    }
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
-        this.updatedAt = getUpdatedAt();
     }
+
+    public void update(int views) {
+        this.views = views;
+    }
+
+
+
 }

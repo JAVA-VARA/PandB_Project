@@ -11,7 +11,7 @@ public class BoardListViewResponse {
     private final String content;
     private final String author;
     private final LocalDateTime createdAt;
-    private final Long views;
+    private final int views;
 
     public BoardListViewResponse(Board board){
         this.boardNo = board.getBoardNo();

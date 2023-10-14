@@ -12,7 +12,7 @@ public class FindArticle {
     private final String content;
     private final String author;
     private final LocalDateTime createdAt;
-    private final Long views;
+    private final int views;
 
     public FindArticle(Board board){
         this.title = board.getTitle();

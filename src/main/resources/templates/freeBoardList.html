@@ -24,6 +24,7 @@
 
 
     <div class="row-6" th:each="item: ${articles}">
+        <input type="hidden" id="view-id" th:value="${item.boardNo}">
 
         <table border="10">
             <colgroup>
@@ -40,16 +41,21 @@
             <tr>
                 <td th:text="${item.boardNo}"></td>
                 <td>
-                    <a th:href="@{/articles/{id}(id=${item.boardNo})}" th:text="${item.title}" target="blank" />
+                    <a id="view-btn" th:href="@{/articles/{id}(id=${item.boardNo})}" th:text="${item.title}" target="blank" />
                 </td>
                 <td th:text="${item.author}"></td>
-                <td th:text="${item.createdAt}"></td>
+                <td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
                 <td th:text="${item.views}"></td>
             </tr>
         </table>
     </div>
 
 </div>
-
+<script src="/js/views.js"></script>
 <script src="/js/article.js"></script>
+<script src="/js/token.js"></script>
 </body>
+
+<!--                    <button-->
+<!--                            type="button" id="view-btn"-->
+<!--                            th:href="@{/articles/{id}(id=${item.boardNo})}" th:text="${item.title}"></button>-->
