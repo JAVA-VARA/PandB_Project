@@ -1,6 +1,5 @@
 package sjspring.shop.pregAndBirthDeveloper.controller;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +18,23 @@ import java.util.List;
 public class BoardViewController {
     private final BoardService boardService;
 
+    @GetMapping("/homePage")
+    public String homePage(Model model){
+
+        List<BoardListViewResponse> articles = boardService.findAll().stream()
+                .map(BoardListViewResponse::new)
+                .toList();
+        model.addAttribute("articles", articles);
+
+        return "homePage";
+    }
+
     @GetMapping("/articles")
     public String getArticles(Model model){
         List<BoardListViewResponse> articles = boardService.findAll().stream()
                 .map(BoardListViewResponse::new)
                 .toList();
         model.addAttribute("articles", articles);
-
-        if(articles.isEmpty()){
-            return "freeBoardListEmpty";
-        }
 
         return "freeBoardList";
     }

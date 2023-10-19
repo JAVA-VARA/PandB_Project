@@ -23,15 +23,12 @@ const modifyButton = document.getElementById('modify-btn');
 
 if (modifyButton) {
     modifyButton.addEventListener('click', event => {
-        // let params = new URLSearchParams(location.search);
-        // let boardNo=  params.get(article.boardNo);
-        //=> 안되는 이유가 뭡니까
-
         let boardNo = document.getElementById('article-id').value;
 
         body = JSON.stringify({
             title: document.getElementById('title').value,
-            content: document.getElementById('content').value
+            content: document.getElementById('content').value,
+            categoryName: document.getElementById('categoryName').value
         })
 
         function success() {
@@ -56,7 +53,8 @@ if (createButton) {
     createButton.addEventListener('click', event => {
         body = JSON.stringify({
             title: document.getElementById('title').value,
-            content: document.getElementById('content').value
+            content: document.getElementById('content').value,
+            category: document.getElementById('category').value
         });
         function success() {
             alert('등록 완료되었습니다.');

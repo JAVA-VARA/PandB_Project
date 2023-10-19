@@ -9,27 +9,30 @@ import sjspring.shop.pregAndBirthDeveloper.domain.User;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddArticleRequest;
 import sjspring.shop.pregAndBirthDeveloper.dto.FindArticle;
 import sjspring.shop.pregAndBirthDeveloper.dto.UpdateArticleRequest;
-import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
 import sjspring.shop.pregAndBirthDeveloper.service.BoardService;
+import sjspring.shop.pregAndBirthDeveloper.service.CategoryService;
+import sjspring.shop.pregAndBirthDeveloper.service.UserService;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
 public class BoardApiController {
     private final BoardService boardService;
-    private final UserRepository userRepository;
+    private final UserService userService;
+    private final CategoryService categoryService;
 
-    @PostMapping("/api/articles") //api/articles로 post 요청이 들어오면 아래 메서드 실행.
+
+    @PostMapping("/api/articles")
     public ResponseEntity<Board> addArticle(@RequestBody AddArticleRequest request, Principal principal){
 
+        request.setBoardCategory(categoryService.save(request.getCategory()));
+
         String email = principal.getName();
-        Optional<User> user = userRepository.findByEmail(email);
-        String author = user.get().getNickName();
-        request.setAuthor(author);;
+        User user = userService.findByEmail(email);
+        String author = user.getNickName();
+        request.setAuthor(author);
 
         Board savedArticle = boardService.save(request, principal.getName());
 
@@ -68,7 +71,6 @@ public class BoardApiController {
         //업데이트된 값을 저장한다.
         return ResponseEntity.ok()
                 .body(updateView);
-
     }
 
     @PutMapping("/api/articles/{board_id}")
@@ -86,7 +88,4 @@ public class BoardApiController {
         return ResponseEntity.ok()
                 .build();
     }
-
-
-
 }

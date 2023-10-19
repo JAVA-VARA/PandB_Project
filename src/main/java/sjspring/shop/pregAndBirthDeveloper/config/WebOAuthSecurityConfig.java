@@ -24,8 +24,6 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
-
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
@@ -56,7 +54,7 @@ public class WebOAuthSecurityConfig {
 
 
         http.authorizeHttpRequests()
-                .requestMatchers("/api/token", "/login", "/signup", "/users", "/findId", "/showId", "/findPwd", "/showPwd").permitAll()
+                .requestMatchers("/api/token", "/login", "/signup", "/users", "/findId", "/showId", "/findPwd", "/showPwd", "/freeBoardList", "/freeBoardListEmpty", "/homePage").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
 
@@ -74,9 +72,9 @@ public class WebOAuthSecurityConfig {
                 .userInfoEndpoint()
                 .userService(oAuth2UserCustomService);
 
-        http.formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/articles", true);
+//        http.formLogin()
+//                .loginPage("/login")
+//                .defaultSuccessUrl("/articles", true);
 
         http.logout()
                 .logoutSuccessUrl("/login");

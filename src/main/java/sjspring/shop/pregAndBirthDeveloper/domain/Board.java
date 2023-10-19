@@ -1,20 +1,18 @@
 package sjspring.shop.pregAndBirthDeveloper.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDateTime;
+
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity(name = "board")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 
 public class Board {
 
@@ -32,7 +30,7 @@ public class Board {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "author")
+    @Column(name = "author", nullable = false)
     private String author;
 
     @CreatedDate
@@ -46,13 +44,19 @@ public class Board {
     @Column(name = "views", columnDefinition = "integer default 0", nullable = false)
     private int views;
 
+    @ManyToOne(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "board_category_id")
+    private BoardCategory category;
+
+
     @Builder
-    public Board(String title, String content, String author, int views, String email){
+    public Board(String title, String content, String author, int views, String email, BoardCategory category){
         this.title = title;
         this.content = content;
         this.author = author;
         this.views = views;
         this.email = email;
+        this.category = category;
     }
 
     public void update(String title, String content) {
@@ -63,7 +67,4 @@ public class Board {
     public void update(int views) {
         this.views = views;
     }
-
-
-
 }

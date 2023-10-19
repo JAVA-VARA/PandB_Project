@@ -5,20 +5,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
-import sjspring.shop.pregAndBirthDeveloper.domain.User;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddArticleRequest;
 import sjspring.shop.pregAndBirthDeveloper.dto.UpdateArticleRequest;
 import sjspring.shop.pregAndBirthDeveloper.repository.BoardRepository;
-import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
-    private final UserRepository userRepository;
 
     public Board save(AddArticleRequest request, String userName){
         return boardRepository.save(request.toEntity(userName));

@@ -54,15 +54,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-//    @Builder
-//    public User(String email, String password, String nickName){
-//        this.email = email;
-//        this.password = password;
-//        this.nickName = nickName;
-//    }
-
-
-
     public void updatePassword(String email, String password){
         this.email = email;
         this.password = password;

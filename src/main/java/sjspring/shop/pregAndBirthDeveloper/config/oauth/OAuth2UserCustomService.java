@@ -41,4 +41,5 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
         return userRepository.save(user);
     }
+
 }

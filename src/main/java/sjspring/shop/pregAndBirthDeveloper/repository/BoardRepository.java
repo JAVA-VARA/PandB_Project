@@ -4,8 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
+import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
+import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
+
+    public List<Board> findByCategory(BoardCategory category);
 
     @Modifying
     @Query("update board b set b.views = b.views+1 where b.boardNo = :boardNo")
