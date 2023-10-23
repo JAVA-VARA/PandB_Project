@@ -1,5 +1,6 @@
 package sjspring.shop.pregAndBirthDeveloper.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -46,6 +47,7 @@ public class Board {
 
     @ManyToOne(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "board_category_id")
+    @JsonBackReference
     private BoardCategory category;
 
 
@@ -59,9 +61,10 @@ public class Board {
         this.category = category;
     }
 
-    public void update(String title, String content) {
+    public void update(String title, String content, BoardCategory boardCategory) {
         this.title = title;
         this.content = content;
+        this.category = boardCategory;
     }
 
     public void update(int views) {

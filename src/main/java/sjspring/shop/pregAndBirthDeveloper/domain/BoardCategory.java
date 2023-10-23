@@ -1,5 +1,6 @@
 package sjspring.shop.pregAndBirthDeveloper.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class BoardCategory {
     private String categoryName;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST)
+    @JsonManagedReference
     private List<Board> boardList = new ArrayList<>();
 
     public void mappingBoard(Board board){
@@ -30,5 +32,9 @@ public class BoardCategory {
             this.boardList = new ArrayList<>();
         }
         this.boardList.add(board);
+    }
+
+    public void deleteBoard(Board board){
+        this.boardList.remove(board);
     }
 }

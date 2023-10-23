@@ -9,4 +9,5 @@ public interface BoardCategoryRepository extends JpaRepository<BoardCategory, Lo
 
     BoardCategory findByCategoryName(String categoryName);
 
+
 }

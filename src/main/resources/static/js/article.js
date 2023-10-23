@@ -28,7 +28,7 @@ if (modifyButton) {
         body = JSON.stringify({
             title: document.getElementById('title').value,
             content: document.getElementById('content').value,
-            categoryName: document.getElementById('categoryName').value
+            category: document.getElementById('category').value
         })
 
         function success() {

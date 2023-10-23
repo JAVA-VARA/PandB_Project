@@ -55,34 +55,90 @@
             th:onclick="|location.href='@{/new-article}'|"
             class="btn btn-outline-dark me-2">글쓰기</button>
 
+        <div class="container mt-5" >
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">작성일</th>
+                    <th scope="col">조회수</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:if="${#lists.isEmpty(boardPage)}">
+                    <td colspan="3">게시글이 없습니다.</td>
+                </tr>
 
 
-    <div class="container mt-5" >
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">제목</th>
-                <th scope="col">작성자</th>
-                <th scope="col">작성일</th>
-                <th scope="col">조회수</th>
-            </tr>
-            </thead>
+                <tr  th:each="boardList : ${boardPage}">
+                    <input type="hidden" id="view-id" th:value="${boardList.boardNo}">
 
-            <tbody>
-            <tr th:each="item: ${articles}">
-                <input type="hidden" id="view-id" th:value="${item.boardNo}">
+                    <td th:text="${boardList.boardNo}"></td>
+                    <td>
+                        <a id="view-btn" th:href="@{/articles/{id}(id=${boardList.boardNo})}" th:text="${boardList.title}" target="blank" />
+                    </td>
+                    <td th:text="${boardList.author}"></td>
+                    <td th:text="${#temporals.format(boardList.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${boardList.views}"></td>
+                </tr>
+                </tbody>
+            </table>
 
-                <td th:text="${item.boardNo}"></td>
-                <td>
-                    <a id="view-btn" th:href="@{/articles/{id}(id=${item.boardNo})}" th:text="${item.title}" target="blank" />
-                </td>
-                <td th:text="${item.author}"></td>
-                <td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-                <td th:text="${item.views}"></td>
-            </tr>
-            </tbody>
-        </table>
+            <nav style="text-align: center;">
+                <!--표에 사용될 변수값 초기화 -->
+                <ul class="pagination justify-content-center"
+                    th:with="start=${T(java.lang.Math).floor(boardPage.number/3)*10 + 1},
+                last=(${start + 9 < boardPage.totalPages ? start + 9 : boardPage.totalPages})">
+                    <th:block th:with="
+                firstAddr=@{/articles(page=1)},
+                prevAddr=@{/articles(page=${boardPage.number})},
+                nextAddr=@{/articles(page=${boardPage.number + 2})},
+                lastAddr=@{/articles(page=${boardPage.totalPages})}">
+
+                        <!-- 첫번재 페이지 -->
+                        <li class="page-item">
+                            <a class="page-link"  th:href="${firstAddr}" aria-label="First">
+                                <span aria-hidden="true">First</span>
+                            </a>
+                        </li>
+
+                        <!-- 이전 페이지로 가기 버튼 -->
+                        <li class="page-item" th:class="${boardPage.first} ? 'disabled'">
+                            <a class="page-link" th:href="${boardPage.first} ? '#' :${prevAddr}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                            </a>
+                        </li>
+
+                        <!--1,2,3,4,.. 등 페이지-->
+                        <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
+                            th:class="${page == boardPage.number + 1} ? 'active'">
+                            <a class="page-link"
+                               th:text="${page}" th:href="@{/articles(page=${page})}"></a>
+                        </li>
+
+                        <!--다음 페이지로 -->
+                        <li class="page-item" th:class="${boardPage.last} ? 'disabled'">
+                            <a class="page-link" th:href="${boardPage.last} ? '#' : ${nextAddr}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&gt;</span>
+                            </a>
+                        </li>
+
+                        <!--맨 마지막 페이지로 이동 -->
+                        <li class="page-item">
+                            <a class="page-link" th:href="${lastAddr}" aria-label="Last">
+                                <span aria-hidden="true">Last</span>
+                            </a>
+                        </li>
+                    </th:block>
+                </ul>
+            </nav>
+
     </div>
 
 </div>
