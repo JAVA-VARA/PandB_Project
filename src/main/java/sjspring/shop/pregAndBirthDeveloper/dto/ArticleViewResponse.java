@@ -19,6 +19,7 @@ public class ArticleViewResponse {
     private int views;
     private BoardCategory category;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 
 
@@ -29,6 +30,7 @@ public class ArticleViewResponse {
         this.content = board.getContent();
         this.category = board.getCategory();
         this.createdAt = board.getCreatedAt();
+        this.updatedAt = board.getUpdatedAt();
         this.views = board.getViews();
     }
 }

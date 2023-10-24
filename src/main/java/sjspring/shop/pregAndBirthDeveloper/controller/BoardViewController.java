@@ -57,10 +57,18 @@ public class BoardViewController {
         model.addAttribute("boardPage",boardPage);
         return "/freeBoardList";
     }
+
+    //조회수 기능 추가해보자
     @GetMapping("/articles/{board_no}")
     public String getArticle(@PathVariable Long board_no, Model model){
         Board board = boardService.findById(board_no);
         model.addAttribute("board", new ArticleViewResponse(board));
+
+        int view = board.getViews(); //현재 조회수 가져옴
+        view = view + 1; //클릭시마다 조회수 1 증가
+        boardService.updateView(board_no, view); //업데이트된 조회수 저장.
+
+
 
         return "freeBoard";
     }

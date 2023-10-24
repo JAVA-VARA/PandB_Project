@@ -75,14 +75,23 @@
 
 
                 <tr  th:each="boardList : ${boardPage}">
-                    <input type="hidden" id="view-id" th:value="${boardList.boardNo}">
-
                     <td th:text="${boardList.boardNo}"></td>
                     <td>
-                        <a id="view-btn" th:href="@{/articles/{id}(id=${boardList.boardNo})}" th:text="${boardList.title}" target="blank" />
+                        <a id="view-btn"
+                           th:class="${boardList.boardNo}"
+                           th:href="@{/articles/{id}(id=${boardList.boardNo})}"
+                           th:text="${boardList.title}" target="blank" />
                     </td>
+
                     <td th:text="${boardList.author}"></td>
-                    <td th:text="${#temporals.format(boardList.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+
+                    <td th:if="${#strings.equals(#temporals.format(boardList.createdAt, 'yyyy-MM-dd'), #dates.format(#dates.createNow(), 'yyyy-MM-dd'))}"
+                        th:text=" ${#temporals.format(boardList.createdAt, 'HH:mm')}"></td>
+
+                    <td th:if="${!#strings.equals(#temporals.format(boardList.createdAt, 'yyyy-MM-dd'), #dates.format(#dates.createNow(), 'yyyy-MM-dd'))}"
+                        th:text=" ${#temporals.format(boardList.createdAt, 'yyyy-MM-dd')}"></td>
+
+
                     <td th:text="${boardList.views}"></td>
                 </tr>
                 </tbody>
@@ -144,8 +153,14 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-<script src="/js/views.js"></script>
 <script src="/js/article.js"></script>
 <script src="/js/token.js"></script>
 </body>
+</html>
 
+
+<!--                            th:if="${#strings.equals(#temporals.format(boardList.createdAt, 'yyyy-MM-dd), }"-->
+<!--                            -->
+<!--                            th:text="${}"-->
+
+<!--                            th:text="${#dates.format(#dates.createNow(),'yyyy-MM-dd)}"-->

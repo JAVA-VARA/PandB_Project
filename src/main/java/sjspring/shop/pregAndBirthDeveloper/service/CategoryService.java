@@ -12,11 +12,14 @@ public class CategoryService {
 
     public BoardCategory save(String categoryName) {
 
-        BoardCategory newCategory = BoardCategory.builder()
-                .categoryName(categoryName)
-                .build();
+        if(boardCategoryRepository.findByCategoryName(categoryName) == null){
 
-        boardCategoryRepository.save(newCategory);
+            BoardCategory newCategory = BoardCategory.builder()
+                    .categoryName(categoryName)
+                    .build();
+
+            boardCategoryRepository.save(newCategory);
+        }
         return boardCategoryRepository.findByCategoryName(categoryName);
 
     }

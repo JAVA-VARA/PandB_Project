@@ -101,7 +101,23 @@
         <div class="card-header">
             <div class="board clear " style=";">
                 <div class="top_area ngeb" style=";">
-                    <span class="date m_no" th:text=" ${#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+
+                    <span class="date m_no"
+                          th:if="${#strings.equals(#temporals.format(board.createdAt, 'yyyy-MM-dd'), #dates.format(#dates.createNow(), 'yyyy-MM-dd'))}"
+                          th:text=" ${#temporals.format(board.createdAt, 'HH:mm')}"
+                    ></span>
+                    <!--                          ${#temporals.format(board.createdAt, 'yyyy-MM-dd')} == ${#temporals.format(#dates.createNow(), 'yyyy-MM-dd')}-->
+                    <span class="date m_no"
+                          th:unless="${#strings.equals(#temporals.format(board.createdAt, 'yyyy-MM-dd'), #dates.format(#dates.createNow(), 'yyyy-MM-dd'))}"
+                          th:text=" ${#temporals.format(board.createdAt, 'yyyy-MM-dd')}"
+                    ></span>
+
+                    <span class="date m_no"
+                          th:if="${!#strings.equals(#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm'), #temporals.format(board.updatedAt, 'yyyy-MM-dd HH:mm'))}"
+                          th:text=" ${#temporals.format(board.updatedAt, 'yyyy-MM-dd HH:mm')}"
+                    ></span>
+
+
 
                     <div class="btm_area clear"><div class="side">
                             <span th:text="${board.author}"></span>
@@ -144,7 +160,6 @@
         crossorigin="anonymous"></script>
 
 <script src="/js/token.js"></script>
-
 <script src="/js/article.js"></script>
 
 </body>

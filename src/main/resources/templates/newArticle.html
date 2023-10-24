@@ -19,8 +19,16 @@
 
                 <header class="m-20">
 
-                    <select class="form-select" aria-label="select category" id="category">
-                        <option selected value="">카테고리를 선택해주세요</option>
+                    <select class="form-select" aria-label="select category" id="category" th:field="${article}">>
+
+                        <option th:if = "${article.boardNo} == null" value="카테고리를 선택해주세요.">카테고리를 선택해주세요</option>
+
+                        <option th:if = "${article.boardNo} != null"
+                                th:value="${article.category.getCategoryName()}"
+                                th:text="${article.category.getCategoryName()}"
+
+                        ></option>
+
                         <option value="자유 게시판">자유 게시판</option>
                         <option value="정보 공유 게시판">정보 공유 게시판</option>
                         <option value="갤러리">갤러리</option>
@@ -32,8 +40,10 @@
                 <section class="mb-5">
                     <textarea class="form-control h-25" rows="10" placeholder="내용" id="content" th:text="${article.content}"></textarea>
                 </section>
+
                 <button th:if="${article.boardNo} != null" type="button" id="modify-btn" class="btn btn-primary btn-sm">수정</button>
                 <button th:if="${article.boardNo} == null" type="button" id="create-btn" class="btn btn-primary btn-sm">등록</button>
+
             </article>
         </div>
     </div>

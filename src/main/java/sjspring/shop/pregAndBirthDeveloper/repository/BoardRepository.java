@@ -14,7 +14,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
 
     Page<Board> findAll(Pageable pageable);
-
+    public List<Board> findByCategory(BoardCategory category);
     @Modifying
     @Query("update board b set b.views = b.views+1 where b.boardNo = :boardNo")
     int updateView(Long boardNo);

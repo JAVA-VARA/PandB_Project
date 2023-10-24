@@ -77,18 +77,30 @@ public class BoardService {
         authorizeArticleAuthor(board);
 
         BoardCategory boardCategory = boardCategoryRepository.findByCategoryName(request.getCategory());
-        board.update(request.getTitle(), request.getContent(), boardCategory);
 
+        if(boardCategory == null){
+
+            boardCategory = BoardCategory.builder()
+                    .categoryName(request.getCategory())
+                    .build();
+
+            boardCategoryRepository.save(boardCategory);
+            board.update(request.getTitle(), request.getContent(), boardCategory);
+            boardCategory.mappingBoard(board);
+
+            return board;
+
+        }
+        board.update(request.getTitle(), request.getContent(), boardCategory);
         return board;
     }
 
     @Transactional
-    public Board update(long boardId, int view){
+    public void updateView(long boardId, int view){
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()-> new IllegalArgumentException("not found:" + boardId));
 
         board.update(view);
-        return board;
     }
 
     private static void authorizeArticleAuthor(Board board){

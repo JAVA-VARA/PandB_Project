@@ -58,21 +58,6 @@ public class BoardApiController {
                 .body(new FindArticle(board));
     }
 
-    @GetMapping("/api/articles/view/{board_id}")
-    public ResponseEntity<Board> updateView(@PathVariable long board_id){
-        //VIEW를 REPOSITORY에서 가져온다
-        Board board = boardService.findById(board_id);
-        int view = board.getViews();
-        //가져온 VIEW에 1을 더한다.
-        view = view + 1;
-
-        Board updateView = boardService.update(board_id, view);
-
-        //업데이트된 값을 저장한다.
-        return ResponseEntity.ok()
-                .body(updateView);
-    }
-
     @PutMapping("/api/articles/{board_id}")
     public ResponseEntity<Board> updateArticle(@PathVariable long board_id, @RequestBody UpdateArticleRequest request){
         Board updatedArticle = boardService.update(board_id, request);
@@ -89,3 +74,4 @@ public class BoardApiController {
                 .build();
     }
 }
+

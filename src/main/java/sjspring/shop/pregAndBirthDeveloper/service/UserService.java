@@ -26,6 +26,14 @@ public class UserService {
                 .build()).getId();
     }
 
+    //회원 가입 시 추가 입력 기능 TBD
+    public Long save(String name, String hp) {
+        return userRepository.save(User.builder()
+                .name(name)
+                .hp(hp)
+                .build()).getId();
+    }
+
     public User findById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
