@@ -1,10 +1,7 @@
 package sjspring.shop.pregAndBirthDeveloper.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
 
@@ -14,11 +11,21 @@ import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddArticleRequest {
+
+    @NonNull
     private String title;
+
+    @NonNull
     private String content;
+
+    @NonNull
     private String author;
+
+    @NonNull
     private String category;
+
     private BoardCategory boardCategory;
+
     private int views;
 
 
@@ -32,7 +39,6 @@ public class AddArticleRequest {
                 .category(boardCategory)
                 .build();
 
-        boardCategory.mappingBoard(board);
         return board;
     }
 }

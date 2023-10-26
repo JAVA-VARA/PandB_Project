@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.dto.ArticleViewResponse;
 import sjspring.shop.pregAndBirthDeveloper.dto.BoardListViewResponse;
-import sjspring.shop.pregAndBirthDeveloper.dto.ResponseDto;
 import sjspring.shop.pregAndBirthDeveloper.service.BoardService;
 
 import java.util.List;
@@ -34,18 +33,6 @@ public class BoardViewController {
 
         return "homePage";
     }
-
-
-    //자유게시판 viewList 수정하기전!!!!!
-//    @GetMapping("/articles")
-//    public String getArticles(Model model){
-//        List<BoardListViewResponse> articles = boardService.findAll().stream()
-//                .map(BoardListViewResponse::new)
-//                .toList();
-//        model.addAttribute("articles", articles);
-//
-//        return "freeBoardList";
-//    }
 
     //자유게시판 viewList 수정후!!!//
     @GetMapping("/articles")
@@ -87,3 +74,14 @@ public class BoardViewController {
     }
 
 }
+
+//자유게시판 viewList 수정하기전!!!!!
+//    @GetMapping("/articles")
+//    public String getArticles(Model model){
+//        List<BoardListViewResponse> articles = boardService.findAll().stream()
+//                .map(BoardListViewResponse::new)
+//                .toList();
+//        model.addAttribute("articles", articles);
+//
+//        return "freeBoardList";
+//    }

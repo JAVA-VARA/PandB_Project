@@ -23,7 +23,11 @@ public class BoardService {
     private final BoardCategoryRepository boardCategoryRepository;
 
     public Board save(AddArticleRequest request, String userName) {
-        return boardRepository.save(request.toEntity(userName));
+
+        Board board = request.toEntity(userName);
+        request.getBoardCategory().mappingBoard(board);
+
+        return boardRepository.save(board);
     }
 
     //ReadAll

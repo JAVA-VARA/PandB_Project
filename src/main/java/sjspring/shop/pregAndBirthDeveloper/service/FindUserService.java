@@ -14,7 +14,7 @@ import java.util.Optional;
 public class FindUserService {
     private final UserRepository userRepository;
 
-    public String findId(FindUserInfo findUserInfoDto){
+    public String findEmail(FindUserInfo findUserInfoDto){
         String name = findUserInfoDto.getName();
         String hp = findUserInfoDto.getHp();
 

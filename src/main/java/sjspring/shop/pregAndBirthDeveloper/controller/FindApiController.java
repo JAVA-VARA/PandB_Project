@@ -20,7 +20,7 @@ public class FindApiController {
             Model model) {
 
         FindUserInfo findUserInfoDto = new FindUserInfo(name, hp);
-        String findUser = findUserService.findId(findUserInfoDto);
+        String findUser = findUserService.findEmail(findUserInfoDto);
 
         FindUserInfo findUserInfoToView = new FindUserInfo();
         findUserInfoToView.setEmail(findUser);

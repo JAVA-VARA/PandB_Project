@@ -13,13 +13,9 @@ public class CategoryService {
     public BoardCategory save(String categoryName) {
 
         if(boardCategoryRepository.findByCategoryName(categoryName) == null){
-
-            BoardCategory newCategory = BoardCategory.builder()
-                    .categoryName(categoryName)
-                    .build();
-
-            boardCategoryRepository.save(newCategory);
+            return new BoardCategory(categoryName);
         }
+
         return boardCategoryRepository.findByCategoryName(categoryName);
 
     }

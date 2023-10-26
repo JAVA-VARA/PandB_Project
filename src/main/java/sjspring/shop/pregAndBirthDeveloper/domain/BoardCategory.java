@@ -27,6 +27,11 @@ public class BoardCategory {
     @JsonManagedReference
     private List<Board> boardList = new ArrayList<>();
 
+    public BoardCategory(String categoryName){
+        this.categoryName = categoryName;
+    }
+
+
     public void mappingBoard(Board board){
         if (this.boardList == null) {
             this.boardList = new ArrayList<>();
