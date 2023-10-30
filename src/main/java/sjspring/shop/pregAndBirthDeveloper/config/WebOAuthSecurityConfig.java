@@ -54,7 +54,7 @@ public class WebOAuthSecurityConfig {
 
 
         http.authorizeHttpRequests()
-                .requestMatchers("/api/token", "/login", "/signup", "/users", "/findId", "/showId", "/findPwd", "/showPwd", "/freeBoardList", "/freeBoardListEmpty", "/homePage").permitAll()
+                .requestMatchers("/api/token", "/login", "/signup", "/users", "/findId", "/showId", "/findPwd", "/showPwd", "/freeBoardList", "/freeBoardListEmpty", "/homePage", "/").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
 

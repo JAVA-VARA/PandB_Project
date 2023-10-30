@@ -1,6 +1,5 @@
 package sjspring.shop.pregAndBirthDeveloper.service;
 
-import io.micrometer.common.util.internal.logging.InternalLogger;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
@@ -10,57 +9,39 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import org.thymeleaf.spring6.SpringTemplateEngine;
-
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
 import sjspring.shop.pregAndBirthDeveloper.dto.FindUserInfo;
 import sjspring.shop.pregAndBirthDeveloper.dto.MailDto;
 import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
-
 
 @RequiredArgsConstructor
 @Service
 public class SendEmailService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    private final SpringTemplateEngine templateEngine;
     private final JavaMailSender javaMailSender;
 
     @Transactional
-    public User  updatePassword(FindUserInfo findUserInfo){
-        User user = userRepository.findByEmail(findUserInfo.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("NOT FOUND" + findUserInfo.getEmail()));
+    public FindUserInfo updateAndSendPwd(FindUserInfo findUserInfoDto){
 
-        //임시 비번 생성
+        //findUserInfoDto에는 현재 유저가 입력한 email만 들어 있음.
+        //유저 이메일로 유효한 사용자 인지 확인
+        String email = findUserInfoDto.getEmail();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("NOT FOUND" + email));
+
+        //유효하다면 임시 비번 생성.
         String tempPwd = getTempPassword();
-        //임시 비번 encoding
-        String encodedTempPwd = passwordEncoder(tempPwd);
-        //User의 정보를 업데이트함.
-        user.updatePassword(user.getEmail(),encodedTempPwd);
+        //임시 비번 암호화/repository에 저장
+        user.updatePassword(email, passwordEncoder(tempPwd));
 
-        //메일 생성
-        MailDto mailDto = new MailDto();
-        mailDto.setSender("sj.youns1027@gmail.com");
-        mailDto.setReceiver(findUserInfo.getEmail());
-        mailDto.setTitle("쭈쭈르 홈페이지 임시비밀번호 안내");
-        mailDto.setMessage("안녕하세요 쭈주르입니다." + user.getName() + " 회원님의 임시 비밀번호는 " + tempPwd + " 입니다.");
+        //dto에 user 정보 담기.
+        findUserInfoDto.setPassword(tempPwd);
 
-        //메일 송부
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        try{
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-            mimeMessageHelper.setTo(mailDto.getReceiver());
-            mimeMessageHelper.setSubject(mailDto.getTitle());
-            mimeMessageHelper.setText(mailDto.getMessage(), false);
-            javaMailSender.send(mimeMessage);
+        //user가 입력한 email로 임시 pw 송부
+        emailSender(findUserInfoDto);
 
-            return user;
-
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
-
+        return findUserInfoDto;
     }
 
     //존재하는 user일 경우 임시 비번 생성
@@ -78,6 +59,23 @@ public class SendEmailService {
         return tempPwd.toString();
     }
 
+    //메일 송부 메서드
+    public void emailSender(FindUserInfo findUserInfo){
+        MailDto mailDto = new MailDto(findUserInfo);
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+        try{
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+            mimeMessageHelper.setTo(mailDto.getReceiver());
+            mimeMessageHelper.setSubject(mailDto.getTitle());
+            mimeMessageHelper.setText(mailDto.getMessage(), false);
+            javaMailSender.send(mimeMessage);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
     //임시로 생성한 비번 encoding
     public String passwordEncoder(String tempPwd){
         return bCryptPasswordEncoder.encode(tempPwd);

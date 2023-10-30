@@ -80,6 +80,7 @@ class BoardApiControllerTest {
     @Transactional
     public void addArticle() throws Exception {
 
+
         //given
         final String url = "/api/articles";
         final String title = "title";
@@ -89,17 +90,23 @@ class BoardApiControllerTest {
         final LocalDateTime createdAt = LocalDateTime.now();
         final int views = 100;
 
+
         //카테고리 저장 여부 확인
         final BoardCategory boardCategory = categoryService.save(categoryName);
 
 
+        //
         final AddArticleRequest userRequest = new AddArticleRequest(title,content,author,categoryName,boardCategory, views);
         Principal principal = Mockito.mock(Principal.class);
         Mockito.when(principal.getName()).thenReturn("username");
 
+
+        //
         userRequest.toEntity(principal.getName());
         userRequest.setBoardCategory(boardCategory);
 
+
+        //
         final String requestBody = objectMapper.writeValueAsString(userRequest);
 
 
@@ -108,6 +115,7 @@ class BoardApiControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .principal(principal)
                 .content(requestBody));
+
 
         //then
         result.andExpect(status().isCreated());
@@ -131,7 +139,8 @@ class BoardApiControllerTest {
         Board savedBoard = createDefaultArticleAndCategoryMapping();
 
         //when
-        final ResultActions resultActions = mockMvc.perform(get(url)
+        final ResultActions resultActions =
+                mockMvc.perform(get(url)
                 .accept(MediaType.APPLICATION_JSON));
 
         //then

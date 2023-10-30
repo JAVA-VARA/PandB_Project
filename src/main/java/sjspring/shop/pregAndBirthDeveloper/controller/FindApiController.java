@@ -1,6 +1,7 @@
 package sjspring.shop.pregAndBirthDeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +15,13 @@ public class FindApiController {
     private final FindUserService findUserService;
 
     @GetMapping("/showId")
-    public String findId(
+    public ResponseEntity<String> findId(
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "hp", required = false) String hp,
             Model model) {
 
         FindUserInfo findUserInfoDto = new FindUserInfo(name, hp);
+
         String findUser = findUserService.findEmail(findUserInfoDto);
 
         FindUserInfo findUserInfoToView = new FindUserInfo();
@@ -27,9 +29,12 @@ public class FindApiController {
 
         if (!findUser.isEmpty()) {
             model.addAttribute("FindUserInfo", findUserInfoToView);
-            return findUser;
+
+            return ResponseEntity.ok()
+                    .body(findUser);
         }
 
-        return "유효하지 않은 이메일입니다. 다시 입력해주세요.";
+        return ResponseEntity.ok()
+                .body("일치 하는 회원 정보가 없습니다.");
     }
 }

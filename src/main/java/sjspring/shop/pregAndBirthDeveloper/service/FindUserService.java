@@ -19,7 +19,7 @@ public class FindUserService {
         String hp = findUserInfoDto.getHp();
 
         return userRepository.findEmailByNameAndHp(name, hp)
-                .orElseThrow(() -> new IllegalArgumentException("일치 하는" + name + hp + "정보가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("일치 하는 회원 정보가 없습니다."));
     }
 
     public User findPwd(FindUserInfo findUserInfoDto){
