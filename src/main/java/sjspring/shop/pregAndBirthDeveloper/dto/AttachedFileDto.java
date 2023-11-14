@@ -2,6 +2,7 @@ package sjspring.shop.pregAndBirthDeveloper.dto;
 
 import lombok.*;
 import sjspring.shop.pregAndBirthDeveloper.domain.AttachedFile;
+import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 
 @Getter
 @Setter
@@ -11,6 +12,7 @@ public class AttachedFileDto {
     private String originalFileName;
     private String fileName;
     private String filePath;
+    private Board board;
 
 
     public AttachedFile toEntity() {
@@ -19,6 +21,7 @@ public class AttachedFileDto {
                 .originalFileName(originalFileName)
                 .fileName(fileName)
                 .filePath(filePath)
+                .board(board)
                 .build();
     }
 

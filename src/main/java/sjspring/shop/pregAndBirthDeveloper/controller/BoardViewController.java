@@ -11,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import sjspring.shop.pregAndBirthDeveloper.domain.AttachedFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.dto.ArticleViewResponse;
+import sjspring.shop.pregAndBirthDeveloper.dto.AttachedFileDto;
 import sjspring.shop.pregAndBirthDeveloper.dto.BoardListViewResponse;
 import sjspring.shop.pregAndBirthDeveloper.service.BoardService;
 import java.util.List;
@@ -70,25 +72,7 @@ public class BoardViewController {
         Board board = boardService.findById(board_no);
         ArticleViewResponse articleViewResponse = new ArticleViewResponse(board);
 
-        //이미지 리턴 => ArticleViewResponse에 image 경로 추가하면 될듯?
-        /*
-         * 이미지 경로 불러오기
-         * ArticleViewResponse에 삽입
-         * html에서 board.filepath 불러오기.
-         * */
-
-        //이미지 경로 불러오기
-        //String filePath = ~~~
-
-
-        //파일 경로 저장
-//        articleViewResponse.setFilePath(filePath);
-
         model.addAttribute("board", articleViewResponse);
-
-
-
-
 
         //조회수 기능 추가
         int view = board.getViews(); //현재 조회수 가져옴

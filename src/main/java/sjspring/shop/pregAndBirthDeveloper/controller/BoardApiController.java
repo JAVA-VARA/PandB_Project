@@ -32,7 +32,8 @@ public class BoardApiController {
             @RequestParam String category,
             @RequestParam String title,
             @RequestParam String content,
-            @RequestPart(required = false) MultipartFile files,
+//            @RequestPart(required = false) MultipartFile files, => 단일 파일 저장.
+            @RequestPart(name = "files", required = false) List<MultipartFile> files,
             Principal principal) throws IOException
     {
         AddArticleRequest request = new AddArticleRequest(category, title, content, files);

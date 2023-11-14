@@ -11,5 +11,5 @@ public interface AttachedFileRepository extends JpaRepository<AttachedFile, Long
 
     List<AttachedFile> findAttachedFileByFileNo(Long fileNo);
 
-
+    AttachedFile findAttachedFileByFileName(String fileName);
 }

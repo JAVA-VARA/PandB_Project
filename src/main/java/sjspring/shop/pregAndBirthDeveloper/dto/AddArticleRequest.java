@@ -8,6 +8,8 @@ import sjspring.shop.pregAndBirthDeveloper.domain.AttachedFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -33,13 +35,13 @@ public class AddArticleRequest {
 
     private int views;
 
-    private MultipartFile file;
+    private List<MultipartFile> file;
 
-    public AddArticleRequest(@NotNull String category, @NotNull String title, @NotNull String content, MultipartFile file) {
+    public AddArticleRequest(@NotNull String category, @NotNull String title, @NotNull String content, List<MultipartFile> file) {
         this.category =category;
         this.title = title;
         this.content = content;
-        this.file =file;
+        this.file = file;
     }
 
     public AddArticleRequest(@NotNull String title, @NotNull String content, @NotNull String author, @NotNull String categoryName, BoardCategory boardCategory, int views) {

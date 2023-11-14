@@ -1,12 +1,15 @@
 package sjspring.shop.pregAndBirthDeveloper.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @EntityListeners(AuditingEntityListener.class)
@@ -50,6 +53,10 @@ public class Board {
     @JsonBackReference
     private BoardCategory category;
 
+    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
+    @JsonManagedReference
+    private List<AttachedFile> attachedFileList = new ArrayList<>();
+
 
     @Builder
     public Board(String title, String content, String author, int views, String email, BoardCategory category){
@@ -59,6 +66,13 @@ public class Board {
         this.views = views;
         this.email = email;
         this.category = category;
+    }
+
+    public void mappingAttachedFileToBoard(AttachedFile attachedFile){
+        if(this.attachedFileList == null){
+            this.attachedFileList = new ArrayList<>();
+        }
+        this.attachedFileList.add(attachedFile);
     }
 
     public void update(String title, String content, BoardCategory boardCategory) {

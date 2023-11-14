@@ -6,6 +6,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import sjspring.shop.pregAndBirthDeveloper.domain.AttachedFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddArticleRequest;
@@ -18,6 +20,7 @@ import sjspring.shop.pregAndBirthDeveloper.repository.BoardRepository;
 import sjspring.shop.pregAndBirthDeveloper.util.UploadFileUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,17 +32,31 @@ public class BoardService {
 
     public Board save(AddArticleRequest request, String userName) throws IOException {
 
+        List<AttachedFileDto> attachedFileDtos = new ArrayList<>();
+
         //첨부파일 저장.
-        if(request.getFile() != null){
+        if(request.getFile() != null && !request.getFile().isEmpty()){
             UploadFileUtil uploadFileUtil = new UploadFileUtil();
-            AttachedFileDto attachedFileDto = uploadFileUtil.uploadFile(request.getFile());
-            attachedFileRepository.save(attachedFileDto.toEntity());
+
+            for(MultipartFile file : request.getFile()){
+                AttachedFileDto attachedFileDto = uploadFileUtil.uploadFile(file);
+                attachedFileDtos.add(attachedFileDto);
+            }
         }
 
         //글 저장
         Board board = request.toEntity(userName);
         request.getBoardCategory().mappingBoard(board);
 
+        for(AttachedFileDto attachedFileDto : attachedFileDtos){
+
+            attachedFileDto.setBoard(board);
+            attachedFileRepository.save(attachedFileDto.toEntity());
+
+            AttachedFile attachedFile = attachedFileRepository.findAttachedFileByFileName(attachedFileDto.getFileName());
+            board.mappingAttachedFileToBoard(attachedFile);
+
+        }
         return boardRepository.save(board);
     }
 

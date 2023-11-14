@@ -1,5 +1,6 @@
 package sjspring.shop.pregAndBirthDeveloper.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,8 +23,9 @@ public class AttachedFile {
     @Column(nullable = false)
     private String filePath;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "board_no")
+    @JsonBackReference
     private Board board;
 
     @Builder
@@ -33,6 +35,4 @@ public class AttachedFile {
         this.filePath = filePath;
         this.board = board;
     }
-
-
 }

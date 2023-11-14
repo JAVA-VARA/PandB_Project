@@ -3,10 +3,12 @@ package sjspring.shop.pregAndBirthDeveloper.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import sjspring.shop.pregAndBirthDeveloper.domain.AttachedFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -20,6 +22,7 @@ public class ArticleViewResponse {
     private BoardCategory category;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private List<AttachedFile> attachedFileList;
 
 
 
@@ -32,5 +35,6 @@ public class ArticleViewResponse {
         this.createdAt = board.getCreatedAt();
         this.updatedAt = board.getUpdatedAt();
         this.views = board.getViews();
+        this.attachedFileList = board.getAttachedFileList();
     }
 }
