@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>자유게시판</title>
@@ -20,206 +21,110 @@
         }
 
         .card-header {
-            background-color: #343a40;
-            color: #ffffff;
+            background-color: #ffffff;
+            color: #010c06;
         }
 
         .card-title {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
         }
 
         .card-body {
             line-height: 1.6;
+            color: #010c06;
+        }
+
+        .board {
+            margin: 20px 0;
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        .date {
+            margin-right: 10px;
+        }
+
+        .btm_area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .side {
+            margin-right: 10px;
+        }
+
+        .btn-group {
+            margin-top: 10px;
         }
     </style>
-
 </head>
+
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 
-<header class="p-3 text-bg-dark">
-    <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
-            </a>
+<div th:replace="~{header :: header}"></div>
 
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/homePage" class="nav-link px-2 text-secondary">Home</a></li>
-                <li><a href="/articles" class="nav-link px-2 text-white">자유게시판</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">정보공유게시판</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">갤러리</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Hot 게시판</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">공지</a></li>
-            </ul>
-
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
-                       aria-label="Search" id="Search">
-            </form>
-
-            <div class="text-end">
-                <button
-                        type="button" class="btn btn-outline-light me-2" onclick="location.href='/login'">Login
-                </button>
-                <button
-                        type="button" class="btn btn-warning" onclick="location.href='/signup'">Sign-up
-                </button>
-
-                <button
-                        type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">LogOut
-                </button>
-
-                <!--                    <button th:if="${article.boardNo} != null"-->
-                <!--                            type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">LogOut</button>-->
-            </div>
-        </div>
-    </div>
-</header>
-
-
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0">자유게시판</h5>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="container">
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">자유게시판</h5>
+    </div>
+
     <div class="card">
         <div class="card-header">
-            <div class="board clear " style=";">
-                <div class="top_area ngeb" style=";">
 
+            <article>
+                <input type="hidden" id="article-id" th:value="${board.boardNo}">
+
+                <div class="card-title">
+                    <span class="np_18px_span" th:text="${board.title}"></span>
+                </div>
+
+                <div class="top_area ngeb d-flex justify-content-end mt-3">
+                    <span th:text="|${board.author}|"></span>
                     <span class="date m_no"
                           th:if="${#strings.equals(#temporals.format(board.createdAt, 'yyyy-MM-dd'), #dates.format(#dates.createNow(), 'yyyy-MM-dd'))}"
-                          th:text=" ${#temporals.format(board.createdAt, 'HH:mm')}"
-                    ></span>
-                    <!--                          ${#temporals.format(board.createdAt, 'yyyy-MM-dd')} == ${#temporals.format(#dates.createNow(), 'yyyy-MM-dd')}-->
+                          th:text="${#temporals.format(board.createdAt, 'HH:mm')}"></span>
                     <span class="date m_no"
                           th:unless="${#strings.equals(#temporals.format(board.createdAt, 'yyyy-MM-dd'), #dates.format(#dates.createNow(), 'yyyy-MM-dd'))}"
-                          th:text=" ${#temporals.format(board.createdAt, 'yyyy-MM-dd')}"
-                    ></span>
-
-                    <span class="date m_no"
-                          th:if="${!#strings.equals(#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm'), #temporals.format(board.updatedAt, 'yyyy-MM-dd HH:mm'))}"
-                          th:text=" ${#temporals.format(board.updatedAt, 'yyyy-MM-dd HH:mm')}"
-                    ></span>
-
-
-
-                    <div class="btm_area clear"><div class="side">
-                            <span th:text="${board.author}"></span>
-                        </div></div>
+                          th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd')}"></span>
+                    <!--                    <span class="date m_no" th:if="${!#strings.equals(#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm'), #temporals.format(board.updatedAt, 'yyyy-MM-dd HH:mm'))}" th:text="${#temporals.format(board.updatedAt, 'yyyy-MM-dd HH:mm')}"></span>-->
                 </div>
 
-                <article>
-                    <input type="hidden" id="article-id" th:value="${board.boardNo}">
-                    <span class="np_18px_span" th:text="${board.title}"></span>
+                <div class="card-body">
+                    <span th:text="${board.content}"></span>
 
-                    <div class="card-body">
-                        <span th:text="${board.content}"></span>
-                    </div>
+<!--                <-- 이미지 파일 -->
+                    <img th:src = "@{#.filepath}" alt="#">
+<!--                    <img onerror="this.style.visibility='hidden'" th:src="@{|/photo/${question.filename}|}" alt=""/>-->
 
-                    <div class="card-footer">
-
-                        <button type="button"
-                                th:onclick="|location.href='/new-article?board_no=${board.boardNo}'|"
-                                class="btn btn-primary btn-sm">수정
-                        </button>
-
-                        <button type="button" id="delete-btn"
-                                class="btn btn-secondary btn-sm">삭제
-                        </button>
-
-                    </div>
-
-
-                </article>
-                <div>
-                    <button type="button" class="btn btn-secondary mt-3" onclick="location.href='/articles'">목록으로 돌아가기</button>
                 </div>
-            </div>
+
+            </article>
+
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+<div class="container d-flex justify-content-end mt-3">
+    <button type="button" th:onclick="|location.href='/new-article?board_no=${board.boardNo}'|"
+            class="btn btn-primary btn-sm">수정
+    </button>
+    <button type="button" id="delete-btn" class="btn btn-secondary btn-sm ms-2">삭제</button>
+</div>
+
+<div class="container mt-3">
+    <div class="top_area ngeb">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='/articles'">목록으로 돌아가기</button>
+    </div>
+</div>
 
 <script src="/js/token.js"></script>
-<script src="/js/article.js"></script>
-
+<script src="/js/formDataArticle.js"></script>
 </body>
+
 </html>
-
-<!--<div class="constant mt-5">-->
-<!--    <div class = "row">-->
-<!--        <div class = "mb-4">-->
-<!--            <article>-->
-<!--                <input type="hidden" id="article-id" th:value="${board.boardNo}">-->
-
-<!--                <header class="mb-4">-->
-
-<!--                    <select class="form-select" aria-label="select category" id="category">-->
-<!--                        <option selected th:value="${board.category}"></option>-->
-<!--                        <option value="자유 게시판">자유 게시판</option>-->
-<!--                        <option value="정보 공유 게시판">정보 공유 게시판</option>-->
-<!--                        <option value="갤러리">갤러리</option>-->
-<!--                        <option value="추천 사이트">추천 사이트</option>-->
-<!--                    </select>-->
-
-<!--                    <h1 class="fw-bolder mb-1" th:text="${board.title}"></h1>-->
-<!--                    <div class="text-muted fst-italic mb-2" th:text="|작성 시간 ${#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm')}|"></div>-->
-<!--                    <div class="text-muted fst-italic mb-2" th:text="|작성자 ${board.author}|"></div>-->
-<!--                </header>-->
-
-<!--                <section class="mb-5">-->
-<!--                    <p class="fs-5 mb-4" th:text = "${board.content}"></p>-->
-<!--                </section>-->
-
-<!--                <button type="button" id="modify-btn"-->
-<!--                        th:onclick="|location.href='/new-article?board_no=${board.boardNo}'|"-->
-<!--                        class="btn btn-primary btn-sm">수정</button>-->
-
-<!--                <button type="button" id="delete-btn"-->
-<!--                        class="btn btn-secondary btn-sm">삭제</button>-->
-<!--            </article>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<div class="container">-->
-<!--    <div class="card">-->
-
-<!--        <div class="card-header">-->
-<!--            <h5 class="mb-0">자유게시판</h5>-->
-<!--            <h1 class="card-title" th:text="${board.title}"></h1>-->
-<!--            <div class="text-muted fst-italic mb-2"-->
-<!--                 th:text=" ${#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm')}"></div>-->
-<!--        </div>-->
-
-<!--        <div class="card-body">-->
-<!--            <div class="text-muted fst-italic mb-2" th:text="|작성자 ${board.author}|"></div>-->
-<!--            <p class="fs-5 mb-4" th:text="${board.content}"></p>-->
-<!--        </div>-->
-<!--        -->
-<!--    </div>-->
-
-<!--    <div class="mt-3">-->
-<!--        <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="location.href='/articles'">목록으로 돌아가기-->
-<!--        </button>-->
-<!--    </div>-->
-<!--</div>-->

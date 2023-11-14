@@ -10,10 +10,14 @@ import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddArticleRequest;
 import sjspring.shop.pregAndBirthDeveloper.dto.ArticleViewResponse;
+import sjspring.shop.pregAndBirthDeveloper.dto.AttachedFileDto;
 import sjspring.shop.pregAndBirthDeveloper.dto.UpdateArticleRequest;
+import sjspring.shop.pregAndBirthDeveloper.repository.AttachedFileRepository;
 import sjspring.shop.pregAndBirthDeveloper.repository.BoardCategoryRepository;
 import sjspring.shop.pregAndBirthDeveloper.repository.BoardRepository;
+import sjspring.shop.pregAndBirthDeveloper.util.UploadFileUtil;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,9 +25,18 @@ import java.util.List;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardCategoryRepository boardCategoryRepository;
+    private final AttachedFileRepository attachedFileRepository;
 
-    public Board save(AddArticleRequest request, String userName) {
+    public Board save(AddArticleRequest request, String userName) throws IOException {
 
+        //첨부파일 저장.
+        if(request.getFile() != null){
+            UploadFileUtil uploadFileUtil = new UploadFileUtil();
+            AttachedFileDto attachedFileDto = uploadFileUtil.uploadFile(request.getFile());
+            attachedFileRepository.save(attachedFileDto.toEntity());
+        }
+
+        //글 저장
         Board board = request.toEntity(userName);
         request.getBoardCategory().mappingBoard(board);
 
@@ -59,6 +72,16 @@ public class BoardService {
                 .orElseThrow(()-> new IllegalArgumentException("not found:" + boardId));
     }
 
+    //Searching
+    public Page<ArticleViewResponse> boardSearchList(String searchKeyword, Pageable pageable){
+        int page = (pageable.getPageNumber()==0)? 0 : (pageable.getPageNumber() - 1);
+
+        Page<Board> boardList = boardRepository.findByTitleContaining(searchKeyword, pageable);
+        Page<ArticleViewResponse> pageList = boardList.map(this::convertToDto);
+
+        return pageList;
+    }
+
     public void delete(long boardId){
         Board board = boardRepository.findById(boardId)
                         .orElseThrow(()-> new IllegalArgumentException("NOT FOUNd :" + boardId));
@@ -74,14 +97,14 @@ public class BoardService {
     }
 
     @Transactional
-    public Board update(long boardId, UpdateArticleRequest request){
+    public Board update(long boardId, UpdateArticleRequest request) throws IOException {
+
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()-> new IllegalArgumentException("not found:" + boardId));
 
         authorizeArticleAuthor(board);
 
-        BoardCategory boardCategory = boardCategoryRepository.findByCategoryName(request.getCategory());
-
+        BoardCategory boardCategory = (BoardCategory) boardCategoryRepository.findByCategoryName(request.getCategory());
         if(boardCategory == null){
 
             boardCategory = BoardCategory.builder()
@@ -92,9 +115,18 @@ public class BoardService {
             board.update(request.getTitle(), request.getContent(), boardCategory);
             boardCategory.mappingBoard(board);
 
+
             return board;
 
         }
+
+        //첨부파일 저장.
+        if(request.getFiles() != null){
+            UploadFileUtil uploadFileUtil = new UploadFileUtil();
+            AttachedFileDto attachedFileDto = uploadFileUtil.uploadFile(request.getFiles());
+            attachedFileRepository.save(attachedFileDto.toEntity());
+        }
+
         board.update(request.getTitle(), request.getContent(), boardCategory);
         return board;
     }
@@ -114,5 +146,4 @@ public class BoardService {
             throw new IllegalArgumentException("not authorized");
         }
     }
-
 }
