@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import sjspring.shop.pregAndBirthDeveloper.config.jwt.TokenAuthenticationFilter;
 import sjspring.shop.pregAndBirthDeveloper.config.jwt.TokenProvider;
 import sjspring.shop.pregAndBirthDeveloper.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
@@ -27,12 +29,27 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-public class WebOAuthSecurityConfig {
+public class WebOAuthSecurityConfig implements WebMvcConfigurer {
 
     private final OAuth2UserCustomService oAuth2UserCustomService;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserService userService;
+
+//    @Override =>
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedOrigins("http://localhost:8080", "http://localhost:8081")
+//                .allowedMethods("GET", "POST")
+//                .maxAge(3000);
+//    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry){
+        registry.addResourceHandler("/photo/**")
+                .addResourceLocations("file:///C:/Users/sjyou/IdeaProjects/PandB_Project_updated/files/");
+//        .addResourceLocations(System.getProperty("user.dir") + "\\files/");
+    }
 
     @Bean
     public WebSecurityCustomizer configure() {

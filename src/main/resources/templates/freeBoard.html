@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -98,9 +98,10 @@
                 <div class="card-body">
                     <span th:text="${board.content}"></span>
 
-<!--                <-- 이미지 파일 -->
-                    <img th:src = "@{#.filepath}" alt="#">
-<!--                    <img onerror="this.style.visibility='hidden'" th:src="@{|/photo/${question.filename}|}" alt=""/>-->
+                    <div th:each="attachedFileList : ${board.attachedFileList}">
+                        <img th:src = "@{|/photo/${attachedFileList.fileName}|}" style="max-width: 50%; height: auto;" alt="지원하지않는파일입니다.">
+<!--                        <a th:href="${attachment}" download="downloaded_file">Download</a>-->
+                    </div>
 
                 </div>
 
@@ -128,3 +129,11 @@
 </body>
 
 </html>
+
+<!--                    <div th:each="attachedFile : ${board.attachedFileList}">-->
+<!--&lt;!&ndash;                        <img th:src = "${attachedFile.filePath}" alt="#">&ndash;&gt;-->
+<!--                        <img th:src = "@{|/photo/${attachedFile.filePath}|}" alt="#">-->
+<!--                        <p th:text="${attachedFile.filePath}"></p>-->
+<!--                    </div>-->
+
+<!--                        <img th:src="${attachment.filePath}" alt="Attached Image" style="max-width: 100%; height: auto;">-->
