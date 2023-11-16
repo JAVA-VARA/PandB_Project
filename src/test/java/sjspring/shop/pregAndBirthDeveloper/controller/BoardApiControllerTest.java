@@ -15,7 +15,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.web.context.WebApplicationContext;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
@@ -80,7 +79,6 @@ class BoardApiControllerTest {
     @Transactional
     public void addArticle() throws Exception {
 
-
         //given
         final String url = "/api/articles";
         final String title = "title";
@@ -90,32 +88,25 @@ class BoardApiControllerTest {
         final LocalDateTime createdAt = LocalDateTime.now();
         final int views = 100;
 
-
         //카테고리 저장 여부 확인
         final BoardCategory boardCategory = categoryService.save(categoryName);
 
-
-        //
         final AddArticleRequest userRequest = new AddArticleRequest(title,content,author,categoryName,boardCategory, views);
         Principal principal = Mockito.mock(Principal.class);
         Mockito.when(principal.getName()).thenReturn("username");
-
 
         //
         userRequest.toEntity(principal.getName());
         userRequest.setBoardCategory(boardCategory);
 
-
         //
         final String requestBody = objectMapper.writeValueAsString(userRequest);
-
 
         //when: 설정한 내용을 바탕으로 요청 전송(post 요청 시뮬레이션)
         ResultActions result = mockMvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .principal(principal)
                 .content(requestBody));
-
 
         //then
         result.andExpect(status().isCreated());
@@ -152,8 +143,6 @@ class BoardApiControllerTest {
                 .andExpect(jsonPath("$[0].views").value(savedBoard.getViews()))
                 .andExpect(jsonPath("$[0].createdAt").isNotEmpty());
     }
-
-//                    .andExpect(jsonPath("$[0].createdAt").value(createdAt.toString().substring(0, 26)));
 
     @DisplayName("findArticle: 게시판 글(단일) 조회 성공")
     @Test
@@ -246,7 +235,6 @@ class BoardApiControllerTest {
         boardCategory.mappingBoard(board);
 
         return board;
-
     }
 
     //카테고리 저장 여부 확인 메서드

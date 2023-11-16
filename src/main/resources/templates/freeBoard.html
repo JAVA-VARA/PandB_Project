@@ -58,6 +58,10 @@
         .btn-group {
             margin-top: 10px;
         }
+
+        .top_area {
+            margin-top: 20px;
+        }
     </style>
 </head>
 
@@ -68,7 +72,6 @@
 
 <div th:replace="~{header :: header}"></div>
 
-
 <div class="container">
     <div class="card-header bg-dark text-white">
         <h5 class="mb-0">자유게시판</h5>
@@ -76,7 +79,6 @@
 
     <div class="card">
         <div class="card-header">
-
             <article>
                 <input type="hidden" id="article-id" th:value="${board.boardNo}">
 
@@ -92,36 +94,37 @@
                     <span class="date m_no"
                           th:unless="${#strings.equals(#temporals.format(board.createdAt, 'yyyy-MM-dd'), #dates.format(#dates.createNow(), 'yyyy-MM-dd'))}"
                           th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd')}"></span>
-                    <!--                    <span class="date m_no" th:if="${!#strings.equals(#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm'), #temporals.format(board.updatedAt, 'yyyy-MM-dd HH:mm'))}" th:text="${#temporals.format(board.updatedAt, 'yyyy-MM-dd HH:mm')}"></span>-->
                 </div>
 
                 <div class="card-body">
                     <span th:text="${board.content}"></span>
 
-                    <div th:each="attachedFileList : ${board.attachedFileList}">
-                        <img th:src = "@{|/photo/${attachedFileList.fileName}|}" style="max-width: 50%; height: auto;" alt="지원하지않는파일입니다.">
-<!--                        <a th:href="${attachment}" download="downloaded_file">Download</a>-->
+                    <div th:each="attachedFile : ${board.attachedFileList}">
+                        <img th:if="${#strings.endsWith(attachedFile.originalFileName, '.png') or #strings.endsWith(attachedFile.originalFileName, '.jpg')}"
+                             th:src="@{|/photo/${attachedFile.fileName}|}"
+                             style="max-width: 50%; height: auto;"
+                             alt="지원하지 않는 파일입니다.">
+                    </div>
+
+                    <h6 class="top_area" style="stress: inherit">첨부 파일 목록</h6>
+                    <div th:each="attachedFile : ${board.attachedFileList}" >
+                        <a th:href="@{|/photo/${attachedFile.fileName}|}" download="downloaded_file" th:text="${attachedFile.originalFileName}"></a>
                     </div>
 
                 </div>
 
             </article>
-
         </div>
     </div>
 </div>
 
 <div class="container d-flex justify-content-end mt-3">
-    <button type="button" th:onclick="|location.href='/new-article?board_no=${board.boardNo}'|"
-            class="btn btn-primary btn-sm">수정
-    </button>
+    <button type="button" th:onclick="|location.href='/new-article?board_no=${board.boardNo}'|" class="btn btn-primary btn-sm">수정</button>
     <button type="button" id="delete-btn" class="btn btn-secondary btn-sm ms-2">삭제</button>
 </div>
 
-<div class="container mt-3">
-    <div class="top_area ngeb">
-        <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='/articles'">목록으로 돌아가기</button>
-    </div>
+<div class="container top_area">
+    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='/articles'">목록으로 돌아가기</button>
 </div>
 
 <script src="/js/token.js"></script>
@@ -129,11 +132,3 @@
 </body>
 
 </html>
-
-<!--                    <div th:each="attachedFile : ${board.attachedFileList}">-->
-<!--&lt;!&ndash;                        <img th:src = "${attachedFile.filePath}" alt="#">&ndash;&gt;-->
-<!--                        <img th:src = "@{|/photo/${attachedFile.filePath}|}" alt="#">-->
-<!--                        <p th:text="${attachedFile.filePath}"></p>-->
-<!--                    </div>-->
-
-<!--                        <img th:src="${attachment.filePath}" alt="Attached Image" style="max-width: 100%; height: auto;">-->

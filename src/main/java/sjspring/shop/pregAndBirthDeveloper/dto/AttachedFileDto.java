@@ -24,12 +24,10 @@ public class AttachedFileDto {
                 .board(board)
                 .build();
     }
-
     @Builder
     public AttachedFileDto(String originalFileName, String fileName, String filePath){
         this.originalFileName = originalFileName;
         this.fileName = fileName;
         this.filePath = filePath;
     }
-
 }

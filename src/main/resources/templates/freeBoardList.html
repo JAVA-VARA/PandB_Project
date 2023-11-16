@@ -34,7 +34,7 @@
 
                 <tbody>
 
-                <tr th:if="${#lists.isEmpty(boardPage)}">
+                <tr th:if="${boardPage.isEmpty()}">
                     <td colspan="3">게시글이 없습니다.</td>
                 </tr>
 
