@@ -6,6 +6,7 @@ import lombok.Setter;
 import sjspring.shop.pregAndBirthDeveloper.domain.AttachedFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
+import sjspring.shop.pregAndBirthDeveloper.domain.Comment;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +24,8 @@ public class ArticleViewResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<AttachedFile> attachedFileList;
+    private List<Comment> commentList;
+
 
 
 
@@ -36,5 +39,8 @@ public class ArticleViewResponse {
         this.updatedAt = board.getUpdatedAt();
         this.views = board.getViews();
         this.attachedFileList = board.getAttachedFileList();
+        this.commentList = board.getCommentList();
     }
+
+
 }

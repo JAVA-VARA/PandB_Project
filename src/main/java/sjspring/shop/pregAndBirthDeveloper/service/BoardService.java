@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.AttachedFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
+import sjspring.shop.pregAndBirthDeveloper.domain.Comment;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddArticleRequest;
 import sjspring.shop.pregAndBirthDeveloper.dto.ArticleViewResponse;
 import sjspring.shop.pregAndBirthDeveloper.dto.AttachedFileDto;
@@ -55,8 +56,8 @@ public class BoardService {
 
             AttachedFile attachedFile = attachedFileRepository.findAttachedFileByFileName(attachedFileDto.getFileName());
             board.mappingAttachedFileToBoard(attachedFile);
-
         }
+
         return boardRepository.save(board);
     }
 
@@ -101,7 +102,7 @@ public class BoardService {
 
     public void delete(long boardId){
         Board board = boardRepository.findById(boardId)
-                        .orElseThrow(()-> new IllegalArgumentException("NOT FOUNd :" + boardId));
+                        .orElseThrow(()-> new IllegalArgumentException("NOT FOUND :" + boardId));
 
         String categoryName = board.getCategory().getCategoryName();
         BoardCategory boardCategory = boardCategoryRepository.findByCategoryName(categoryName);
@@ -162,5 +163,9 @@ public class BoardService {
         if(!board.getEmail().equals(userName)){
             throw new IllegalArgumentException("not authorized");
         }
+    }
+
+    public List<Comment> findCommentListByBoardNo(Long boardNo){
+        return boardRepository.findCommentListByBoardNo(boardNo);
     }
 }

@@ -1,5 +1,6 @@
 package sjspring.shop.pregAndBirthDeveloper.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +47,11 @@ public class User implements UserDetails {
     @Column(name = "baby_due")
     private Date babyDue;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER , cascade = CascadeType.REMOVE)
+    @OrderBy("id asc")
+    @JsonManagedReference
+    private List<Comment> commentList = new ArrayList<>();
+
     @Builder
     public User(String name, String email, String nickName, String hp,String password){
         this.name = name;
@@ -52,6 +59,13 @@ public class User implements UserDetails {
         this.email = email;
         this.hp = hp;
         this.password = password;
+    }
+
+    public void mappingCommentToUser(Comment comment){
+        if(this.commentList == null){
+            this.commentList = new ArrayList<>();
+        }
+        this.commentList.add(comment);
     }
 
     public void updatePassword(String email, String password){
@@ -63,6 +77,10 @@ public class User implements UserDetails {
         this.nickName = nickName;
 
         return this;
+    }
+
+    public void deleteCommentInUser(Comment comment){
+        this.commentList.remove(comment);
     }
 
     @Override

@@ -57,6 +57,10 @@ public class Board {
     @JsonManagedReference
     private List<AttachedFile> attachedFileList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER , cascade = CascadeType.REMOVE)
+    @OrderBy("id asc")
+    @JsonManagedReference
+    private List<Comment> commentList = new ArrayList<>();
 
     @Builder
     public Board(String title, String content, String author, int views, String email, BoardCategory category){
@@ -75,6 +79,13 @@ public class Board {
         this.attachedFileList.add(attachedFile);
     }
 
+    public void mappingCommentToBoard(Comment comment){
+        if(this.commentList == null){
+            this.commentList = new ArrayList<>();
+        }
+        this.commentList.add(comment);
+    }
+
     public void update(String title, String content, BoardCategory boardCategory) {
         this.title = title;
         this.content = content;
@@ -83,5 +94,9 @@ public class Board {
 
     public void update(int views) {
         this.views = views;
+    }
+
+    public void deleteCommentInBoard(Comment comment){
+        this.commentList.remove(comment);
     }
 }

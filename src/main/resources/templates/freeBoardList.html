@@ -40,12 +40,23 @@
 
 
                 <tr  th:each="boardList : ${boardPage}">
+
                     <td th:text="${boardList.boardNo}"></td>
+<!--                    원본-->
+<!--                    <td>-->
+<!--                        <a class="board-title-link"-->
+<!--                           th:id="${boardList.boardNo}"-->
+<!--                           th:href="@{/articles/{id}(id=${boardList.boardNo})}"-->
+<!--                           th:text="${boardList.title}" target="blank" />-->
+<!--                    </td>-->
+
+<!--                    test-->
                     <td>
-                        <a id="view-btn"
-                           th:class="${boardList.boardNo}"
-                           th:href="@{/articles/{id}(id=${boardList.boardNo})}"
-                           th:text="${boardList.title}" target="blank" />
+
+                        <button
+                                class="board-title-link"
+                                th:id="${boardList.boardNo}"
+                                th:text="${boardList.title}"></button>
                     </td>
 
                     <td th:text="${boardList.author}"></td>
@@ -120,6 +131,7 @@
 
 <script src="/js/formDataArticle.js"></script>
 <script src="/js/token.js"></script>
+<script src="/js/getBoard.js"></script>
 </body>
 </html>
 

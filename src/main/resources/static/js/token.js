@@ -8,8 +8,10 @@ if(token){
 }
 
 //searchParam 함수 정의
+//key 라는 매개 변수를 받아서
 function searchParam(key){
-    //key 라는 매개 변수를 받아서
-    return new URLSearchParams(loacation.search).get(key);
     //key값을 담고 있는 객체를 생성한다.
+    // return new URLSearchParams(loacation.search).get(key);
+    return new URLSearchParams(location.search).get(key);
+
 }

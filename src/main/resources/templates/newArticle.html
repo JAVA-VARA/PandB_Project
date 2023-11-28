@@ -36,7 +36,10 @@
                 </header>
 
                 <section class="mb-5">
-                    <label for="content"></label><textarea class="form-control h-25" rows="10" placeholder="내용" id="content" th:text="${article.content}"></textarea>
+                    <label for="content">
+
+                    </label>
+                    <textarea class="form-control h-25" rows="10" placeholder="내용" id="content" th:text="${article.content}"></textarea>
                 </section>
 
 
@@ -48,6 +51,7 @@
                                 <label class="custom-file-label" for="customFile" id="fileLabel">파일 선택</label>
                                 <input name="file" type="file" class="custom-file-input" id="customFile" onchange="handleFiles(this.files)" multiple>
                             </div>
+                            <h6 id="fileListTitle" class="mt-4" style="display: none;"><strong>[첨부 파일 목록]</strong></h6>
                             <div id="fileList"></div>
                         </div>
                     </div>
@@ -64,5 +68,6 @@
 <script src="/js/token.js"></script>
 <script src="/js/fileUpload.js"></script>
 <script src="/js/formDataArticle.js"></script>
+<script src="/js/updateComment.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
 </body>
