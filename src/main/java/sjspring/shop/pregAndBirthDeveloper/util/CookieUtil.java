@@ -14,6 +14,7 @@ public class CookieUtil {
         cookie.setPath("/");
         cookie.setMaxAge(maxAge);
 
+        //http 응답에 쿠키 추가
         response.addCookie(cookie);
     }
 
@@ -23,7 +24,6 @@ public class CookieUtil {
         if (cookies == null) {
             return;
         }
-
         for (Cookie cookie : cookies) {
             if (name.equals(cookie.getName())) {
                 cookie.setValue("");
@@ -33,7 +33,6 @@ public class CookieUtil {
             }
         }
     }
-
     public static String serialize(Object obj) {
         return Base64.getUrlEncoder()
                 .encodeToString(SerializationUtils.serialize(obj));

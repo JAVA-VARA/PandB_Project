@@ -42,21 +42,19 @@
                 <tr  th:each="boardList : ${boardPage}">
 
                     <td th:text="${boardList.boardNo}"></td>
-<!--                    원본-->
-<!--                    <td>-->
-<!--                        <a class="board-title-link"-->
-<!--                           th:id="${boardList.boardNo}"-->
-<!--                           th:href="@{/articles/{id}(id=${boardList.boardNo})}"-->
-<!--                           th:text="${boardList.title}" target="blank" />-->
-<!--                    </td>-->
 
-<!--                    test-->
                     <td>
+                        <a class="board-title-link"
+                           th:id="${boardList.boardNo}"
+                           th:href="@{/articles/{id}(id=${boardList.boardNo})}"
+                           th:text="${boardList.title}"
+                           style=" font-weight: bold; color: black; text-decoration: none;"
+                           target="blank" />
 
-                        <button
-                                class="board-title-link"
-                                th:id="${boardList.boardNo}"
-                                th:text="${boardList.title}"></button>
+                        <span th:text="|[${boardList.commentList.size()}]|"
+                              style=" color: red;">
+                        </span>
+
                     </td>
 
                     <td th:text="${boardList.author}"></td>
@@ -131,13 +129,8 @@
 
 <script src="/js/formDataArticle.js"></script>
 <script src="/js/token.js"></script>
-<script src="/js/getBoard.js"></script>
+
+<script>sendHttpRequest();</script>
 </body>
 </html>
 
-
-<!--                            th:if="${#strings.equals(#temporals.format(boardList.createdAt, 'yyyy-MM-dd), }"-->
-<!--                            -->
-<!--                            th:text="${}"-->
-
-<!--                            th:text="${#dates.format(#dates.createNow(),'yyyy-MM-dd)}"-->

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import sjspring.shop.pregAndBirthDeveloper.dto.CommentRequestDto;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "comment")
 public class Comment {
 
@@ -24,6 +26,12 @@ public class Comment {
 
     @Column(name = "content")
     private String  content;
+
+    @Column(name = "author")
+    private String author;
+
+    @Column(name = "email")
+    private String email;
 
     @CreatedDate
     @Column(name = "created_at")
@@ -44,8 +52,10 @@ public class Comment {
     private User user;
 
     @Builder
-    public Comment(String content, Board board, User user){
+    public Comment(String content, String author, String email, Board board, User user){
         this.content = content;
+        this.author = author;
+        this.email = email;
         this.board = board;
         this.user = user;
     }

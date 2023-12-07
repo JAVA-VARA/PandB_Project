@@ -3,10 +3,14 @@ package sjspring.shop.pregAndBirthDeveloper.service;
 
 import lombok.RequiredArgsConstructor;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
+import sjspring.shop.pregAndBirthDeveloper.dto.AddSignupInfoDto;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddUserRequest;
 import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -27,11 +31,18 @@ public class UserService {
     }
 
     //회원 가입 시 추가 입력 기능 TBD
-    public Long save(String name, String hp) {
-        return userRepository.save(User.builder()
-                .name(name)
-                .hp(hp)
-                .build()).getId();
+    public void addUserInfo(AddSignupInfoDto addSignupInfoDto, Principal principal) {
+
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+
+        String name = addSignupInfoDto.getName();
+        String nickName = addSignupInfoDto.getNickname();
+        String hp = addSignupInfoDto.getHp();
+
+        user.update(name, nickName, hp);
+
+        userRepository.save(user);
     }
 
     public User findById(Long userId) {
@@ -43,4 +54,5 @@ public class UserService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
+
 }

@@ -17,7 +17,6 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
-    private final UserRepository userRepository;
 
     public Comment addComment(CommentRequestDto commentRequestDto){
 

@@ -10,10 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Table(name = "users")
@@ -32,7 +29,7 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "nick_Name", nullable = false, unique = true)
+    @Column(name = "nick_Name", unique = true)
     private String nickName;
 
     @Column(name = "email", nullable = false, unique = true)
@@ -52,13 +49,23 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Comment> commentList = new ArrayList<>();
 
+//    @ManyToMany
+//    @JoinTable( // JoinTable은 테이블과 테이블 사이에 별도의 조인 테이블을 만들어 양 테이블간의 연관관계를 설정 하는 방법
+//            name = "account_authority",
+//            joinColumns = {@JoinColumn(name = "user_no", referencedColumnName = "user_no")},
+//            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+//    private Set<Authority> authorities;
+
+
+
     @Builder
-    public User(String name, String email, String nickName, String hp,String password){
+    public User(String name, String email, String nickName, String hp,String password, Date babyDue){
         this.name = name;
         this.nickName = nickName;
         this.email = email;
         this.hp = hp;
         this.password = password;
+//        this.babyDue = babyDue;
     }
 
     public void mappingCommentToUser(Comment comment){
@@ -73,8 +80,16 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public User update(String nickName){
+    public User update(String name){
+        this.name = name;
+
+        return this;
+    }
+
+    public User update(String name, String nickName, String hp){
+        this.name = name;
         this.nickName = nickName;
+        this.hp = hp;
 
         return this;
     }
@@ -83,9 +98,15 @@ public class User implements UserDetails {
         this.commentList.remove(comment);
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
-        return List.of(new SimpleGrantedAuthority("user"));
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("guest"));
+        authorities.add(new SimpleGrantedAuthority("user"));
+        authorities.add(new SimpleGrantedAuthority("admin"));
+
+        return authorities;
     }
 
     @Override

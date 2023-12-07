@@ -51,14 +51,14 @@ public class TokenProvider {
         }
     }
 
-    //principal 이 여기서 사용자 정보를 가져온다.
     public Authentication getAuthentication(String token){
         Claims claims = getClaims(token);
         Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
 
         return new UsernamePasswordAuthenticationToken(
-                new org.springframework.security.core.userdetails.User(
-                        claims.getSubject(), "", authorities), token, authorities);
+                new org.springframework.security.core.userdetails.User(claims.getSubject(), "", authorities),
+                token,
+                authorities);
     }
 
     public Long getUserId(String token){

@@ -1,6 +1,7 @@
 package sjspring.shop.pregAndBirthDeveloper.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -36,26 +37,12 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserService userService;
 
-//    @Override =>
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//                .allowedOrigins("http://localhost:8080", "http://localhost:8081")
-//                .allowedMethods("GET", "POST")
-//                .maxAge(3000);
-//    }
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/photo/**")
-                .addResourceLocations("file:///C:/Users/sjyou/IdeaProjects/PandB_Project_updated/files/");
-//        .addResourceLocations(System.getProperty("user.dir") + "\\files/");
+                .addResourceLocations("file:///C:/Users/sjyou/IdeaProjects/Clone/PandB_Project/files/");
     }
 
-    @Bean
-    public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring()
-                .requestMatchers("/img/**", "/css/**", "/js/**");
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -67,38 +54,47 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        //커스텀 필터 추가
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-
         http.authorizeHttpRequests()
-                .requestMatchers("/api/token", "/login", "/signup", "/users", "/findId", "/showId", "/findPwd", "/showPwd", "/freeBoardList", "/freeBoardListEmpty", "/homePage", "/").permitAll()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .requestMatchers("/api/token", "/login", "/signup", "/users", "/findId", "/showId", "/findPwd", "/showPwd", "/homePage", "/").permitAll()
+
+//                //글 작성은 ADMIN, USER에게만
                 .requestMatchers("/api/**").authenticated()
+                .requestMatchers("/api/**").hasAnyRole("ADMIN", "USER")
+//                //글이 보이는 것은 모두에게 보이도록 설정
+                .requestMatchers("/articles/**").hasAnyRole("ADMIN", "USER", "ANONYMOUS")
                 .anyRequest().permitAll();
 
         http.oauth2Login()
                 .loginPage("/login")
+
+                //사용자를 인증 서버로 리디렉션 시키는 엔드포인트 설정.
                 .authorizationEndpoint()
-                //사용자가 호출하는 클라이언트의 인증 시작 api에 대한 설정 ->
-                //이 api를 호출하면 소셜 로그인 페이지로 사용자를 redirect 한다.
-                //사용자의 인증 요청을 임시로 보관하는 리포지토리에 대한 설정
+
+                //authorization 요청과 관련된 상태 저장
                 .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
                 .and()
-                //인증 및 유저 정보를 가져오는 것 까지 성공했을 때 호출되는 핸들러
+
+                // 로그인 성공 후의 처리를 정의하는 커스텀 핸들러 주로 토큰을 발급
                 .successHandler(oAuth2SuccessHandler())
+
                 //리소스 서버로부터 유저 정보를 가져올 때 사용되는 설정
                 .userInfoEndpoint()
                 .userService(oAuth2UserCustomService);
 
-//        http.formLogin()
-//                .loginPage("/login")
-//                .defaultSuccessUrl("/articles", true);
-
         http.logout()
                 .logoutSuccessUrl("/login");
 
+        //인증 실패시 401 상태 코드 반환
         http.exceptionHandling()
                 .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
-                        new AntPathRequestMatcher("/api/**"));
+                        new AntPathRequestMatcher("/api/**"))
+
+                .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
+                new AntPathRequestMatcher("/articles/**"));
 
 
         return http.build();
@@ -106,7 +102,8 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
 
     @Bean
     public OAuth2SuccessHandler oAuth2SuccessHandler() {
-        return new OAuth2SuccessHandler(tokenProvider,
+        return new OAuth2SuccessHandler(
+                tokenProvider,
                 refreshTokenRepository,
                 oAuth2AuthorizationRequestBasedOnCookieRepository(),
                 userService
@@ -129,11 +126,23 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailService userDetailService) throws Exception {
+    public AuthenticationManager authenticationManager(
+            HttpSecurity http,
+            BCryptPasswordEncoder bCryptPasswordEncoder,
+            UserDetailService userDetailService) throws Exception {
+
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userDetailService)
                 .passwordEncoder(bCryptPasswordEncoder)
                 .and()
                 .build();
     }
+
+//    @Bean
+//    public UserDetailsService userDetailsService(UserRepository userRepository){
+//        return username -> userRepository
+//                .findByEmail(username)
+//                .map(AddUserRequest::form)
+//                .map(principal)
+//    }
 }

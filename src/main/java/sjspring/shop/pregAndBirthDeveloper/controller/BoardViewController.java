@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.dto.ArticleViewResponse;
 import sjspring.shop.pregAndBirthDeveloper.dto.BoardListViewResponse;
+import sjspring.shop.pregAndBirthDeveloper.dto.LoginUserAuthDto;
 import sjspring.shop.pregAndBirthDeveloper.service.BoardService;
+
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 
@@ -26,7 +29,7 @@ public class BoardViewController {
     private final BoardService boardService;
 
     @GetMapping({"/", "/homePage"})
-    public String home(Model model){
+    public String home(Model model) {
         List<BoardListViewResponse> articles = boardService.findAll().stream()
                 .map(BoardListViewResponse::new)
                 .toList();
@@ -35,44 +38,54 @@ public class BoardViewController {
         return "homePage";
     }
 
-    @GetMapping("/articles")
-    public String  getAllBoardList(Model model,
-                                   @PageableDefault(sort = "boardNo",direction = Sort.Direction.DESC) Pageable pageable,
-                                   String searchKeyword){
+    @GetMapping("/boardList")
+    public String getAllBoardList(Model model,
+                                  @PageableDefault(sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable,
+                                  String searchKeyword) {
 
-        Page<ArticleViewResponse> list = null;
-        if(searchKeyword == null){
+        Page<ArticleViewResponse> list;
+
+        if (searchKeyword == null) {
             list = boardService.getBoardList(pageable);
-        } else{
-            list = boardService.boardSearchList(searchKeyword,pageable);
+        } else {
+            list = boardService.boardSearchList(searchKeyword, pageable);
         }
 
-        model.addAttribute("boardPage",list);
+        model.addAttribute("boardPage", list);
 
         return "/freeBoardList";
     }
 
-
-    @GetMapping("/articles/{board_no}")
-    public String getArticle(@PathVariable Long board_no, Model model) throws IOException {
+    @GetMapping("articles/{board_no}")
+    public String getArticle(@PathVariable Long board_no, Model model, Principal principal) throws IOException {
         Board board = boardService.findById(board_no);
 
         ArticleViewResponse articleViewResponse = new ArticleViewResponse(board);
         model.addAttribute("board", articleViewResponse);
+
+        //사용자 인증
+        LoginUserAuthDto loginUserAuthDto = new LoginUserAuthDto();
+        if(principal != null){
+            String userEmail = principal.getName();
+            loginUserAuthDto.setEmail(userEmail);
+        }else{
+            loginUserAuthDto.setEmail("AnonymousUser");
+        }
+        model.addAttribute("currentUser",loginUserAuthDto);
 
         //조회수
         int view = board.getViews();
         view = view + 1;
         boardService.updateView(board_no, view);
 
-        return "freeBoard";
+        return "/freeBoard";
     }
 
     @GetMapping("/new-article")
-    public String newArticle(@RequestParam(required = false) Long board_no, Model model){
-        if(board_no == null){
+    public String newArticle(@RequestParam(required = false) Long board_no, Model model) {
+        if (board_no == null) {
             model.addAttribute("article", new ArticleViewResponse());
-        }else{
+        } else {
             Board board = boardService.findById(board_no);
             model.addAttribute("article", new ArticleViewResponse(board));
         }
@@ -80,27 +93,5 @@ public class BoardViewController {
         return "/newArticle";
     }
 
-//    private byte[] readFileToByteArray(String filePath) throws IOException{
-//        try(FileInputStream inputStream = new FileInputStream(filePath)){
-//            return IOUtils.toByteArray(inputStream);
-//        }
-//    }
-//
-//
-}
-//    //첨부파일 테스트용~
-//    @GetMapping("/fileAttachment")
-//    public String newAttached(){
-//        return "/fileAttachment";
-//    }
 
-//자유게시판 viewList 수정하기전!!!!!
-//    @GetMapping("/articles")
-//    public String getArticles(Model model){
-//        List<BoardListViewResponse> articles = boardService.findAll().stream()
-//                .map(BoardListViewResponse::new)
-//                .toList();
-//        model.addAttribute("articles", articles);
-//
-//        return "freeBoardList";
-//    }
+}

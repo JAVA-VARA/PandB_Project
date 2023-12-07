@@ -39,7 +39,7 @@ public class BoardApiController {
         AddArticleRequest request = new AddArticleRequest(category, title, content, files);
 
         //카테고리 저장.
-        request.setBoardCategory(categoryService.save(request.getCategory()));
+        request.setBoardCategory(categoryService.save(category));
 
         String email = principal.getName();
         User user = userService.findByEmail(email);

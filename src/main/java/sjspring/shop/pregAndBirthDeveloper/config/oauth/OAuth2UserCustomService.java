@@ -17,9 +17,13 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
 
+    //리소스 서버에서 보내주는 사용자 정보를 불러오는 메서드
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        //1 사용자 정보를 불러와서 객체로 반환 => 사용자 객체에는 식별자, 이름, 이메일, 프로필 사진 링크 등의 정보를 담고 있다.
         OAuth2User user = super.loadUser(userRequest); // 요청을 바탕으로 유저 정보를 담은 객체 반환
+
+        //2 사용자 정보를 repository에 저장/업데이트
         saveOrUpdate(user);
 
         return user;
@@ -36,7 +40,7 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
                 .map(entity -> entity.update(name))
                 .orElse(User.builder()
                         .email(email)
-                        .nickName(name)
+                        .name(name)
                         .build());
 
         return userRepository.save(user);

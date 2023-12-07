@@ -22,9 +22,10 @@ import java.time.Duration;
 @Component
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
+    public static final String ACCESS_TOKEN_COOKIE_NAME = "access_token";
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(14);
     public static final Duration ACCESS_TOKEN_DURATION = Duration.ofDays(1);
-    public static final String REDIRECT_PATH_1 = "/signupAddInfo";
+    public static final String REDIRECT_PATH_1 = "/additional-info";
     public static final String REDIRECT_PATH_2 = "/homePage";
 
     private final TokenProvider tokenProvider;
@@ -36,24 +37,40 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException {
 
-        // OAuth2User 인터페이스를 구현한 Principal(인증 주체)을 얻습니다
+        // OAuth2User 인터페이스를 구현한 Principal(인증 주체)을 얻음.
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         User user = userService.findByEmail((String) oAuth2User.getAttributes().get("email"));
 
-        //리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
+        //리프레시 토큰 생성
         String refreshtoken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
+        //db에 리프레쉬 토큰 저장
         saveRefreshToken(user.getId(), refreshtoken);
+        //쿠키에 리프레쉬 토큰 저장
         addRefreshTokenToCookie(request, response, refreshtoken);
 
-        //액세스 토큰 생성 -> 패스에 액세스 토큰 추가
+
+        //액세스 토큰 생성
         String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
-        String targetUrl = getTargetUrl(accessToken);
+//        addAccessTokenToCookie(request, response, accessToken);
+
 
         //인증 관련 설정값, 쿠키 제거
         clearAuthenticationAttributes(request, response);
 
+        //
+        if (user.getHp() == null) {
+            String targetUrl = getTargetUrl1(accessToken);
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);
+
+        }else {
+            String targetUrl = getTargetUrl2(accessToken);
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);
+        }
+
+
         //리다이렉트
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+//        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+
     }
 
 
@@ -73,17 +90,41 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         CookieUtil.addCookie(response, REFRESH_TOKEN_COOKIE_NAME, refreshToken, cookieMaxAge);
     }
 
+    private void addAccessTokenToCookie(HttpServletRequest request, HttpServletResponse response, String accessToken){
+        int cookieMaxAge = (int) ACCESS_TOKEN_DURATION.toSeconds();
+        CookieUtil.deleteCookie(request, response, ACCESS_TOKEN_COOKIE_NAME);
+        CookieUtil.addCookie(response, ACCESS_TOKEN_COOKIE_NAME, accessToken, cookieMaxAge);
+    }
+
     //인증 관련 설정값, 쿠키 제거
     private void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
         super.clearAuthenticationAttributes(request);
         authorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
 
-    private String getTargetUrl(String token){
+    //before
+//    private String getTargetUrl(String token){
+//        return UriComponentsBuilder.fromUriString(REDIRECT_PATH_2)
+//                .queryParam("token", token)
+//                .build()
+//                .toUriString();
+//    }
+
+    //test
+    private String getTargetUrl1(String token){
+        return UriComponentsBuilder.fromUriString(REDIRECT_PATH_1)
+                .queryParam("token", token)
+                .build()
+                .toUriString();
+    }
+
+    private String getTargetUrl2(String token){
         return UriComponentsBuilder.fromUriString(REDIRECT_PATH_2)
                 .queryParam("token", token)
                 .build()
                 .toUriString();
     }
+
+
 
 }

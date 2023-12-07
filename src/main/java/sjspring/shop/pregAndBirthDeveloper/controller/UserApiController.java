@@ -29,11 +29,5 @@ public class UserApiController {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/login";
     }
-    //여기서 부터 추가함(OAuth2 추가 정보 입력)
-    @PostMapping("/oauth2/register")
-    public void oauth2Authorize(
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "hp", required = false) String hp) {
-        userService.save(name, hp);
-    }
+
 }

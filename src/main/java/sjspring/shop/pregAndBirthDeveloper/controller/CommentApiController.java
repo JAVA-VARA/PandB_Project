@@ -33,14 +33,16 @@ public class CommentApiController {
         String userEmail = principal.getName();
         User user = userService.findByEmail(userEmail);
         Board board = boardService.findById(board_id);
+        String author = user.getNickName();
+        String email = user.getEmail();
 
-        CommentRequestDto commentRequestDto = new CommentRequestDto(content, board, user);
+        CommentRequestDto commentRequestDto = new CommentRequestDto(content, author, email, board, user);
         commentService.addComment(commentRequestDto);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
-        String boardUrl = "/articles/" + board_id; // You need to modify this based on your URL structure
+        String boardUrl = "/articles/" + board_id;
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(boardUrl);
