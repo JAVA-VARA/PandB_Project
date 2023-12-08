@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,12 +43,24 @@ public class User implements UserDetails {
     private String password;
 
     @Column(name = "baby_due")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date babyDue;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER , cascade = CascadeType.REMOVE)
     @OrderBy("id asc")
     @JsonManagedReference
     private List<Comment> commentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OrderBy("boardNo asc")
+    private List<Board> boardList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<ScrapArticle> scrapedArticles = new ArrayList<>();
+//    @OneToMany
+//    private List<Board> scrapedArticles = new ArrayList<>();
 
 //    @ManyToMany
 //    @JoinTable( // JoinTable은 테이블과 테이블 사이에 별도의 조인 테이블을 만들어 양 테이블간의 연관관계를 설정 하는 방법
@@ -75,6 +88,20 @@ public class User implements UserDetails {
         this.commentList.add(comment);
     }
 
+    public void mappingBoardToUser(Board board){
+        if(this.boardList == null){
+            this.boardList = new ArrayList<>();
+        }
+        this.boardList.add(board);
+    }
+
+//    public void scrapedArticleToUser(Board board){
+//        if(this.scrapedArticles == null){
+//            this.scrapedArticles = new ArrayList<>();
+//        }
+//        this.scrapedArticles.add(board);
+//    }
+
     public void updatePassword(String email, String password){
         this.email = email;
         this.password = password;
@@ -86,10 +113,19 @@ public class User implements UserDetails {
         return this;
     }
 
-    public User update(String name, String nickName, String hp){
+    public User update(String name, String nickName, String hp, Date babyDue){
         this.name = name;
         this.nickName = nickName;
         this.hp = hp;
+        this.babyDue = babyDue;
+
+        return this;
+    }
+
+    public User update(String nickName, String hp, Date babyDue){
+        this.nickName = nickName;
+        this.hp = hp;
+        this.babyDue = babyDue;
 
         return this;
     }

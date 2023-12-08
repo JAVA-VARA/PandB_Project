@@ -7,17 +7,9 @@ import org.springframework.data.domain.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import sjspring.shop.pregAndBirthDeveloper.domain.AttachedFile;
-import sjspring.shop.pregAndBirthDeveloper.domain.Board;
-import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
-import sjspring.shop.pregAndBirthDeveloper.domain.Comment;
-import sjspring.shop.pregAndBirthDeveloper.dto.AddArticleRequest;
-import sjspring.shop.pregAndBirthDeveloper.dto.ArticleViewResponse;
-import sjspring.shop.pregAndBirthDeveloper.dto.AttachedFileDto;
-import sjspring.shop.pregAndBirthDeveloper.dto.UpdateArticleRequest;
-import sjspring.shop.pregAndBirthDeveloper.repository.AttachedFileRepository;
-import sjspring.shop.pregAndBirthDeveloper.repository.BoardCategoryRepository;
-import sjspring.shop.pregAndBirthDeveloper.repository.BoardRepository;
+import sjspring.shop.pregAndBirthDeveloper.domain.*;
+import sjspring.shop.pregAndBirthDeveloper.dto.*;
+import sjspring.shop.pregAndBirthDeveloper.repository.*;
 import sjspring.shop.pregAndBirthDeveloper.util.UploadFileUtil;
 
 import java.io.IOException;
@@ -30,6 +22,8 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardCategoryRepository boardCategoryRepository;
     private final AttachedFileRepository attachedFileRepository;
+    private final UserRepository userRepository;
+    private final ScrapArticlesRepository scrapArticlesRepository;
 
     public Board save(AddArticleRequest request, String userName) throws IOException {
 
@@ -100,6 +94,7 @@ public class BoardService {
         return pageList;
     }
 
+    //삭제
     public void delete(long boardId){
         Board board = boardRepository.findById(boardId)
                         .orElseThrow(()-> new IllegalArgumentException("NOT FOUND :" + boardId));
@@ -114,6 +109,7 @@ public class BoardService {
 
     }
 
+    //수정
     @Transactional
     public Board update(long boardId, UpdateArticleRequest request) throws IOException {
 
@@ -163,6 +159,27 @@ public class BoardService {
         if(!board.getEmail().equals(userName)){
             throw new IllegalArgumentException("not authorized");
         }
+    }
+
+    public ScrapArticle scrap(long boardId, String currentUserEmail){
+
+        User user = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(()-> new IllegalArgumentException("not found:"));
+
+        Board board = boardRepository.findByBoardNo(boardId)
+                .orElseThrow(()-> new IllegalArgumentException("not found:"));
+
+        //이미 스크랩한 글인 경우 알림
+        for(ScrapArticle scrapArticle : user.getScrapedArticles()){
+            if(scrapArticle.getBoard().getBoardNo() == boardId){
+                throw new RuntimeException("이미 저장되어 있는 게시글");
+            }
+        }
+
+        ScrapRequestDto scrapRequestDto = new ScrapRequestDto(user, board);
+        ScrapArticle scrapArticle = scrapRequestDto.toEntity();
+
+        return scrapArticlesRepository.save(scrapArticle);
     }
 
     public List<Comment> findCommentListByBoardNo(Long boardNo){

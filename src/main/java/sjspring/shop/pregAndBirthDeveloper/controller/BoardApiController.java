@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
@@ -45,9 +46,11 @@ public class BoardApiController {
         User user = userService.findByEmail(email);
         String author = user.getNickName();
         request.setAuthor(author);
+        request.setUser(user);
 
+        Board savedArticle = boardService.save(request, email);
 
-        Board savedArticle = boardService.save(request, principal.getName());
+        user.mappingBoardToUser(savedArticle);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(savedArticle);
@@ -90,6 +93,16 @@ public class BoardApiController {
     @DeleteMapping("/api/articles/{board_id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable long board_id){
         boardService.delete(board_id);
+
+        return ResponseEntity.ok()
+                .build();
+    }
+
+    @GetMapping("/api/articles/scrap/{board_id}")
+    public ResponseEntity<Void> scrapArticle(@PathVariable long board_id, Principal principal){
+
+        String userEmail = principal.getName();
+        boardService.scrap(board_id, userEmail);
 
         return ResponseEntity.ok()
                 .build();

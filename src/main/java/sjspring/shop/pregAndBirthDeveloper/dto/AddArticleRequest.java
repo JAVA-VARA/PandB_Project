@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.AttachedFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
+import sjspring.shop.pregAndBirthDeveloper.domain.User;
 
 import java.util.List;
 
@@ -37,6 +38,8 @@ public class AddArticleRequest {
 
     private List<MultipartFile> file;
 
+    private User user;
+
     public AddArticleRequest(@NotNull String category, @NotNull String title, @NotNull String content, List<MultipartFile> file) {
         this.category =category;
         this.title = title;
@@ -44,7 +47,7 @@ public class AddArticleRequest {
         this.file = file;
     }
 
-    public AddArticleRequest(@NotNull String title, @NotNull String content, @NotNull String author, @NotNull String categoryName, BoardCategory boardCategory, int views) {
+    public AddArticleRequest(@NotNull String title, @NotNull String content, @NotNull String author, @NotNull String categoryName, BoardCategory boardCategory, int views, User user) {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -62,6 +65,7 @@ public class AddArticleRequest {
                 .author(author)
                 .email(username)
                 .category(boardCategory)
+                .user(user)
                 .build();
 
         return board;

@@ -5,11 +5,13 @@ import lombok.RequiredArgsConstructor;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddSignupInfoDto;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddUserRequest;
+import sjspring.shop.pregAndBirthDeveloper.dto.UpdateUserRequest;
 import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class UserService {
                 .build()).getId();
     }
 
-    //회원 가입 시 추가 입력 기능 TBD
+    //babyDue 추가 필요함!!!
     public void addUserInfo(AddSignupInfoDto addSignupInfoDto, Principal principal) {
 
         User user = userRepository.findByEmail(principal.getName())
@@ -39,8 +41,9 @@ public class UserService {
         String name = addSignupInfoDto.getName();
         String nickName = addSignupInfoDto.getNickname();
         String hp = addSignupInfoDto.getHp();
+        Date babyDue = addSignupInfoDto.getBabyDue();
 
-        user.update(name, nickName, hp);
+        user.update(name, nickName, hp, babyDue);
 
         userRepository.save(user);
     }
@@ -53,6 +56,25 @@ public class UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    }
+
+    public void update(UpdateUserRequest request, String email){
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+
+        String nickName = request.getNickname();
+        String hp = request.getHp();
+        Date babyDue = request.getBabyDue();
+
+        user.update(nickName, hp, babyDue);
+
+        userRepository.save(user);
+    }
+
+    public void delete(Principal principal){
+        String email = principal.getName();
+        Long id = userRepository.findByEmail(email).get().getId();
+        userRepository.deleteById(id);
     }
 
 }

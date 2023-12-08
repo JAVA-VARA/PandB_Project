@@ -53,6 +53,13 @@ public class Board {
     @JsonBackReference
     private BoardCategory category;
 
+    //fk
+    @ManyToOne(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_no")
+    @JsonBackReference
+    private User user;
+
+
     @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
     @JsonManagedReference
     private List<AttachedFile> attachedFileList = new ArrayList<>();
@@ -62,14 +69,19 @@ public class Board {
     @JsonManagedReference
     private List<Comment> commentList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<ScrapArticle> scrapByUsers = new ArrayList<>();
+
     @Builder
-    public Board(String title, String content, String author, int views, String email, BoardCategory category){
+    public Board(String title, String content, String author, int views, String email, BoardCategory category, User user){
         this.title = title;
         this.content = content;
         this.author = author;
         this.views = views;
         this.email = email;
         this.category = category;
+        this.user = user;
     }
 
     public void mappingAttachedFileToBoard(AttachedFile attachedFile){

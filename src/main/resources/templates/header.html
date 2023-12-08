@@ -4,7 +4,6 @@
       <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
       </a>
-
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a href="/homePage" class="nav-link px-2 text-secondary">Home</a></li>
         <li><a href="/boardList" class="nav-link px-2 text-white">자유게시판</a></li>
@@ -13,6 +12,29 @@
         <li><a href="#" class="nav-link px-2 text-white">Hot 게시판</a></li>
         <li><a href="#" class="nav-link px-2 text-white">공지</a></li>
       </ul>
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  마이페이지
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li><a class="dropdown-item" href="/mypage/my-articles">내가 작성한 글</a></li>
+                  <li><a class="dropdown-item" href="/mypage/my-comments">내가 작성한 댓글</a></li>
+                  <li><a class="dropdown-item" href="/mypage/my-scraps">내가 스크랩한 글</a></li>
+                  <li><a class="dropdown-item" href="/mypage/my-info">개인정보변경</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
 
       <form th:action="@{/articles}" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
         <div class="input-group">
@@ -28,7 +50,7 @@
 
       <div class="text-end">
         <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/login'">Login</button>
-        <button type="button" class="btn btn-warning" onclick="location.href='/signup'">Sign-up</button>
+        <button type="button" class="btn btn-warning me-2" onclick="location.href='/signup'">Sign-up</button>
         <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">LogOut</button>
       </div>
     </div>
