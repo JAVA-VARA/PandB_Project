@@ -8,17 +8,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
-import sjspring.shop.pregAndBirthDeveloper.domain.Comment;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
 import sjspring.shop.pregAndBirthDeveloper.dto.CommentRequestDto;
-import sjspring.shop.pregAndBirthDeveloper.dto.CommentResponseDto;
 import sjspring.shop.pregAndBirthDeveloper.dto.UpdateCommentRequest;
 import sjspring.shop.pregAndBirthDeveloper.service.BoardService;
 import sjspring.shop.pregAndBirthDeveloper.service.CommentService;
 import sjspring.shop.pregAndBirthDeveloper.service.UserService;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor

@@ -2,6 +2,9 @@ package sjspring.shop.pregAndBirthDeveloper.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddSignupInfoDto;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddUserRequest;
@@ -12,7 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.Date;
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -75,6 +79,18 @@ public class UserService {
         String email = principal.getName();
         Long id = userRepository.findByEmail(email).get().getId();
         userRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String, String> validateHandling(Errors errors){
+        Map<String, String> validatorResult = new HashMap<>();
+
+        for (FieldError error : errors.getFieldErrors()) {
+            String validKeyName = String.format("valid_%s", error.getField());
+            validatorResult.put(validKeyName, error.getDefaultMessage());
+        }
+        return validatorResult;
+
     }
 
 }

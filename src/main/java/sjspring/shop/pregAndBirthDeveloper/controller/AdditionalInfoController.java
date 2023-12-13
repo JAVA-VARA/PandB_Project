@@ -1,10 +1,11 @@
 package sjspring.shop.pregAndBirthDeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddSignupInfoDto;
 import sjspring.shop.pregAndBirthDeveloper.service.UserService;
 
@@ -22,18 +23,18 @@ public class AdditionalInfoController {
         return "signupAddInfo";
     }
 
-    @PostMapping("/submit-additional-info")
-    public String submitAdditionalInfo(
-            @RequestParam String name,
-            @RequestParam String nickname,
-            @RequestParam String hp,
+    @PutMapping("/submit-additional-info")
+    public ResponseEntity<Void> submitAdditionalInfo(
+            @RequestBody AddSignupInfoDto addSignupInfoDto,
+
             Principal principal)
 
     {
-        AddSignupInfoDto addSignupInfoDto = new AddSignupInfoDto(name, nickname, hp);
+//        AddSignupInfoDto = new AddSignupInfoDto(name, nickname, hp, babyDue);
         userService.addUserInfo(addSignupInfoDto, principal);
-
-        return "redirect:/home";
+//
+        return ResponseEntity.ok()
+                .build();
     }
 }
 

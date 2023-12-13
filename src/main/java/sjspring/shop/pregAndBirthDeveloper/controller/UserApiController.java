@@ -2,28 +2,54 @@ package sjspring.shop.pregAndBirthDeveloper.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import sjspring.shop.pregAndBirthDeveloper.domain.User;
+import sjspring.shop.pregAndBirthDeveloper.Validator.CheckEmailValidator;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddUserRequest;
 import sjspring.shop.pregAndBirthDeveloper.dto.UpdateUserRequest;
 import sjspring.shop.pregAndBirthDeveloper.service.UserService;
 
 import java.security.Principal;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
 public class UserApiController {
     private final UserService userService;
+    private final CheckEmailValidator checkEmailValidator;
+
+    //유효성 검증
+    @InitBinder
+    public void validatorBinder(WebDataBinder binder){
+        binder.addValidators(checkEmailValidator);
+    }
 
     @PostMapping("/users")
-    public String signup(AddUserRequest request){
+    public ResponseEntity<Map<String, String>> signup(@Valid @RequestBody AddUserRequest request,
+                         Errors errors, Model model) {
+
+        //회원가입 실패 시 입력했던 정보 유지, error 문구 안내
+        if (errors.hasErrors()) {
+            model.addAttribute("dto", request);
+
+        Map<String, String> validatorResult = userService.validateHandling(errors);
+        for (String key : validatorResult.keySet()) {
+            model.addAttribute(key, validatorResult.get(key));
+        }
+            return ResponseEntity.status(400).body(validatorResult);
+        }
+
         userService.save(request);
-        return "redirect:/login";
+        return ResponseEntity.ok().build();
+
     }
 
     @PutMapping("/update/users")

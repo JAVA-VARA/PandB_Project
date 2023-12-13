@@ -192,8 +192,6 @@ function httpRequest(method, url, body, success, fail) {
         method: method,
         headers: {
             Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-            // 'Content-Type': 'multipart/form-data',
-            // 'Content-Type':o 'application/jsn',
         },
         body: body,
     }).then(response => {
