@@ -71,10 +71,11 @@ public class BoardViewController {
                                    String searchKeyword, Model model){
 
         Page<ArticleViewResponse> list = boardService.boardSearchList(searchKeyword, pageable);
+        model.addAttribute("searchKeyword", searchKeyword);
         model.addAttribute("boardPage", list);
 
 
-        return "/freeBoardList";
+        return "/searchBoardList";
     }
 
     @GetMapping("articles/{board_no}")
