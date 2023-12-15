@@ -26,12 +26,12 @@ if (createButton) {
 
         function success() {
             alert('등록 완료되었습니다.');
-            location.replace('/boardList');
+            window.history.back();
+            // location.replace('/boardList');
         }
 
         function fail() {
             alert('등록 실패했습니다.');
-            location.replace('/boardList');
         }
 
         httpRequest('POST', '/api/articles', formData, success, fail);
@@ -75,12 +75,12 @@ if (deleteButton) {
         let id = document.getElementById('article-id').value;
         function success() {
             alert('삭제가 완료되었습니다.');
-            location.replace('/boardList');
+            window.history.back();
         }
 
         function fail() {
             alert('삭제 실패했습니다.');
-            location.replace('/boardList');
+            // location.replace('/boardList');
         }
 
         httpRequest('DELETE', `/api/articles/${id}`, null, success, fail);

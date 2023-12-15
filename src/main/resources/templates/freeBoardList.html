@@ -4,128 +4,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>자유게시판 글 목록</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title th:text="${category.getCategoryName()}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 
 <div th:replace="~{header :: header}"></div>
 
-<div class="container"  style="padding:40px;">
-    <h3 class="mb-3 text-center" >자유 게시판</h3>
+<div class="container" style="padding:40px;">
+    <h3 class="mb-3 text-center" th:text="${category.getCategoryName()}"></h3>
 
     <button type="button" id="create-btn"
             th:onclick="|location.href='@{/new-article}'|"
-            class="btn btn-outline-dark me-2">글쓰기</button>
+            class="btn btn-outline-dark me-2">글쓰기
+    </button>
 
-        <div class="container mt-5" >
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">작성일</th>
-                    <th scope="col">조회수</th>
-                </tr>
-                </thead>
+    <div class="container mt-5">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">작성일</th>
+                <th scope="col">조회수</th>
+            </tr>
+            </thead>
 
-                <tbody>
+            <tbody>
 
-                <tr th:if="${boardPage.isEmpty()}">
-                    <td colspan="3">게시글이 없습니다.</td>
-                </tr>
+            <tr th:if="${boardPage.isEmpty()}">
+                <td colspan="3">게시글이 없습니다.</td>
+            </tr>
 
 
-                <tr  th:each="boardList : ${boardPage}">
+            <tr th:each="boardList : ${boardPage}">
 
-                    <td th:text="${boardList.boardNo}"></td>
+                <td th:text="${boardList.boardNo}"></td>
 
-                    <td>
-                        <a class="board-title-link"
-                           th:id="${boardList.boardNo}"
-                           th:href="@{/articles/{id}(id=${boardList.boardNo})}"
-                           th:text="${boardList.title}"
-                           style=" font-weight: bold; color: black; text-decoration: none;"
-                           target="blank" />
+                <td>
+                    <a class="board-title-link"
+                       th:id="${boardList.boardNo}"
+                       th:href="@{/articles/{id}(id=${boardList.boardNo})}"
+                       th:text="${boardList.title}"
+                       style=" font-weight: bold; color: black; text-decoration: none;"
+                       target="blank"/>
 
-                        <span th:text="|[${boardList.commentList.size()}]|"
-                              style=" color: red;">
+                    <span th:text="|[${boardList.commentList.size()}]|"
+                          style=" color: red;">
                         </span>
 
-                    </td>
+                </td>
 
-                    <td th:text="${boardList.author}"></td>
+                <td th:text="${boardList.author}"></td>
 
-                    <td th:if="${#strings.equals(#temporals.format(boardList.createdAt, 'yyyy-MM-dd'), #dates.format(#dates.createNow(), 'yyyy-MM-dd'))}"
-                        th:text=" ${#temporals.format(boardList.createdAt, 'HH:mm')}"></td>
+                <td th:if="${#strings.equals(#temporals.format(boardList.createdAt, 'yyyy-MM-dd'), #dates.format(#dates.createNow(), 'yyyy-MM-dd'))}"
+                    th:text=" ${#temporals.format(boardList.createdAt, 'HH:mm')}"></td>
 
-                    <td th:if="${!#strings.equals(#temporals.format(boardList.createdAt, 'yyyy-MM-dd'), #dates.format(#dates.createNow(), 'yyyy-MM-dd'))}"
-                        th:text=" ${#temporals.format(boardList.createdAt, 'yyyy-MM-dd')}"></td>
+                <td th:if="${!#strings.equals(#temporals.format(boardList.createdAt, 'yyyy-MM-dd'), #dates.format(#dates.createNow(), 'yyyy-MM-dd'))}"
+                    th:text=" ${#temporals.format(boardList.createdAt, 'yyyy-MM-dd')}"></td>
 
 
-                    <td th:text="${boardList.views}"></td>
-                </tr>
-                </tbody>
-            </table>
+                <td th:text="${boardList.views}"></td>
+            </tr>
+            </tbody>
+        </table>
 
-            <nav style="text-align: center;">
-                <!--표에 사용될 변수값 초기화 -->
-                <ul class="pagination justify-content-center"
-                    th:with="start=${T(java.lang.Math).floor(boardPage.number/3)*10 + 1},
-                last=(${start + 9 < boardPage.totalPages ? start + 9 : boardPage.totalPages})">
-                    <th:block th:with="
-                firstAddr=@{/articles(page=1)},
-                prevAddr=@{/articles(page=${boardPage.number})},
-                nextAddr=@{/articles(page=${boardPage.number + 2})},
-                lastAddr=@{/articles(page=${boardPage.totalPages})}">
+<!--        <nav style="text-align: center;">-->
+<!--            &lt;!&ndash;표에 사용될 변수값 설정 &ndash;&gt;-->
+<!--            <ul class="pagination justify-content-center"-->
+<!--                th:with="-->
+<!--                start=${T(java.lang.Math).floor(boardPage.getNumber()/3)*10 + 1},-->
+<!--                last=(${start + 9 < boardPage.totalPages ? start + 9 : boardPage.totalPages})">-->
+<!--                <th:block-->
+<!--                        th:with="-->
+<!--                        firstAddr = @{/boardList/{categoryId}(categoryId=${category.id}, page=0)},-->
+<!--                        lastAddr = @{/boardList/{categoryId}(categoryId=${category.id}, page=${boardPage.totalPages}-1)},-->
+<!--                        prevAddr = @{/boardList/{categoryId}(categoryId=${category.id}, page=${boardPage.getNumber()-1})},-->
+<!--                        megaPrevAddr = @{/boardList/{categoryId}(categoryId=${category.id}, page=${boardPage.getNumber()-10})},-->
+<!--                        nextAddr = @{/boardList/{categoryId}(categoryId=${category.id}, page=${boardPage.getNumber()+1})},-->
+<!--                        megaNextAddr = @{/boardList/{categoryId}(categoryId=${category.id}, page=${boardPage.getNumber()+10})}">-->
 
-                        <!-- 첫번재 페이지 -->
-                        <li class="page-item">
-                            <a class="page-link"  th:href="${firstAddr}" aria-label="First">
-                                <span aria-hidden="true">First</span>
-                            </a>
-                        </li>
+<!--                    &lt;!&ndash; 첫번재 페이지 &ndash;&gt;-->
+<!--                    <li class="page-item">-->
+<!--                        <a class="page-link" th:href="${firstAddr}" aria-label="First">-->
+<!--                            <span aria-hidden="true">First</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
 
-                        <!-- 이전 페이지로 가기 버튼 -->
-                        <li class="page-item" th:class="${boardPage.first} ? 'disabled'">
-                            <a class="page-link" th:href="${boardPage.first} ? '#' :${prevAddr}"
-                               aria-label="Previous">
-                                <span aria-hidden="true">&lt;</span>
-                            </a>
-                        </li>
+<!--                    &lt;!&ndash; 10번째 전 페이지로 가기 버튼 &ndash;&gt;-->
+<!--                    <li class="page-item" th:class="${boardPage.first} ? 'disabled'">-->
+<!--                        <a class="page-link" th:href="${boardPage.first} ? '#' :${megaPrevAddr}"-->
+<!--                           aria-label="MegaPrevious">-->
+<!--                            <span aria-hidden="true">&lt;&lt;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
 
-                        <!--1,2,3,4,.. 등 페이지-->
-                        <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"
-                            th:class="${page == boardPage.number + 1} ? 'active'">
-                            <a class="page-link"
-                               th:text="${page}" th:href="@{/articles(page=${page})}"></a>
-                        </li>
+<!--                    &lt;!&ndash; 이전 페이지로 가기 버튼 &ndash;&gt;-->
+<!--                    <li class="page-item" th:class="${boardPage.first} ? 'disabled'">-->
+<!--                        <a class="page-link" th:href="${boardPage.first} ? '#' :${prevAddr}"-->
+<!--                           aria-label="Previous">-->
+<!--                            <span aria-hidden="true">&lt;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
 
-                        <!--다음 페이지로 -->
-                        <li class="page-item" th:class="${boardPage.last} ? 'disabled'">
-                            <a class="page-link" th:href="${boardPage.last} ? '#' : ${nextAddr}"
-                               aria-label="Next">
-                                <span aria-hidden="true">&gt;</span>
-                            </a>
-                        </li>
+<!--                    &lt;!&ndash;1,2,3,4,.. 등 페이지&ndash;&gt;-->
+<!--                    <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}"-->
+<!--                        th:class="${page == boardPage.number + 1} ? 'active'">-->
+<!--                        <a class="page-link"-->
+<!--                           th:text="${page}"-->
+<!--                           th:href="@{/boardList/{categoryId}(categoryId=${category.id}, page=${page}-1)}"></a>-->
+<!--                    </li>-->
 
-                        <!--맨 마지막 페이지로 이동 -->
-                        <li class="page-item">
-                            <a class="page-link" th:href="${lastAddr}" aria-label="Last">
-                                <span aria-hidden="true">Last</span>
-                            </a>
-                        </li>
-                    </th:block>
-                </ul>
-            </nav>
+<!--                    &lt;!&ndash;다음 페이지로 &ndash;&gt;-->
+<!--                    <li class="page-item" th:class="${boardPage.last} ? 'disabled'">-->
+<!--                        <a class="page-link" th:href="${boardPage.last} ? '#' : ${nextAddr}"-->
+<!--                           aria-label="Next">-->
+<!--                            <span aria-hidden="true">&gt;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+<!--                    &lt;!&ndash; 10번째 후 페이지로 가기 버튼 &ndash;&gt;-->
+<!--                    <li class="page-item" th:class="${boardPage.last} ? 'disabled'">-->
+<!--                        <a class="page-link" th:href="${boardPage.last} ? '#' : ${megaNextAddr}"-->
+<!--                           aria-label="Next">-->
+<!--                            <span aria-hidden="true">>></span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+<!--                    &lt;!&ndash;맨 마지막 페이지로 이동 &ndash;&gt;-->
+<!--                    <li class="page-item">-->
+<!--                        <a class="page-link" th:href="${lastAddr}" aria-label="Last">-->
+<!--                            <span aria-hidden="true">Last</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+
+<!--                </th:block>-->
+
+
+<!--            </ul>-->
+<!--        </nav>-->
+
+        <nav style="text-align: center;">
+            <!-- 표에 사용될 변수값 설정 -->
+            <ul class="pagination justify-content-center"
+                th:with="
+                categoryId=${category.id},
+                start = ${T(java.lang.Math).floor(boardPage.getNumber() / 10) * 10 + 1},
+                last = ${(start + 9 < boardPage.totalPages) ? start + 9 : boardPage.totalPages}">
+
+                <th:block th:with="
+        firstAddr=@{/boardList/{categoryId}(categoryId=${categoryId}, page=0)},
+        lastAddr=@{/boardList/{categoryId}(categoryId=${categoryId}, page=${boardPage.totalPages}-1)},
+        prevAddr=@{/boardList/{categoryId}(categoryId=${categoryId}, page=${boardPage.getNumber()-1})},
+        nextAddr=@{/boardList/{categoryId}(categoryId=${categoryId}, page=${boardPage.getNumber()+1})}">
+
+                    <!-- 첫 페이지 -->
+                    <li class="page-item">
+                        <a class="page-link" th:href="${firstAddr}" aria-label="First">
+                            <span aria-hidden="true">First</span>
+                        </a>
+                    </li>
+
+                    <!-- 이전 페이지로 가기 버튼 -->
+                    <li class="page-item" th:class="${boardPage.first} ? 'disabled'">
+                        <a class="page-link" th:href="${boardPage.first} ? '#' :${prevAddr}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 모든 페이지 번호 표시 -->
+                    <li class="page-item"
+                        th:if="${boardPage.totalPages !=0}"
+                        th:each="page: ${#numbers.sequence(start, last)}"
+                        th:class="${(page - 1) == boardPage.number} ? 'active'">
+                        <a class="page-link" th:text="${page}"
+                           th:href="@{/boardList/{categoryId}(categoryId=${categoryId}, page=${page}-1)}"></a>
+                    </li>
+
+                    <!-- 다음 페이지로 가기 버튼 -->
+                    <li class="page-item" th:class="${boardPage.last} ? 'disabled'">
+                        <a class="page-link" th:href="${boardPage.last} ? '#' : ${nextAddr}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 마지막 페이지 -->
+                    <li class="page-item">
+                        <a class="page-link" th:href="${lastAddr}" aria-label="Last">
+                            <span aria-hidden="true">Last</span>
+                        </a>
+                    </li>
+                </th:block>
+            </ul>
+        </nav>
 
     </div>
 
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/formDataArticle.js"></script>
 <script src="/js/token.js"></script>
@@ -133,4 +219,28 @@
 <script>sendHttpRequest();</script>
 </body>
 </html>
+
+
+
+<!--        test-->
+<!--        <div th:text="${boardPage.number}"></div>-->
+<!--        <div th:text="${boardPage.getNumber()}"></div>-->
+<!--        <div th:text="${category.id}"></div>-->
+<!--        test-->
+
+
+<!--                <th:block-->
+<!--                        th:with="-->
+<!--                           first = @{/boardList/{category}(category = ${category.id})(page=1)}"-->
+<!--                >-->
+<!--                </th:block>-->
+
+<!--                <a th:href="@{/boardList/{category}(category=${category.id})}" target="blank">test1</a>-->
+
+<!--                <a class="page-link"-->
+<!--                   th:href="@{/boardList/{categoryId}(categoryId=${category.id}, page=${boardPage.getNumber()})}"-->
+<!--                   th:text="${boardPage.getNumber()}"></a>-->
+
+<!--                <a th:href="@{/boardList/{category}(category=${category.id})? page={page}(page=0)}" target="blank">testlink</a>-->
+<!--                <a th:href="@{/boardList/{category}(category=${category.id})}" target="blank">testtest</a>-->
 

@@ -61,12 +61,17 @@ public class BoardService {
     }
 
 
-    public Page<ArticleViewResponse> getBoardList(Pageable pageable){
-        int page = (pageable.getPageNumber()==0)? 0 : (pageable.getPageNumber() - 1);
-        Page<Board> boardList = boardRepository.findAll(pageable);
-        Page<ArticleViewResponse> pageList = boardList.map(this::convertToDto);
+    public Page<ArticleViewResponse> getBoardList(Long  category_id, Pageable pageable){
 
-        return pageList;
+        Page<Board> boardList;
+
+        if(category_id ==4){
+            boardList = boardRepository.findByViewsGreaterThanEqual(10, pageable);
+        }else {
+            boardList = boardRepository.findByCategory_Id(category_id, pageable);
+        }
+
+        return boardList.map(this::convertToDto);
 
     }
 
@@ -86,12 +91,11 @@ public class BoardService {
 
     //Searching
     public Page<ArticleViewResponse> boardSearchList(String searchKeyword, Pageable pageable){
-        int page = (pageable.getPageNumber()==0)? 0 : (pageable.getPageNumber() - 1);
+//        int page = (pageable.getPageNumber()==0)? 0 : (pageable.getPageNumber() - 1);
 
         Page<Board> boardList = boardRepository.findByTitleContaining(searchKeyword, pageable);
-        Page<ArticleViewResponse> pageList = boardList.map(this::convertToDto);
 
-        return pageList;
+        return boardList.map(this::convertToDto);
     }
 
     //삭제

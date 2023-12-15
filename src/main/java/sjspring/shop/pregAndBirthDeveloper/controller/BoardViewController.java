@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
+import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
 import sjspring.shop.pregAndBirthDeveloper.dto.ArticleViewResponse;
 import sjspring.shop.pregAndBirthDeveloper.dto.BoardListViewResponse;
 import sjspring.shop.pregAndBirthDeveloper.dto.LoginUserAuthDto;
 import sjspring.shop.pregAndBirthDeveloper.service.BoardService;
+import sjspring.shop.pregAndBirthDeveloper.service.CategoryService;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -27,31 +29,50 @@ import java.util.List;
 @Controller
 public class BoardViewController {
     private final BoardService boardService;
+    private final CategoryService categoryService;
 
     @GetMapping({"/", "/homePage"})
-    public String home(Model model) {
+    public String home(
+            @PageableDefault(sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model) {
+
         List<BoardListViewResponse> articles = boardService.findAll().stream()
                 .map(BoardListViewResponse::new)
                 .toList();
-        model.addAttribute("articles", articles);
 
+        Page<ArticleViewResponse> notices = boardService.getBoardList(5L, pageable);
+        //NOTICE
+        model.addAttribute("notices", notices);
+        //HOT
+        model.addAttribute("articles", articles);
         return "homePage";
     }
 
-    @GetMapping("/boardList")
-    public String getAllBoardList(Model model,
+    //게시판 세분화
+    @GetMapping("/boardList/{category_id}")
+    public String getAllBoardList(@PathVariable Long category_id,
                                   @PageableDefault(sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable,
-                                  String searchKeyword) {
+                                  Model model) {
 
-        Page<ArticleViewResponse> list;
 
-        if (searchKeyword == null) {
-            list = boardService.getBoardList(pageable);
-        } else {
-            list = boardService.boardSearchList(searchKeyword, pageable);
-        }
+        Page<ArticleViewResponse> list = boardService.getBoardList(category_id, pageable);
 
+
+        BoardCategory category = categoryService.getCategory(category_id);
+
+        model.addAttribute("category", category);
         model.addAttribute("boardPage", list);
+
+        return "/freeBoardList";
+    }
+
+    @GetMapping("/boardList/search")
+    private String searchBoardList(@PageableDefault(sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable,
+                                   String searchKeyword, Model model){
+
+        Page<ArticleViewResponse> list = boardService.boardSearchList(searchKeyword, pageable);
+        model.addAttribute("boardPage", list);
+
 
         return "/freeBoardList";
     }

@@ -16,7 +16,6 @@ public class UserViewController {
         return "signup";
     }
 
-    //
     @GetMapping("/signupAddInfo")
     public String signupPage(){
         return "signupAddInfo";

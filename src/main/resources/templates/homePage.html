@@ -13,58 +13,64 @@
 <div th:replace="~{header :: header}"></div>
 
 <div class="container mt-5" >
-    <h3>공지 사항</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">제목</th>
-            <th scope="col">작성자</th>
-            <th scope="col">작성일</th>
-            <th scope="col">조회수</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr th:each="item: ${articles}">
-            <td th:text="${item.boardNo}"></td>
-            <td>
-                <a th:href="@{/articles/{id}(id=${item.boardNo})}" th:text="${item.title}" target="blank"></a>
-            </td>
-            <td th:text="${item.author}"></td>
-            <td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-<!--                <td th:text="${#temporals.format(item.createdAt, #temporals.createNow().format('yyyy-MM-dd').equals(#temporals.format(item.createdAt, 'yyyy-MM-dd')) ? 'HH:mm' : 'yyyy-MM-dd HH:mm')}"></td>-->
-            <td th:text="${item.views}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <div>
+        <h3 style="font-weight: bold;">공지 사항</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">작성일</th>
+                <th scope="col">조회수</th>
+            </tr>
+            </thead>
 
-    <h3 class="m-10">Hot 게시판</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">제목</th>
-            <th scope="col">작성자</th>
-            <th scope="col">작성일</th>
-            <th scope="col">조회수</th>
-        </tr>
-        </thead>
+            <tbody>
+            <tr th:each="notice: ${notices}">
+                <td th:text="${notice.boardNo}"></td>
+                <td>
+                    <a th:href="@{/articles/{id}(id=${notice.boardNo})}" th:text="${notice.title}" target="blank"></a>
+                </td>
+                <td th:text="${notice.author}"></td>
+                <td th:text="${#temporals.format(notice.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${notice.views}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <tbody>
-        <tr th:each="item: ${articles}">
-            <input type="hidden" id="view-id" th:value="${item.boardNo}">
+    <div class="mt-5">
+        <h3 class="m-10" style="font-weight: bold; color: crimson">Hot 게시판</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">작성일</th>
+                <th scope="col">조회수</th>
+            </tr>
+            </thead>
 
-            <td th:text="${item.boardNo}"></td>
-            <td>
-                <a id="view-btn" th:href="@{/articles/{id}(id=${item.boardNo})}" th:text="${item.title}" target="blank"></a>
-            </td>
-            <td th:text="${item.author}"></td>
-            <td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${item.views}"></td>
-        </tr>
-        </tbody>
-    </table>
+            <tbody th:each="item: ${articles}">
+            <tr th:if="${item.views > 10}">
+
+                <input type="hidden" id="view-id" th:value="${item.boardNo}">
+                <td th:text="${item.boardNo}"></td>
+                <td>
+                    <a id="view-btn" th:href="@{/articles/{id}(id=${item.boardNo})}" th:text="${item.title}" target="blank"></a>
+                </td>
+                <td th:text="${item.author}"></td>
+                <td th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${item.views}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
 </div>
 
 <script src="/js/token.js"></script>

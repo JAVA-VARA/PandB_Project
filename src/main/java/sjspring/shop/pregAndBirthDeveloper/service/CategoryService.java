@@ -15,9 +15,14 @@ public class CategoryService {
         if(boardCategoryRepository.findByCategoryName(categoryName) == null){
             return new BoardCategory(categoryName);
         }
-
         return boardCategoryRepository.findByCategoryName(categoryName);
+    }
+    public BoardCategory getCategory(Long categoryId){
+
+        return boardCategoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("NOT FOUND: "));
 
     }
+
 }
 
