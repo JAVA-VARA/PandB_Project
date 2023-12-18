@@ -47,7 +47,7 @@ public class AddArticleRequest {
         this.file = file;
     }
 
-    public AddArticleRequest(@NotNull String title, @NotNull String content, @NotNull String author, @NotNull String categoryName, BoardCategory boardCategory, int views, User user) {
+    public AddArticleRequest(@NotNull String title, @NotNull String content, @NotNull String author, @NotNull String categoryName, BoardCategory boardCategory, int views) {
         this.title = title;
         this.content = content;
         this.author = author;

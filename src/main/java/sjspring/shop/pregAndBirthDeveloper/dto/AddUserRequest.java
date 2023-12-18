@@ -1,11 +1,11 @@
 package sjspring.shop.pregAndBirthDeveloper.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 //사용자 정보를 담고 있는 객체
 @Getter

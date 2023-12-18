@@ -26,11 +26,9 @@ public class AdditionalInfoController {
     @PutMapping("/submit-additional-info")
     public ResponseEntity<Void> submitAdditionalInfo(
             @RequestBody AddSignupInfoDto addSignupInfoDto,
-
             Principal principal)
 
     {
-//        AddSignupInfoDto = new AddSignupInfoDto(name, nickname, hp, babyDue);
         userService.addUserInfo(addSignupInfoDto, principal);
 //
         return ResponseEntity.ok()

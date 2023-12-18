@@ -2,7 +2,6 @@ package sjspring.shop.pregAndBirthDeveloper.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,6 +9,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import sjspring.shop.pregAndBirthDeveloper.Validator.CheckEmailValidator;
@@ -33,7 +33,7 @@ public class UserApiController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Map<String, String>> signup(@Valid @RequestBody AddUserRequest request,
+    public ResponseEntity<Map<String, String>> signup(@Validated @RequestBody AddUserRequest request,
                          Errors errors, Model model) {
 
         //회원가입 실패 시 입력했던 정보 유지, error 문구 안내

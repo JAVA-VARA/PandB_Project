@@ -36,7 +36,6 @@ public class UserService {
                 .build()).getId();
     }
 
-    //babyDue 추가 필요함!!!
     public void addUserInfo(AddSignupInfoDto addSignupInfoDto, Principal principal) {
 
         User user = userRepository.findByEmail(principal.getName())

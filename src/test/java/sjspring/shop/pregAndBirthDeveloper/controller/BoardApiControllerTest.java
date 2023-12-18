@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,17 +24,18 @@ import sjspring.shop.pregAndBirthDeveloper.dto.UpdateArticleRequest;
 import sjspring.shop.pregAndBirthDeveloper.repository.BoardCategoryRepository;
 import sjspring.shop.pregAndBirthDeveloper.repository.BoardRepository;
 import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
+import sjspring.shop.pregAndBirthDeveloper.service.BoardService;
 import sjspring.shop.pregAndBirthDeveloper.service.CategoryService;
-
-import static org.assertj.core.api.Assertions.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -54,6 +56,9 @@ class BoardApiControllerTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    BoardService boardService;
+
     User user;
 
     @Autowired
@@ -65,6 +70,8 @@ class BoardApiControllerTest {
         if (userRepository.findByEmail("Test@gmail.com").isEmpty()) {
             user = userRepository.save(User.builder()
                     .email("Test@gmail.com")
+                    .name("name")
+                    .hp("12345678")
                     .nickName("author")
                     .password("Test")
                     .build());
@@ -81,12 +88,15 @@ class BoardApiControllerTest {
 
         //given
         final String url = "/api/articles";
+        final String email = "test@email.com";
         final String title = "title";
         final String content = "content";
         final String author = "author";
         final String categoryName = "자유게시판";
         final LocalDateTime createdAt = LocalDateTime.now();
-        final int views = 100;
+        final int views = 0;
+        final MockMultipartFile file = new MockMultipartFile(
+                "files", "test.txt", MediaType.TEXT_PLAIN_VALUE, "fileContent".getBytes());
 
         //카테고리 저장 여부 확인
         final BoardCategory boardCategory = categoryService.save(categoryName);
@@ -95,18 +105,24 @@ class BoardApiControllerTest {
         Principal principal = Mockito.mock(Principal.class);
         Mockito.when(principal.getName()).thenReturn("username");
 
-        //
         userRequest.toEntity(principal.getName());
         userRequest.setBoardCategory(boardCategory);
 
-        //
-        final String requestBody = objectMapper.writeValueAsString(userRequest);
 
+        //final String requestBody = objectMapper.writeValueAsString(userRequest);
         //when: 설정한 내용을 바탕으로 요청 전송(post 요청 시뮬레이션)
-        ResultActions result = mockMvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .principal(principal)
-                .content(requestBody));
+        // ResultActions result = mockMvc.perform(post(url)
+//                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+//                .principal(principal)
+//                .content(requestBody));
+
+        ResultActions result = mockMvc.perform(multipart(url)
+                .file(file)
+                .param("category", categoryName)
+                .param("title", title)
+                .param("content", content)
+                .principal(() -> email)
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE));
 
         //then
         result.andExpect(status().isCreated());
@@ -196,17 +212,36 @@ class BoardApiControllerTest {
         final String newTitle = "new title";
         final String newContent = "new content";
         final String newCategory = "new category";
+        final MockMultipartFile file = new MockMultipartFile(
+                "files", "test.txt", MediaType.TEXT_PLAIN_VALUE, "fileContent".getBytes());
         final LocalDateTime updatedAt = LocalDateTime.now();
+        final String email = "test@email.com";
 
         UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newContent, newCategory, updatedAt);
 
+        //when
+        ResultActions result1 = mockMvc.perform(multipart(url,savedBoard.getBoardNo())
+                .file(file)
+                .param("category", newCategory)
+                .param("title", newTitle)
+                .param("content", newContent)
+                .principal(() -> email)
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE));
+
+        ResultActions result2 = mockMvc.perform(put(url, savedBoard.getBoardNo())
+                .param("category", newCategory)
+                .param("title", newTitle)
+                .param("content", newContent)
+                .principal(() -> email)
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE));
+
         //WHEN
-        ResultActions result = mockMvc.perform(put(url, savedBoard.getBoardNo())
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(objectMapper.writeValueAsString(request)));
+//        ResultActions result = mockMvc.perform(put(url, savedBoard.getBoardNo())
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .content(objectMapper.writeValueAsString(request)));
 
         //then
-        result.andExpect(status().isOk());
+        result2.andExpect(status().isOk());
 
         Optional<Board> board = boardRepository.findById(savedBoard.getBoardNo());
 
@@ -216,6 +251,28 @@ class BoardApiControllerTest {
         assertThat(board.get().getUpdatedAt()).isNotNull();
 
     }
+
+//    @DisplayName("스크랩")
+//    @Test
+//    public void scrapArticle() throws Exception {
+//        //given
+//        final String url = "/api/articles/scrap/{board_id}";
+//        Board savedBoard = createDefaultArticleAndCategoryMapping();
+//        long boardNo = savedBoard.getBoardNo();
+//
+//        Principal principal = Mockito.mock(Principal.class);
+//        Mockito.when(principal.getName()).thenReturn("test@email.com");
+//        String userEmail = principal.getName();
+//
+//        //when
+//        ResultActions result = mockMvc.perform(get("/api/articles/scrap/{board_id}", boardNo)
+//                .principal(principal));
+//
+//        //then
+//        result.andExpect(status().isOk());
+////        verify(boardService, times(1)).scrap(boardNo, "user@example.com");
+//
+//    }
 
     private Board createDefaultArticleAndCategoryMapping(){
         boardRepository.deleteAll();
@@ -242,4 +299,6 @@ class BoardApiControllerTest {
         String categoryName = "자유게시판";
         return categoryService.save(categoryName);
     }
+
+
 }
