@@ -45,7 +45,6 @@ public class AddArticleRequest {
         this.content = content;
         this.file = file;
     }
-
     public AddArticleRequest(@NotNull String title, @NotNull String content, @NotNull String author, @NotNull String categoryName, BoardCategory boardCategory, int views) {
         this.title = title;
         this.content = content;
@@ -54,8 +53,6 @@ public class AddArticleRequest {
         this.boardCategory = boardCategory;
         this.views = views;
     }
-
-
     public Board toEntity(String username){
         Board board =  Board.builder()
                 .title(title)
