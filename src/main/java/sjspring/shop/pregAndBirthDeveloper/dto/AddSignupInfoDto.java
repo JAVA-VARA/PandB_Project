@@ -13,7 +13,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class AddSignupInfoDto {
     private String  name;
+
     private String  nickname;
+
     private String hp;
+
     private Date babyDue;
 }
