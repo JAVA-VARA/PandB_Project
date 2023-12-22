@@ -29,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DisplayName("AdditionalInfoControllerTest 테스트")
 class AdditionalInfoControllerTest {
-
     @Autowired
     protected MockMvc mockMvc;
 
