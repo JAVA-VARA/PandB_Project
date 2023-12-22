@@ -55,7 +55,7 @@
             </thead>
 
             <tbody th:each="item: ${articles}">
-            <tr th:if="${item.views > 10}">
+            <tr th:if="${item.views >= 10}">
 
                 <input type="hidden" id="view-id" th:value="${item.boardNo}">
                 <td th:text="${item.boardNo}"></td>
