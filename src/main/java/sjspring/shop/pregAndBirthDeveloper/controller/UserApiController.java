@@ -9,7 +9,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import sjspring.shop.pregAndBirthDeveloper.Validator.CheckEmailValidator;
@@ -17,6 +16,7 @@ import sjspring.shop.pregAndBirthDeveloper.dto.AddUserRequest;
 import sjspring.shop.pregAndBirthDeveloper.dto.UpdateUserRequest;
 import sjspring.shop.pregAndBirthDeveloper.service.UserService;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Map;
 
@@ -33,7 +33,7 @@ public class UserApiController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Map<String, String>> signup(@Validated @RequestBody AddUserRequest request,
+    public ResponseEntity<Map<String, String>> signup(@Valid @RequestBody AddUserRequest request,
                          Errors errors, Model model) {
 
         //회원가입 실패 시 입력했던 정보 유지, error 문구 안내
@@ -56,7 +56,7 @@ public class UserApiController {
     public String updateInfo(@RequestBody UpdateUserRequest request, Principal principal){
         String userEmail = principal.getName();
         userService.update(request, userEmail);
-        return "/myPage";
+        return "myPage";
     }
 
     @GetMapping("/logout")

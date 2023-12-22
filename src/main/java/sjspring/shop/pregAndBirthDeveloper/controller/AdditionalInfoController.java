@@ -30,7 +30,7 @@ public class AdditionalInfoController {
 
     {
         userService.addUserInfo(addSignupInfoDto, principal);
-//
+
         return ResponseEntity.ok()
                 .build();
     }

@@ -40,7 +40,7 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/photo/**")
-                .addResourceLocations("file:///C:/Users/sjyou/IdeaProjects/Clone/PandB_Project/files/");
+                .addResourceLocations("file:///C:/Users/sjyou/IdeaProjects/PandBproject/PandB_Project/files/");
     }
 
 
@@ -70,20 +70,23 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
 
         http.oauth2Login()
                 .loginPage("/login")
-
                 //사용자를 인증 서버로 리디렉션 시키는 엔드포인트 설정.
                 .authorizationEndpoint()
-
                 //authorization 요청과 관련된 상태 저장
                 .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
                 .and()
-
                 // 로그인 성공 후의 처리를 정의하는 커스텀 핸들러 주로 토큰을 발급
                 .successHandler(oAuth2SuccessHandler())
-
                 //리소스 서버로부터 유저 정보를 가져올 때 사용되는 설정
                 .userInfoEndpoint()
                 .userService(oAuth2UserCustomService);
+
+        http.formLogin()
+                .loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .successHandler(formLoginSuccessHandler())
+                .failureUrl("/login");
 
         http.logout()
                 .logoutSuccessUrl("/login");
@@ -103,6 +106,16 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
     @Bean
     public OAuth2SuccessHandler oAuth2SuccessHandler() {
         return new OAuth2SuccessHandler(
+                tokenProvider,
+                refreshTokenRepository,
+                oAuth2AuthorizationRequestBasedOnCookieRepository(),
+                userService
+        );
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler formLoginSuccessHandler() {
+        return new AuthenticationSuccessHandler(
                 tokenProvider,
                 refreshTokenRepository,
                 oAuth2AuthorizationRequestBasedOnCookieRepository(),
@@ -138,11 +151,5 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
                 .build();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService(UserRepository userRepository){
-//        return username -> userRepository
-//                .findByEmail(username)
-//                .map(AddUserRequest::form)
-//                .map(principal)
-//    }
+
 }

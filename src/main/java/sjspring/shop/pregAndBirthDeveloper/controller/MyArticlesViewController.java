@@ -30,7 +30,7 @@ public class MyArticlesViewController {
         MyArticlesDto myArticlesDto = new MyArticlesDto(user, boardList);
         model.addAttribute("myArticles" , myArticlesDto);
 
-        return "/myArticles";
+        return "myArticles";
     }
 
     @GetMapping("/mypage/my-comments")
@@ -42,7 +42,7 @@ public class MyArticlesViewController {
         MyCommentsDto myCommentsDto = new MyCommentsDto(user, commentList);
         model.addAttribute("myComments" , myCommentsDto);
 
-        return "/myComments";
+        return "myComments";
     }
 
     @GetMapping("/mypage/my-info")
@@ -53,7 +53,7 @@ public class MyArticlesViewController {
         MyCommentsDto myCommentsDto = new MyCommentsDto(user);
         model.addAttribute("myInfo" , myCommentsDto);
 
-        return "/myPage";
+        return "myPage";
     }
 
     @GetMapping("/mypage/my-scraps")
@@ -71,6 +71,6 @@ public class MyArticlesViewController {
 
         model.addAttribute("myPageResponse" , myPageResponse);
 
-        return "/myScrapedArticles";
+        return "myScrapedArticles";
     }
 }

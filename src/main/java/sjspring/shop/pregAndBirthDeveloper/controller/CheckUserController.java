@@ -17,7 +17,7 @@ public class CheckUserController {
     public String findPwd(@RequestParam(value = "email") FindUserInfo findUserInfoDto, Model model) {
         model.addAttribute("isSuccess", sendEmailService.updateAndSendPwd(findUserInfoDto));
 
-        return "/showPwd";
+        return "showPwd";
     }
 }
 

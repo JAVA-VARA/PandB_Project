@@ -59,17 +59,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<ScrapArticle> scrapedArticles = new ArrayList<>();
-//    @OneToMany
-//    private List<Board> scrapedArticles = new ArrayList<>();
-
-//    @ManyToMany
-//    @JoinTable( // JoinTable은 테이블과 테이블 사이에 별도의 조인 테이블을 만들어 양 테이블간의 연관관계를 설정 하는 방법
-//            name = "account_authority",
-//            joinColumns = {@JoinColumn(name = "user_no", referencedColumnName = "user_no")},
-//            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
-//    private Set<Authority> authorities;
-
-
 
     @Builder
     public User(String name, String email, String nickName, String hp,String password, Date babyDue){

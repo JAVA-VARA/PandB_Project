@@ -60,11 +60,11 @@ public class Board {
     private User user;
 
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JsonManagedReference
     private List<AttachedFile> attachedFileList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER , cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER , cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OrderBy("id asc")
     @JsonManagedReference
     private List<Comment> commentList = new ArrayList<>();

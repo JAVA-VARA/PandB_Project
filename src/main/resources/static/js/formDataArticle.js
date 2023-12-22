@@ -5,13 +5,6 @@ if (createButton) {
     // 등록 버튼을 클릭하면 /api/articles로 요청을 보낸다
     createButton.addEventListener('click', event => {
         const formData = new FormData();
-        formData.append('title', document.getElementById('title').value)
-        formData.append('content', document.getElementById('content').value)
-        formData.append('category', document.getElementById('category').value)
-
-        //수정 전
-        // const inputFile = document.getElementById('customFile');
-        // formData.append('files', inputFile.files);
 
         //수정 후
         const inputFile = document.getElementById('customFile');
@@ -20,6 +13,12 @@ if (createButton) {
         for (let i = 0; i < files.length; i++) {
             formData.append('files', files[i]);
         }
+
+        formData.append('title', document.getElementById('title').value)
+        formData.append('content', document.getElementById('content').value)
+        formData.append('category', document.getElementById('category').value)
+
+
 
         // alert('files: ' + JSON.stringify(Array.from(files)));
         // console.log('files:', files);

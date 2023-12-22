@@ -63,7 +63,7 @@ public class BoardViewController {
         model.addAttribute("category", category);
         model.addAttribute("boardPage", list);
 
-        return "/freeBoardList";
+        return "freeBoardList";
     }
 
     @GetMapping("/boardList/search")
@@ -75,7 +75,7 @@ public class BoardViewController {
         model.addAttribute("boardPage", list);
 
 
-        return "/searchBoardList";
+        return "searchBoardList";
     }
 
     @GetMapping("articles/{board_no}")
@@ -100,7 +100,7 @@ public class BoardViewController {
         view = view + 1;
         boardService.updateView(board_no, view);
 
-        return "/freeBoard";
+        return "freeBoard";
     }
 
     @GetMapping("/new-article")
@@ -112,7 +112,7 @@ public class BoardViewController {
             model.addAttribute("article", new ArticleViewResponse(board));
         }
 
-        return "/newArticle";
+        return "newArticle";
     }
 
 
