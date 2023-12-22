@@ -17,7 +17,6 @@ import java.util.List;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddArticleRequest {
-
     @NonNull
     private String title;
 
