@@ -1,12 +1,44 @@
---INSERT INTO board (title, content, created_at, updated_at) VALUES ('이렇게 할 수 있는 사람 나와봐', '없음', Now(), Now())
---INSERT INTO board (title, content, created_at, updated_at) VALUES ('모든 부모님은 위대하다', '제곧내', Now(), Now())
---INSERT INTO board (title, content, created_at, updated_at) VALUES ('애기가 밤새도록 잠을 안자요 아기 잘재우는 방법 좀 알려주세요', '제발...' , Now(), Now())
---INSERT INTO board (title, content, created_at, updated_at) VALUES ('육아 꿀팁 알려준다 내가 알려주는 것만 하면 너도 이제 육아 고수!!', '사실 그런 거 없다. 악깡버해라' , Now(), Now())
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 1, 1)
+INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('[필독]공지사항', 'JAVA-VARA', '드루와~', now(), now(), 'sj.youns@gmail.com', 0, 5, 1)
+--
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('title', 'author', 'content', now(), now(), 'email', 10, 2, 1)
+--
+--INSERT INTO board (title, author, content, created_at, updated_at, email, views, board_category_id, user_no) VALUES ('공지사항 꼭 읽어주세요', 'JAVA-VARA', '꼭!', now(), now(), 'email', 0, 5, 1)
+--
+--;
 
---INSERT INTO users (user_no, email, hp, name, nick_name, password) VALUES (1, 'sj1@gmail.com', '01142930091', '쭈쭈ㄷ', '말랑콩ㄷ떡콩벌레', '$2a$10$ABTP0YWtTkdT0Ak3TLAfwegDqKN6oNexvPL48JG9MWlIEdp4CSkuq');
-
-Insert INTO board_category(category_name) VALUES('자유 게시판');
-Insert INTO board_category(category_name) VALUES('정보 공유 게시판');
-Insert INTO board_category(category_name) VALUES('갤러리');
-Insert INTO board_category(category_name) VALUES('Hot 게시판');
-Insert INTO board_category(category_name) VALUES('공지 게시판');
+Insert INTO board_category(category_id, category_name) VALUES(1, '자유 게시판');
+Insert INTO board_category(category_id, category_name) VALUES(2, '정보 공유 게시판');
+Insert INTO board_category(category_id, category_name) VALUES(3, '갤러리');
+Insert INTO board_category(category_id, category_name) VALUES(4, 'Hot 게시판');
+Insert INTO board_category(category_id, category_name) VALUES(5, '공지 게시판');
+Insert INTO board_category(category_id, category_name) VALUES(6, '추천 사이트');
