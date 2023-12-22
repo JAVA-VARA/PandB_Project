@@ -53,6 +53,7 @@ public class AddArticleRequest {
         this.boardCategory = boardCategory;
         this.views = views;
     }
+
     public Board toEntity(String username){
         Board board =  Board.builder()
                 .title(title)
