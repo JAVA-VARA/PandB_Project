@@ -34,16 +34,16 @@ public class UserApiController {
 
     @PostMapping("/users")
     public ResponseEntity<Map<String, String>> signup(@Valid @RequestBody AddUserRequest request,
-                         Errors errors, Model model) {
+                                                      Errors errors, Model model) {
 
         //회원가입 실패 시 입력했던 정보 유지, error 문구 안내
         if (errors.hasErrors()) {
             model.addAttribute("dto", request);
 
-        Map<String, String> validatorResult = userService.validateHandling(errors);
-        for (String key : validatorResult.keySet()) {
-            model.addAttribute(key, validatorResult.get(key));
-        }
+            Map<String, String> validatorResult = userService.validateHandling(errors);
+            for (String key : validatorResult.keySet()) {
+                model.addAttribute(key, validatorResult.get(key));
+            }
             return ResponseEntity.status(400).body(validatorResult);
         }
 
