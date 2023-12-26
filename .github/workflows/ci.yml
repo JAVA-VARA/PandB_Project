@@ -19,7 +19,7 @@ jobs:
           java-version: '17'
 
       - name: Setup MySQL
-        uses: stamina/mysql-action@v3
+        uses: samin/mysql-action@v3
         with:
           character set server: 'utf8'
           mysql database: ${{secrets.TEST_DATASOURCE_URL}}
