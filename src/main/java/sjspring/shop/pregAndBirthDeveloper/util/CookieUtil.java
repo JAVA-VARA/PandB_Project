@@ -13,7 +13,6 @@ public class CookieUtil {
         Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
         cookie.setMaxAge(maxAge);
-
         //http 응답에 쿠키 추가
         response.addCookie(cookie);
     }

@@ -4,6 +4,8 @@ on:
   push:
     branches: [ main ]
 
+permissions: write-all
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,6 +17,14 @@ jobs:
         with:
           distribution: 'corretto'
           java-version: '17'
+
+      - name: Setup MySQL
+        uses: sam in/mysql-action@v1
+        with:
+          character set server: 'utf8'
+          mysql database: '데이터베이스 이름' ${{secrets.TEST_DATASOURCE_URL}}
+          mysql user: '사용자 이름' ${{secrets.TEST_DATASOURCE_USERNAME}}
+          mysql password: '데이터베이스 비밀번호' ${{secrets.TEST_DATASOURCE_PASSWORD}}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
