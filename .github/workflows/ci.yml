@@ -19,10 +19,10 @@ jobs:
           java-version: '17'
 
       - name: Setup MySQL
-        uses: samin/mysql-action@v1
+        uses: samin/mysql-action@v2
         with:
           character set server: 'utf8'
-          mysql host: ${{secrets.TEST_DATASOURCE_HOST}}
+          mysql entryPoint: ${{secrets.TEST_DATASOURCE_HOST}}
           mysql database: ${{secrets.TEST_DATASOURCE_URL}}
           mysql user: ${{secrets.TEST_DATASOURCE_USERNAME}}
           mysql password: ${{secrets.TEST_DATASOURCE_PASSWORD}}
