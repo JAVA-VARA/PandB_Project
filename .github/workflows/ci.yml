@@ -22,6 +22,7 @@ jobs:
         uses: samin/mysql-action@v1
         with:
           character set server: 'utf8'
+          mysql host: ${{secrets.TEST_DATASOURCE_HOST}}
           mysql database: ${{secrets.TEST_DATASOURCE_URL}}
           mysql user: ${{secrets.TEST_DATASOURCE_USERNAME}}
           mysql password: ${{secrets.TEST_DATASOURCE_PASSWORD}}
