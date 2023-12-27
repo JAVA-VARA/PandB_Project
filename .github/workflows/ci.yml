@@ -22,13 +22,19 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
-      - name: Make application.properties
+      - name: Set YML
         run: |
-          cd ./src/main/resources
-          touch ./application.properties
+            mkdir -p src/main/resources
+            echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml
+            find src
 
-          echo "${{ secrets.TEST_DATABASE_PROPERTIES }}" >> ./application.properties
-        shell: bash
+#      - name: Make application.properties
+#        run: |
+#          cd ./src/main/resources
+#          touch ./application.properties
+#
+#          echo "${{ secrets.TEST_DATABASE_PROPERTIES }}" >> ./application.properties
+#        shell: bash
 
       - name: Setup MySQL
         uses: mirromutth/mysql-action@v1.1
