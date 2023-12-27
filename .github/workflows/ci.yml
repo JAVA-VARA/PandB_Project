@@ -11,22 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-java@v3
         with:
           distribution: 'corretto'
           java-version: '17'
 
+      - name: Make application.properties
+        run: |
+          cd ./src/main/resources
+          touch ./application.properties
+          
+          echo "${{ secrets.TEST_DATABASE_PROPERTIES }}" >> ./application.properties
+        shell: bash
+
       - name: Setup MySQL
-        uses: samin/mysql-action@v1
+        uses: mirromutth/mysql-action@v1.1
         with:
-          host port: 3306
-          character set server: 'utf8'
-#          args: --character-set-server=utf8 --mysql-host=${{ secrets.TEST_DATASOURCE_HOST }}
-          mysql database: ebdb
-          mysql user: SJ
-          mysql password: ${{secrets.TEST_DATASOURCE_PASSWORD}}
+          mysql database: 'ebdb'
+          mysql user: 'SJ'
+          mysql password: ${{ secrets.TEST_DATASOURCE_PASSWORD }}
+
+
+
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
