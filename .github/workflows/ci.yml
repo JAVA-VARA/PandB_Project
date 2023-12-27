@@ -27,7 +27,6 @@ jobs:
             mkdir -p src/main/resources
             echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml
             find src
-
 #      - name: Make application.properties
 #        run: |
 #          cd ./src/main/resources
