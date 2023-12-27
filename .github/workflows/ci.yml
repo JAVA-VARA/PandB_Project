@@ -27,7 +27,7 @@ jobs:
         shell: bash
 
       - name: Setup MySQL
-        uses: mirromutth/mysql-action@v1.1
+        uses: shogo82148/actions-setup-mysql@v1.28.1
         with:
           mysql database: 'ebdb'
           mysql user: 'SJ'
