@@ -34,7 +34,8 @@ jobs:
         uses: mirromutth/mysql-action@v1.1
         with:
           mysql database: 'ebdb'
-          mysql root  password: ${{ secrets.TEST_DATASOURCE_PASSWORD }}
+          mysql user: 'SJ'
+          mysql password: ${{ secrets.TEST_DATASOURCE_PASSWORD }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
