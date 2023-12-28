@@ -38,8 +38,8 @@ jobs:
       - name: Setup MySQL
         uses: mirromutth/mysql-action@v1.1
         with:
-          mysql database: 'sj-baby'
-          mysql user: 'sj'
+          mysql database: 'ebdb'
+          mysql user: 'SJ'
           mysql password: ${{ secrets.TEST_DATASOURCE_PASSWORD }}
 
       - name: Grant execute permission for gradlew
