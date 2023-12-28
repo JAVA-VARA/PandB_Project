@@ -28,53 +28,6 @@ jobs:
             echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml
             find src
 
-      - name: Get Github action IP
-        id: ip
-        uses: haythem/public-ip@v1.2
-
-          # 환경변수 설정
-#      - name: Setting environment variables
-#        run: |
-#          echo "AWS_SG_NAME=launch-wizard-2" >> $GITHUB_ENV
-#
-#      - name: Add Github Actions IP to Security group
-#        run: |
-#          aws ec2 authorize-security-group-ingress --group-name ${{ env.AWS_SG_NAME }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
-          
-
-#      - name: Get current time
-#        uses: josStorer/get-current-time@v2.0.2
-#        id: current-time
-#        with:
-#          format: YYYY-NN-DDTHH-mm-ss
-#          utcOffset: "+09:00"
-#
-#      - name: Set artifact
-#        run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
-#
-#      - name: Beanstalk Deploy
-#        uses: einaregilsson/beanstalk-deploy@v20
-#        with:
-#          aws_access_key: ${{secrets.AWS_ACCESS_KEY_ID}}
-#          aws_secret_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-#          application_name: PandBproject
-#          environment_name: PandBproject-env
-#          version_label: CICD-IAM-${{steps.current-time.outputs.formattedTime}}
-#          region: ap-northeast-2
-#          deployment_package: ./build/libs/${{env.artifact}}
-
-
-
-
-
-      - name: Make application.properties
-        run: |
-          cd ./src/main/resources
-          touch ./application.properties
-
-          echo "${{ secrets.TEST_DATABASE_PROPERTIES }}" >> ./application.properties
-        shell: bash
-
       - name: Setup MySQL
         uses: mirromutth/mysql-action@v1.1
         with:
@@ -88,11 +41,53 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-          # 깃허브 러너 아이피를 인바운드 룰에서
-      - name: Remove Github Actions IP from security group
-        run: |
-         aws ec2 revoke-security-group-ingress --group-name ${{ env.AWS_SG_NAME }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
-        env:
-         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         AWS_DEFAULT_REGION: ap-northeast-2
+#      - name: Get Github action IP
+#        id: ip
+#        uses: haythem/public-ip@v1.2
+#
+#      - name: Make application.properties
+#        run: |
+#          cd ./src/main/resources
+#          touch ./application.properties
+#
+#          echo "${{ secrets.TEST_DATABASE_PROPERTIES }}" >> ./application.properties
+#        shell: bash
+
+        # 환경변수 설정
+        #      - name: Setting environment variables
+        #        run: |
+        #          echo "AWS_SG_NAME=launch-wizard-2" >> $GITHUB_ENV
+        #
+        #      - name: Add Github Actions IP to Security group
+        #        run: |
+        #          aws ec2 authorize-security-group-ingress --group-name ${{ env.AWS_SG_NAME }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+
+        #      - name: Get current time
+        #        uses: josStorer/get-current-time@v2.0.2
+        #        id: current-time
+        #        with:
+        #          format: YYYY-NN-DDTHH-mm-ss
+        #          utcOffset: "+09:00"
+        #
+        #      - name: Set artifact
+        #        run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
+        #
+        #      - name: Beanstalk Deploy
+        #        uses: einaregilsson/beanstalk-deploy@v20
+        #        with:
+        #          aws_access_key: ${{secrets.AWS_ACCESS_KEY_ID}}
+        #          aws_secret_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+        #          application_name: PandBproject
+        #          environment_name: PandBproject-env
+        #          version_label: CICD-IAM-${{steps.current-time.outputs.formattedTime}}
+        #          region: ap-northeast-2
+        #          deployment_package: ./build/libs/${{env.artifact}}
+
+#      - name: Remove Github Actions IP from security group
+#        run: |
+#         aws ec2 revoke-security-group-ingress --group-name ${{ env.AWS_SG_NAME }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+#        env:
+#         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         AWS_DEFAULT_REGION: ap-northeast-2
