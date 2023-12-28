@@ -80,7 +80,7 @@ jobs:
         with:
           mysql database: 'sj-baby'
           mysql user: 'sj'
-          mysql password: ${{ secrets.ROOT_DATASOURCE_PASSWORD }}
+          mysql password: ${{ secrets.TEST_DATASOURCE_PASSWORD }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
