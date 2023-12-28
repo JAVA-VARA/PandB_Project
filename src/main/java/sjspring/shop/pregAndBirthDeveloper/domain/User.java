@@ -20,7 +20,6 @@ import java.util.*;
 @Entity
 //UserDetails를 상속받아 인증 객체로 사용.
 public class User implements UserDetails {
-
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
