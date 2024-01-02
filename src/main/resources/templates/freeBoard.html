@@ -113,7 +113,7 @@
 
                     <div class="mt-10" th:each="attachedFile : ${board.attachedFileList}">
                         <img th:if="${#strings.endsWith(attachedFile.originalFileName, '.png') or #strings.endsWith(attachedFile.originalFileName, '.jpg')}"
-                             th:src="@{|/photo/${attachedFile.fileName}|}"
+                             th:src="@{|/files/${attachedFile.fileName}|}"
                              style="max-width: 50%; height: auto;"
                              alt="지원하지 않는 파일입니다.">
                     </div>
