@@ -20,18 +20,18 @@
 
             <div class="mb-3">
 
-                <form class="row g-3" id="additionalInfoForm">
+                <form class="row g-3" id="user-update-form">
 
                     <div class="col-md-6">
                         <label for="nickname" class="col-sm-2 col-form-label">닉네임:</label>
                         <input th:value="${myInfo.getUser().getNickName()}"
-                                type="text" class="form-control" id="nickname" name="nickname" placeholder="10 글자 이내">
+                                type="text" class="form-control" id="nickname" name="nickname" placeholder="10 글자 이내" required>
                     </div>
 
                     <div class="col-md-6">
                         <label for="hp" class="col-sm-2 col-form-label">핸드폰:</label>
                         <input th:value="${myInfo.getUser().getHp()}"
-                                type="text" class="form-control" id="hp" name="hp"  placeholder=" - 없이 숫자만 입력">
+                                type="text" class="form-control" id="hp" name="hp"  placeholder=" - 없이 숫자만 입력" required>
                     </div>
 
                     <div class="col-md-6">
@@ -48,11 +48,12 @@
                     <div class="col-md-6">
                         <label for="confirmPassword" class="col-sm-5 col-form-label">비밀 번호 확인:</label>
                         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+                        <p id="mypagePasswordError" class="text-danger"></p>
                     </div>
 
                     <button
                             id = "userInfo-update-btn"
-                            type="button"
+                            type="submit"
                             class="btn btn-outline-primary">저장하기</button>
                 </form>
 

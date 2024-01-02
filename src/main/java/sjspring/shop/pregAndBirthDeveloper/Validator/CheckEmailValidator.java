@@ -18,6 +18,13 @@ public class CheckEmailValidator  extends AbstractValidator<AddUserRequest>{
         if(userRepository.existsByEmail(dto.getEmail())){
             errors.rejectValue("email", "이메일 중복 오류", "이미 사용 중인 이메일 입니다.");
         }
+        if(userRepository.existsByHp(dto.getHp())){
+            errors.rejectValue("hp", "휴대폰 번호 중복 오류", "이미 사용 중인 번호 입니다.");
+        }
+
+        if(userRepository.existsByNickName(dto.getNickName())){
+            errors.rejectValue("nickname", "닉네임 중복 오류", "이미 사용 중인 닉네임 입니다.");
+        }
 
     }
 }

@@ -22,7 +22,7 @@
                     <div class="col-md-6">
                         <label for="signupEmail" class="col-sm-2 col-form-label">이메일:</label>
                         <input type=email class="form-control" id="signupEmail" name="email" required>
-                        <p ></p>
+                        <p id="emailError" class="text-danger"></p>
                     </div>
 
                     <div>
@@ -43,7 +43,7 @@
 
                     <div class="col-md-6">
                         <label for="signupHp" class="col-sm-2 col-form-label">핸드폰:</label>
-                        <input type="text" class="form-control" id="signupHp" name="hp" placeholder=" - 없이 숫자만 입력">
+                        <input type="text" class="form-control" id="signupHp" name="hp" placeholder=" - 없이 숫자만 입력" required>
                     </div>
 
                     <div class="col-md-6">
@@ -54,6 +54,7 @@
                     <div class="col-md-6">
                         <label for="signupPassword" class="col-sm-5 col-form-label">비밀번호:</label>
                         <input type="password" class="form-control" id="signupPassword" name="password">
+                        <p id="passwordError" class="text-danger"></p>
                     </div>
 
                     <div class="col-md-6">
@@ -61,7 +62,7 @@
                         <input type="password" class="form-control" id="signupPasswordConfirm" name="passwordConfirm">
                     </div>
 
-                    <button type="button" class="btn btn-outline-primary" id="signup-btn">회원 가입</button>
+                    <button type="submit" class="btn btn-outline-primary" id="signup-btn">회원 가입</button>
 
                 </form>
 

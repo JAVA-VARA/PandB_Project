@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import sjspring.shop.pregAndBirthDeveloper.config.jwt.TokenAuthenticationFilter;
@@ -133,18 +134,15 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
         return new OAuth2AuthorizationRequestBasedOnCookieRepository();
     }
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public AuthenticationManager authenticationManager(
             HttpSecurity http,
-            BCryptPasswordEncoder bCryptPasswordEncoder,
+            PasswordEncoder bCryptPasswordEncoder,
             UserDetailService userDetailService) throws Exception {
 
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
+        return http
+                .getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userDetailService)
                 .passwordEncoder(bCryptPasswordEncoder)
                 .and()

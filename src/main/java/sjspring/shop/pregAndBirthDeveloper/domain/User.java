@@ -45,12 +45,12 @@ public class User implements UserDetails {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date babyDue;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER , cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY , cascade = CascadeType.REMOVE)
     @OrderBy("id asc")
     @JsonManagedReference
     private List<Comment> commentList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     @OrderBy("boardNo asc")
     private List<Board> boardList = new ArrayList<>();
@@ -66,7 +66,7 @@ public class User implements UserDetails {
         this.email = email;
         this.hp = hp;
         this.password = password;
-//        this.babyDue = babyDue;
+        this.babyDue = babyDue;
     }
 
     public void mappingCommentToUser(Comment comment){
@@ -115,6 +115,14 @@ public class User implements UserDetails {
         this.hp = hp;
         this.babyDue = babyDue;
 
+        return this;
+    }
+
+    public User update(String nickName, String hp, Date babyDue, String password){
+        this.nickName = nickName;
+        this.hp = hp;
+        this.babyDue = babyDue;
+        this.password = password;
         return this;
     }
 

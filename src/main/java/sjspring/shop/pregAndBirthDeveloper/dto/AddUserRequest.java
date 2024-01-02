@@ -1,12 +1,9 @@
 package sjspring.shop.pregAndBirthDeveloper.dto;
 
-
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.validation.Valid;
+import java.util.Date;
 
 //사용자 정보를 담고 있는 객체
 @Getter
@@ -30,6 +27,5 @@ public class AddUserRequest {
 
     private String hp;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private String babyDue;
+    private Date babyDue;
 }

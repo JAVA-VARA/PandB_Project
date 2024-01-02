@@ -6,9 +6,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
 import sjspring.shop.pregAndBirthDeveloper.dto.FindUserInfo;
 import sjspring.shop.pregAndBirthDeveloper.dto.MailDto;
@@ -19,7 +18,7 @@ import sjspring.shop.pregAndBirthDeveloper.util.PasswordMakerUtil;
 @Service
 public class SendEmailService {
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder bCryptPasswordEncoder;
     private final JavaMailSender javaMailSender;
 
 

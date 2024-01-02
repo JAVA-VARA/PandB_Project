@@ -2,6 +2,8 @@ package sjspring.shop.pregAndBirthDeveloper.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -10,8 +12,6 @@ import sjspring.shop.pregAndBirthDeveloper.dto.AddSignupInfoDto;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddUserRequest;
 import sjspring.shop.pregAndBirthDeveloper.dto.UpdateUserRequest;
 import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.Date;
@@ -23,15 +23,17 @@ import java.util.Map;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
-    public Long save(AddUserRequest dto) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    public Long save(AddUserRequest dto){
 
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return userRepository.save(User.builder()
                 .email(dto.getEmail())
                 .nickName(dto.getNickName())
                 .name(dto.getName())
                 .hp(dto.getHp())
+                .babyDue(dto.getBabyDue())
                 .password(encoder.encode(dto.getPassword()))
                 .build()).getId();
     }
@@ -49,6 +51,7 @@ public class UserService {
         user.update(name, nickName, hp, babyDue);
 
         userRepository.save(user);
+        //Dirty check 알아보고 코드 수정하기 일단은 저장이 안되네??
     }
 
     public User findById(Long userId) {
@@ -69,7 +72,12 @@ public class UserService {
         String hp = request.getHp();
         Date babyDue = request.getBabyDue();
 
-        user.update(nickName, hp, babyDue);
+        if(request.getPassword() != null) {
+            user.update(nickName, hp, babyDue, encoder.encode(request.getPassword()));
+        }
+        else {
+            user.update(nickName, hp, babyDue);
+        }
 
         userRepository.save(user);
     }

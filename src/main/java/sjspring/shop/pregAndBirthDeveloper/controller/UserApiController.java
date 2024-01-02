@@ -33,8 +33,10 @@ public class UserApiController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Map<String, String>> signup(@Valid @RequestBody AddUserRequest request,
-                                                      Errors errors, Model model) {
+    public ResponseEntity<Map<String, String>> signup(
+            @Valid
+            @RequestBody AddUserRequest request,
+            Errors errors, Model model)  {
 
         //회원가입 실패 시 입력했던 정보 유지, error 문구 안내
         if (errors.hasErrors()) {
@@ -53,10 +55,15 @@ public class UserApiController {
     }
 
     @PutMapping("/update/users")
-    public String updateInfo(@RequestBody UpdateUserRequest request, Principal principal){
+    public ResponseEntity<Map<String, String>> updateInfo(
+            @RequestBody UpdateUserRequest request,
+            Principal principal){
+
         String userEmail = principal.getName();
         userService.update(request, userEmail);
-        return "myPage";
+
+        return ResponseEntity.ok()
+                .build();
     }
 
     @GetMapping("/logout")

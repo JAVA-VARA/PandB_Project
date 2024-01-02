@@ -1,16 +1,28 @@
-const updateButton = document.getElementById('userInfo-update-btn');
+// const updateButton = document.getElementById('userInfo-update-btn');
 
-if(updateButton){
-    updateButton.addEventListener("click", event =>{
+const userUpdateForm = document.getElementById("user-update-form");
+
+if(userUpdateForm){
+    userUpdateForm.addEventListener("submit", event =>{
+        event.preventDefault();
+
+        const passwordInput = document.getElementById("password").value;
+        const passwordConfirmInput = document.getElementById("confirmPassword").value;
+        const mypagePasswordError = document.getElementById("mypagePasswordError");
+        if(passwordInput !== passwordConfirmInput) {
+            mypagePasswordError.textContent = "비밀번호가 일치하지 않습니다.";
+            return;
+        }
 
         fetch('/update/users',
             {method: 'PUT',
                 headers:{
-                "Content-Type": "application/json",
+                    "Content-Type": "application/json",
                 },
                 body:JSON.stringify({
                     nickname:document.getElementById("nickname").value,
                     hp:document.getElementById("hp").value,
+                    password: document.getElementById("password").value,
                     babyDue:document.getElementById("babyDue").value
                 })
             })

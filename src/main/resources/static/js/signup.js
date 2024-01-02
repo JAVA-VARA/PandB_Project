@@ -1,7 +1,12 @@
-const oAuth2SignupButton = document.getElementById('Oauth2-signup-btn');
+// const oAuth2SignupButton = document.getElementById('Oauth2-signup-btn');
 
-if(oAuth2SignupButton){
-    oAuth2SignupButton.addEventListener("click", event =>{
+const oAuth2SignupForm = document.getElementById('additionalInfoForm');
+
+
+
+if(oAuth2SignupForm){
+    oAuth2SignupForm.addEventListener("submit", event =>{
+        event.preventDefault();
 
         const accessToken = localStorage.getItem('access_token');
 

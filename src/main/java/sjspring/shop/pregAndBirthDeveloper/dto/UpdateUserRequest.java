@@ -12,5 +12,6 @@ import java.util.Date;
 public class UpdateUserRequest {
     private String nickname;
     private String hp;
+    private String password;
     private Date babyDue;
 }
