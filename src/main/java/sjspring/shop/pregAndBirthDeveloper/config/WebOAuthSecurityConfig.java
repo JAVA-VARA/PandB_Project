@@ -37,15 +37,26 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
     private final UserService userService;
 
     @Override
+//    정적 리소스 처리하는 핸들러 추가
     public void addResourceHandlers(ResourceHandlerRegistry registry){
+//    ResourceHandlerRegistry => 정적리소스를 처리하는 핸들러에 대한 등록과 관리를 담당하는 클래스
         registry.addResourceHandler("/files/**")
-                .addResourceLocations("https://elasticbeanstalk-ap-northeast-2-944031405712.s3.ap-northeast-2.amazonaws.com/files/");
+                .addResourceLocations("file:///" + System.getProperty("user.dir") + "/files/");
+
+//                .addResourceLocations("file:///C:/Users/sjyou/IdeaProjects/PandBproject/PandB_Project/files/");
+    }
+
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/files/**")
+//                .addResourceLocations("https://elasticbeanstalk-ap-northeast-2-944031405712.s3.ap-northeast-2.amazonaws.com/files/");
+//    }
 
 
 //                .addResourceLocations("file:///tmp/")
 //                .resourceChain(false)
 //                .addResolver(new S3ResourceResolver());
-    }
+
 
 //    private static class S3ResourceResolver extends AbstractResourceResolver{
 //        private final S3Client s3Client;

@@ -48,23 +48,23 @@ public class Board {
     @Column(name = "views", columnDefinition = "integer default 0", nullable = false)
     private int views;
 
-    @ManyToOne(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "board_category_id")
     @JsonBackReference
     private BoardCategory category;
 
     //fk
-    @ManyToOne(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "user_no")
     @JsonBackReference
     private User user;
 
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
     @JsonManagedReference
     private List<AttachedFile> attachedFileList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER , cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER )
     @OrderBy("id asc")
     @JsonManagedReference
     private List<Comment> commentList = new ArrayList<>();
