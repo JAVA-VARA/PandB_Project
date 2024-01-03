@@ -48,13 +48,13 @@ public class Board {
     @Column(name = "views", columnDefinition = "integer default 0", nullable = false)
     private int views;
 
-    @ManyToOne(fetch =  FetchType.LAZY)
+    @ManyToOne(fetch =  FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "board_category_id")
     @JsonBackReference
     private BoardCategory category;
 
     //fk
-    @ManyToOne(fetch =  FetchType.LAZY)
+    @ManyToOne(fetch =  FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_no")
     @JsonBackReference
     private User user;
