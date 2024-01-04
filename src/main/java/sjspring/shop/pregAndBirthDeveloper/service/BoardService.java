@@ -3,7 +3,6 @@ package sjspring.shop.pregAndBirthDeveloper.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -96,7 +95,6 @@ public class BoardService {
 
     //Searching
     public Page<ArticleViewResponse> boardSearchList(String searchKeyword, Pageable pageable){
-//        int page = (pageable.getPageNumber()==0)? 0 : (pageable.getPageNumber() - 1);
 
         Page<Board> boardList = boardRepository.findByTitleContaining(searchKeyword, pageable);
 
@@ -137,7 +135,6 @@ public class BoardService {
             boardCategoryRepository.save(boardCategory);
             board.update(request.getTitle(), request.getContent(), boardCategory);
             boardCategory.mappingBoard(board);
-
 
             return board;
 

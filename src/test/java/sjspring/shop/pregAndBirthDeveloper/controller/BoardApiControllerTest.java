@@ -66,6 +66,7 @@ class BoardApiControllerTest {
     @BeforeEach
     void setSecurityContext() {
         userRepository.deleteAll();
+        boardRepository.deleteAll();
 
         if (userRepository.findByEmail("Test@gmail.com").isEmpty()) {
             user = userRepository.save(User.builder()
