@@ -65,6 +65,8 @@ dependencies {
 //    implementation 'org.glassfish:jakarta.el:5.0.0-M1'
 //    implementation 'javax.el:el-api:2.2'
 
+    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
+
 
 }
 

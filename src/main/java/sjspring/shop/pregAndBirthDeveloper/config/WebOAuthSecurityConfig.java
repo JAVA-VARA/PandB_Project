@@ -41,7 +41,8 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry){
 //    ResourceHandlerRegistry => 정적리소스를 처리하는 핸들러에 대한 등록과 관리를 담당하는 클래스
         registry.addResourceHandler("/files/**")
-                .addResourceLocations("file:///" + System.getProperty("user.dir") + "/files/");
+                .addResourceLocations("/src/main/resources/files/");
+//                .addResourceLocations("file:///" + System.getProperty("user.dir") + "/files/");
 
 //                .addResourceLocations("file:///C:/Users/sjyou/IdeaProjects/PandBproject/PandB_Project/files/");
     }

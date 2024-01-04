@@ -3,7 +3,9 @@ package sjspring.shop.pregAndBirthDeveloper.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +13,7 @@ import sjspring.shop.pregAndBirthDeveloper.domain.*;
 import sjspring.shop.pregAndBirthDeveloper.dto.*;
 import sjspring.shop.pregAndBirthDeveloper.repository.*;
 import sjspring.shop.pregAndBirthDeveloper.util.UploadFileUtil;
+import software.amazon.awssdk.services.s3.S3Client;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,14 +27,16 @@ public class BoardService {
     private final AttachedFileRepository attachedFileRepository;
     private final UserRepository userRepository;
     private final ScrapArticlesRepository scrapArticlesRepository;
+    private final S3Client s3Client;
 
     public Board save(AddArticleRequest request, String userName) throws IOException {
+
 
         List<AttachedFileDto> attachedFileDtos = new ArrayList<>();
 
         //첨부파일 저장.
         if(request.getFile() != null && !request.getFile().isEmpty()){
-            UploadFileUtil uploadFileUtil = new UploadFileUtil();
+            UploadFileUtil uploadFileUtil = new UploadFileUtil(s3Client);
 
             for(MultipartFile file : request.getFile()){
                 AttachedFileDto attachedFileDto = uploadFileUtil.uploadFile(file);
@@ -140,7 +145,7 @@ public class BoardService {
 
         //첨부파일 저장.
         if(request.getFiles() != null){
-            UploadFileUtil uploadFileUtil = new UploadFileUtil();
+            UploadFileUtil uploadFileUtil = new UploadFileUtil(s3Client);
             AttachedFileDto attachedFileDto = uploadFileUtil.uploadFile(request.getFiles());
             attachedFileRepository.save(attachedFileDto.toEntity());
         }

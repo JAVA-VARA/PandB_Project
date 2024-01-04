@@ -12,6 +12,7 @@ public class AttachedFileDto {
     private String originalFileName;
     private String fileName;
     private String filePath;
+    private String imageUrl;
     private Board board;
 
 
@@ -21,6 +22,7 @@ public class AttachedFileDto {
                 .originalFileName(originalFileName)
                 .fileName(fileName)
                 .filePath(filePath)
+                .imageUrl(imageUrl)
                 .board(board)
                 .build();
     }
@@ -28,5 +30,12 @@ public class AttachedFileDto {
         this.originalFileName = originalFileName;
         this.fileName = fileName;
         this.filePath = filePath;
+    }
+
+    public AttachedFileDto(String originalFileName, String fileName, String filePath, String imageUrl){
+        this.originalFileName = originalFileName;
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.imageUrl = imageUrl;
     }
 }

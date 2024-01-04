@@ -23,16 +23,20 @@ public class AttachedFile {
     @Column(nullable = false)
     private String filePath;
 
+    @Column
+    private String imageUrl;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "board_no")
     @JsonBackReference
     private Board board;
 
     @Builder
-    public AttachedFile(String originalFileName,String fileName, String filePath, Board board){
+    public AttachedFile(String originalFileName,String fileName, String filePath, Board board, String imageUrl){
         this.originalFileName = originalFileName;
         this.fileName = fileName;
         this.filePath = filePath;
         this.board = board;
+        this.imageUrl = imageUrl;
     }
 }

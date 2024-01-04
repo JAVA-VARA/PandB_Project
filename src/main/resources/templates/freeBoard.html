@@ -11,6 +11,8 @@
 
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.891.0.min.js"></script>
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -113,17 +115,19 @@
 
                     <div class="mt-10" th:each="attachedFile : ${board.attachedFileList}">
                         <img th:if="${#strings.endsWith(attachedFile.originalFileName, '.png') or #strings.endsWith(attachedFile.originalFileName, '.jpg')}"
-                             th:src="@{|/files/${attachedFile.fileName}|}"
+                             th:src="${attachedFile.imageUrl}"
                              style="max-width: 50%; height: auto;"
                              alt="지원하지 않는 파일입니다.">
                     </div>
+<!--                    th:src="@{|/files/${attachedFile.fileName}|}"-->
+<!--                    th:src="${attachedFile.getImageUrl()}"-->
 
                     <div th:if="${!board.attachedFileList.isEmpty()}">
                         <h6 class="top_area mt-5"><strong>[첨부 파일 목록]</strong></h6>
                     </div>
 
                     <div th:each="attachedFile : ${board.attachedFileList}">
-                        <a th:href="@{|/photo/${attachedFile.fileName}|}" download="downloaded_file"
+                        <a th:href="@{|/files/${attachedFile.fileName}|}" download="downloaded_file"
                            th:text="${attachedFile.originalFileName}"></a>
                     </div>
 
