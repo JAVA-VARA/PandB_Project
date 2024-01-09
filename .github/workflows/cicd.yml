@@ -9,7 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4  #깃허브 저장소의 코드를 체크아웃함.with: continue-on-error:
+
 
       - name: Use Java
         uses: actions/setup-java@v3
@@ -43,3 +44,6 @@ jobs:
           version_label: github-action-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: ./build/libs/${{env.artifact}}
+
+      - name: Print artifacts
+        run: ls -al ./build/libs/
