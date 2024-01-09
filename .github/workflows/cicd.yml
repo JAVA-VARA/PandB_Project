@@ -47,3 +47,6 @@ jobs:
 
       - name: Print artifacts
         run: ls -al ./build/libs/
+
+      - name: Print nginx
+        run: ls /etc/nginx/conf.d/
