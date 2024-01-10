@@ -11,7 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4  #깃허브 저장소의 코드를 체크아웃함.with: continue-on-error:
 
-
       - name: Use Java
         uses: actions/setup-java@v3
         with:
@@ -24,6 +23,12 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
+      - name: Create deployment package
+        run: |
+          mkdir deployment-package
+          cp ./build/libs/${{ env.artifact }} deployment-package/
+          cp .platform/nginx/conf.d/myconf.conf deployment-package/
+
       - name: Get current time
         uses: josStorer/get-current-time@v2.0.2
         id: current-time
@@ -32,7 +37,7 @@ jobs:
           utcOffset: "+09:00"
 
       - name: Set artifact
-        run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
+        run: echo "artifact=deployment-package" >> $GITHUB_ENV
 
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v20
@@ -43,7 +48,7 @@ jobs:
           environment_name: PandBproject-env
           version_label: github-action-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
-          deployment_package: ./build/libs/${{env.artifact}}
+          deployment_package: ${{env.artifact}}
 
       - name: Print artifacts
         run: ls -al ./build/libs/
