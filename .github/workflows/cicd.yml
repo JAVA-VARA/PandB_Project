@@ -26,7 +26,7 @@ jobs:
       - name: Create deployment package
         run: |
           mkdir deployment-package
-          cp ./build/libs/${{ env.artifact }} deployment-package/
+          cp .$(ls ./build/libs)" deployment-package/
           cp .platform/nginx/conf.d/myconf.conf deployment-package/
 
       - name: Get current time
