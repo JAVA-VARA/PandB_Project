@@ -26,8 +26,8 @@ jobs:
       - name: Create deployment package
         run: |
           mkdir deployment-package
-          cp .$(ls ./build/libs)" deployment-package/
-          cp .platform/nginx/conf.d/myconf.conf deployment-package/
+          cp -r build/libs/*.jar deployment-package/application.jar
+          cp -r .platform  deployment-package/.platform
 
       - name: Get current time
         uses: josStorer/get-current-time@v2.0.2
