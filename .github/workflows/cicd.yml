@@ -28,7 +28,7 @@ jobs:
           mkdir deployment-package
           cp build/libs/*.jar deployment-package/application.jar
           cp -r .platform deployment-package/.platform
-          cd deployment-package && zip -r deployment-package.zip
+          cd deployment-package && zip -r deployment-package.zip .
 
       - name: Get current time
         uses: josStorer/get-current-time@v2.0.2
@@ -38,7 +38,7 @@ jobs:
           utcOffset: "+09:00"
 
       - name: Set artifact
-        run: echo "artifact=deployment-package" >> $GITHUB_ENV
+        run: echo "artifact=deployment-package/deployment-package.zip" >> $GITHUB_ENV
 
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v20
@@ -50,9 +50,3 @@ jobs:
           version_label: github-action-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: ${{env.artifact}}
-
-      - name: Print artifacts
-        run: ls -al ./build/libs/
-
-      - name: Print nginx
-        run: ls /etc/nginx/conf.d/
