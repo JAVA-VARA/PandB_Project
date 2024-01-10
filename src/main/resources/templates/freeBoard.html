@@ -114,7 +114,12 @@
                     <span th:text="${board.content}"></span>
 
                     <div class="mt-10" th:each="attachedFile : ${board.attachedFileList}">
-                        <img th:if="${#strings.endsWith(attachedFile.originalFileName, '.png') or #strings.endsWith(attachedFile.originalFileName, '.jpg')}"
+                        <img th:if="${
+                        #strings.endsWith(attachedFile.originalFileName, '.png') or
+                        #strings.endsWith(attachedFile.originalFileName, '.jpg') or
+                        #strings.endsWith(attachedFile.originalFileName, '.JPG') or
+                        #strings.endsWith(attachedFile.originalFileName, '.PNG')
+                                               }"
                              th:src="${attachedFile.imageUrl}"
                              style="max-width: 50%; height: auto;"
                              alt="지원하지 않는 파일입니다.">
@@ -127,7 +132,7 @@
                     </div>
 
                     <div th:each="attachedFile : ${board.attachedFileList}">
-                        <a th:href="@{|/files/${attachedFile.fileName}|}" download="downloaded_file"
+                        <a th:href="${attachedFile.imageUrl}" download="downloaded_file"
                            th:text="${attachedFile.originalFileName}"></a>
                     </div>
 
