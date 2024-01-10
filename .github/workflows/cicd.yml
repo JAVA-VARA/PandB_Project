@@ -2,14 +2,14 @@ name: CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4  #깃허브 저장소의 코드를 체크아웃함.with: continue-on-error:
+      - uses: actions/checkout@v4
 
       - name: Use Java
         uses: actions/setup-java@v3
@@ -27,7 +27,8 @@ jobs:
         run: |
           mkdir deployment-package
           cp build/libs/*.jar deployment-package/application.jar
-          cp -r .platform  deployment-package/.platform
+          cp -r .platform deployment-package/.platform
+          cd deployment-package && zip -r deployment-package.zip
 
       - name: Get current time
         uses: josStorer/get-current-time@v2.0.2
