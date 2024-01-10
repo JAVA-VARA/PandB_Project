@@ -26,7 +26,7 @@ jobs:
       - name: Create deployment package
         run: |
           mkdir deployment-package
-          cp -r build/libs/*.jar deployment-package/application.jar
+          cp build/libs/*.jar deployment-package/application.jar
           cp -r .platform  deployment-package/.platform
 
       - name: Get current time
