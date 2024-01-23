@@ -26,12 +26,14 @@ public class AttachedFileDto {
                 .board(board)
                 .build();
     }
+    //local
     public AttachedFileDto(String originalFileName, String fileName, String filePath){
         this.originalFileName = originalFileName;
         this.fileName = fileName;
         this.filePath = filePath;
     }
 
+    //s3
     public AttachedFileDto(String originalFileName, String fileName, String filePath, String imageUrl){
         this.originalFileName = originalFileName;
         this.fileName = fileName;

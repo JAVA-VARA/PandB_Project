@@ -3,6 +3,7 @@ package sjspring.shop.pregAndBirthDeveloper.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.*;
 import sjspring.shop.pregAndBirthDeveloper.dto.*;
 import sjspring.shop.pregAndBirthDeveloper.repository.*;
+import sjspring.shop.pregAndBirthDeveloper.util.LocalUploadUtil;
 import sjspring.shop.pregAndBirthDeveloper.util.UploadFileUtil;
 import software.amazon.awssdk.services.s3.S3Client;
 
@@ -27,6 +29,8 @@ public class BoardService {
     private final UserRepository userRepository;
     private final ScrapArticlesRepository scrapArticlesRepository;
     private final S3Client s3Client;
+    @Value("${aws.bucket}")
+    private String bucketName;
 
     public Board save(AddArticleRequest request, String userName) throws IOException {
 
@@ -35,10 +39,11 @@ public class BoardService {
 
         //첨부파일 저장.
         if(request.getFile() != null && !request.getFile().isEmpty()){
-            UploadFileUtil uploadFileUtil = new UploadFileUtil(s3Client);
+//            UploadFileUtil uploadFileUtil = new UploadFileUtil(s3Client);
+            LocalUploadUtil localUploadUtil = new LocalUploadUtil();
 
             for(MultipartFile file : request.getFile()){
-                AttachedFileDto attachedFileDto = uploadFileUtil.uploadFile(file);
+                AttachedFileDto attachedFileDto = localUploadUtil.fileUplodToLocalDir(file);
                 attachedFileDtos.add(attachedFileDto);
             }
         }
@@ -191,4 +196,51 @@ public class BoardService {
     public List<Comment> findCommentListByBoardNo(Long boardNo){
         return boardRepository.findCommentListByBoardNo(boardNo);
     }
+
+//    public List<String> uploadAttachedAsList(List<MultipartFile> multipartFiles){
+//        List<String> resizedImageList = new ArrayList<>();
+//
+//        multipartFiles.forEach(image -> {
+//            if(Objects.requireNonNull(image.getContentType()).contains("image")){
+//
+//                String originalFilename = image.getOriginalFilename();
+//                String fileName = UUID.randomUUID() + "_" + originalFilename;
+//                String fileFormat = image.getContentType().substring(image.getContentType().lastIndexOf("/") + 1); //파일 확장자명 추출
+//
+//                MultipartFile resizedImage = resizer(fileName, fileFormat, image, 400);
+//
+//                //gradle에 의존성을 추가해야 사용 가능함.
+//                ObjectMetadata objectMetadata = new ObjectMetadata();
+//                objectMetadata.setContentLength(resizedImage.getSize()); //사이즈 전달
+//                objectMetadata.setContentType(resizedImage.getContentType());
+//
+//                try (InputStream inputStream = resizedImage.getInputStream()){
+//
+//                    // S3에 파일 업로드
+//                    s3Client.putObject(software.amazon.awssdk.services.s3.model.PutObjectRequest.builder()
+//                                    .bucket(bucketName)
+//                                    .key(fileName)
+//                                    .acl(CannedAccessControlList.PublicRead)
+//                                    .build(),
+//                            RequestBody.fromInputStream(inputStream, objectMetadata.getContentLength());
+//
+//                    s3Client.putObject(new PutObjectRequest(bucketName, fileName, inputStream, objectMetadata)
+//                            .withCannedAcl(CannedAccessControlList.PublicRead));
+//
+//                }catch (IOException E){
+//                    throw new RuntimeException("실패입니다");
+//                }
+//
+//                String imageURL = s3Client.utilities().getUrl(GetUrlRequest.builder()
+//                        .bucket(bucketName)
+//                        .key(fileName)
+//                        .build()).toExternalForm();
+//
+//                resizedImageList.add(imageURL);
+//            }
+//        });
+//        return resizedImageList;
+//    }
+
+
 }

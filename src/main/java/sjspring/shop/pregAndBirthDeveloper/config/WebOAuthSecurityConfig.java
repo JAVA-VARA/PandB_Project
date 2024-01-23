@@ -38,14 +38,14 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
 
     @Override
 //    정적 리소스 처리하는 핸들러 추가
+    //    ResourceHandlerRegistry => 정적리소스를 처리하는 핸들러에 대한 등록과 관리를 담당하는 클래스
     public void addResourceHandlers(ResourceHandlerRegistry registry){
-//    ResourceHandlerRegistry => 정적리소스를 처리하는 핸들러에 대한 등록과 관리를 담당하는 클래스
         registry.addResourceHandler("/files/**")
-                .addResourceLocations("/src/main/resources/files/");
-//                .addResourceLocations("file:///" + System.getProperty("user.dir") + "/files/");
-
-//                .addResourceLocations("file:///C:/Users/sjyou/IdeaProjects/PandBproject/PandB_Project/files/");
+                .addResourceLocations("file:src/main/resources/files/");
     }
+    //                .addResourceLocations("/src/main/resources/files/");
+//                .addResourceLocations("file:///" + System.getProperty("user.dir") + "/files/");
+//                .addResourceLocations("file:///C:/Users/sjyou/IdeaProjects/PandBproject/PandB_Project/files/");
 
 //    @Override
 //    public void addResourceHandlers(ResourceHandlerRegistry registry) {

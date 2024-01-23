@@ -43,7 +43,7 @@ public class BoardApiController {
 
         String email = principal.getName();
         User user = userService.findByEmail(email);
-        String author = user.getNickName();
+        String author = user.getNickname();
         request.setAuthor(author);
         request.setUser(user);
 

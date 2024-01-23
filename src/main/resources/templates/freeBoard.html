@@ -120,10 +120,11 @@
                         #strings.endsWith(attachedFile.originalFileName, '.JPG') or
                         #strings.endsWith(attachedFile.originalFileName, '.PNG')
                                                }"
-                             th:src="${attachedFile.imageUrl}"
+                             th:src="@{|/files/${attachedFile.fileName}|}"
                              style="max-width: 50%; height: auto;"
                              alt="지원하지 않는 파일입니다.">
                     </div>
+<!--                    th:src="${attachedFile.imageUrl}"-->
 <!--                    th:src="@{|/files/${attachedFile.fileName}|}"-->
 <!--                    th:src="${attachedFile.getImageUrl()}"-->
 
