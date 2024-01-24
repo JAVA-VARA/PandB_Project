@@ -2,6 +2,7 @@ package sjspring.shop.pregAndBirthDeveloper.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -73,13 +74,18 @@ class BoardApiControllerTest {
                     .email("Test@gmail.com")
                     .name("name")
                     .hp("12345678")
-                    .nickName("author")
+                    .nickname("author")
                     .password("Test")
                     .build());
         }
 
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities()));
+    }
+
+    @AfterEach
+    void deleteUserRepository(){
+        userRepository.deleteAll();
     }
 
     @DisplayName("addArticle: 사용자 인증 & 글 추가 성공.")
@@ -109,14 +115,6 @@ class BoardApiControllerTest {
         userRequest.toEntity(principal.getName());
         userRequest.setBoardCategory(boardCategory);
 
-
-        //final String requestBody = objectMapper.writeValueAsString(userRequest);
-        //when: 설정한 내용을 바탕으로 요청 전송(post 요청 시뮬레이션)
-        // ResultActions result = mockMvc.perform(post(url)
-//                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-//                .principal(principal)
-//                .content(requestBody));
-
         ResultActions result = mockMvc.perform(multipart(url)
                 .file(file)
                 .param("category", categoryName)
@@ -137,6 +135,9 @@ class BoardApiControllerTest {
         assertThat(board.get(0).getCategory().getCategoryName()).isEqualTo("자유게시판");
         assertThat(board.get(0).getCreatedAt()).isNotNull();
     }
+
+
+
 
     @DisplayName("findAllArticles: 게시판 글 목록 조회 성공")
     @Test

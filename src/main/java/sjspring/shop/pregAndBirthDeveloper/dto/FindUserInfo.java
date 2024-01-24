@@ -11,12 +11,19 @@ import sjspring.shop.pregAndBirthDeveloper.domain.User;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class FindUserInfo {
     private String email;
     private String name;
     private String hp;
     private String password;
+    private String message;
 
+    public FindUserInfo(String name, String hp, String message) {
+        this.name = name;
+        this.hp = hp;
+        this.email = message;
+    }
 
     public FindUserInfo(String name, String hp) {
         this.name = name;
@@ -33,5 +40,6 @@ public class FindUserInfo {
         this.hp = user.getHp();
         this.password = user.getPassword();
     }
+
 
 }

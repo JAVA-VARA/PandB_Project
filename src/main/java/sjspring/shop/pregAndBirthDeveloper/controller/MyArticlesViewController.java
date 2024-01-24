@@ -62,7 +62,7 @@ public class MyArticlesViewController {
         String userEmail = principal.getName();
         User user = userService.findByEmail(userEmail);
 
-        String nickname = user.getNickName();
+        String nickname = user.getNickname();
         int numberOfArticles = user.getBoardList().size();
         int numberOfComments = user.getCommentList().size();
         List<ScrapArticle> scrapArticles = user.getScrapedArticles();

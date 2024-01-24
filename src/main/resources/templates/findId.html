@@ -20,27 +20,20 @@
                 <h3 class="text-white">아이디 찾기</h3>
 
                 <div class = "mb-2">
-<!--                    <form th:action="@{showId}" th:object="${findUserInfoDto}"  method="GET">-->
-<!--                    <form action="/showId" th:object="${dto}" method="GET">-->
                     <form action="/showId" method="GET">
                         <div class="mb-3">
                             <label class = "form-label text-white">이름
-                                <input type="text" class="form-control" name="name">
+                                <input type="text" class="form-control" name="name" required>
                             </label>
-
-<!--                                <input type="text" class="form-control" th:text ="${findUserInfoDto.name}">-->
                         </div>
 
                         <div class="mb-3">
                             <label class = "form-label text-white">휴대폰 번호
-                                <input type="text" class="form-control" name="hp">
+                                <input type="text" class="form-control" name="hp" required>
                             </label>
                         </div>
 
                         <input type="submit" class="btn btn-secondary mt-3" value="Submit">
-<!--                        <button type="submit" class="btn btn-primary">Submit</button>-->
-<!--                        <button type="button" class="btn btn-secondary mt-3" onclick="location.href='/showId'">Submit</button>-->
-
                     </form>
                 </div>
             </div>

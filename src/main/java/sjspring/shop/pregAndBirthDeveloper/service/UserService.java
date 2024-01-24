@@ -30,7 +30,7 @@ public class UserService {
 //        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return userRepository.save(User.builder()
                 .email(dto.getEmail())
-                .nickName(dto.getNickName())
+                .nickname(dto.getNickname())
                 .name(dto.getName())
                 .hp(dto.getHp())
                 .babyDue(dto.getBabyDue())

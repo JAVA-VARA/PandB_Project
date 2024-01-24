@@ -29,8 +29,8 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "nick_Name", unique = true)
-    private String nickName;
+    @Column(name = "nick_name", unique = true)
+    private String nickname;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -60,9 +60,9 @@ public class User implements UserDetails {
     private List<ScrapArticle> scrapedArticles = new ArrayList<>();
 
     @Builder
-    public User(String name, String email, String nickName, String hp,String password, Date babyDue){
+    public User(String name, String email, String nickname, String hp,String password, Date babyDue){
         this.name = name;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.email = email;
         this.hp = hp;
         this.password = password;
@@ -101,25 +101,25 @@ public class User implements UserDetails {
         return this;
     }
 
-    public User update(String name, String nickName, String hp, Date babyDue){
+    public User update(String name, String nickname, String hp, Date babyDue){
         this.name = name;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.hp = hp;
         this.babyDue = babyDue;
 
         return this;
     }
 
-    public User update(String nickName, String hp, Date babyDue){
-        this.nickName = nickName;
+    public User update(String nickname, String hp, Date babyDue){
+        this.nickname = nickname;
         this.hp = hp;
         this.babyDue = babyDue;
 
         return this;
     }
 
-    public User update(String nickName, String hp, Date babyDue, String password){
-        this.nickName = nickName;
+    public User update(String nickname, String hp, Date babyDue, String password){
+        this.nickname = nickname;
         this.hp = hp;
         this.babyDue = babyDue;
         this.password = password;

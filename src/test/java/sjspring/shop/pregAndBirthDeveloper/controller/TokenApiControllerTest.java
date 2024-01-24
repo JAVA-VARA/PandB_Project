@@ -1,6 +1,7 @@
 package sjspring.shop.pregAndBirthDeveloper.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,13 +21,12 @@ import sjspring.shop.pregAndBirthDeveloper.dto.CreateAccessTokenRequest;
 import sjspring.shop.pregAndBirthDeveloper.repository.RefreshTokenRepository;
 import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TokenApiControllerTest {
@@ -50,6 +50,7 @@ public class TokenApiControllerTest {
                 .build();
         userRepository.deleteAll();
     }
+
     @DisplayName("createNewAccessToken: 새로운 액세스 토큰을 발급한다.")
     @Test
     public void createNewAccessToken() throws Exception {
@@ -60,14 +61,15 @@ public class TokenApiControllerTest {
         final String name = "풍풍풍";
         final String nickname = "풋팡퐁커리";
         final String password = "test";
-        final LocalDateTime babyDue = LocalDateTime.now();
+        final Date babyDue = new Date();
 
         User testUser = userRepository.save(User.builder()
                 .email(email)
                 .hp(hp)
                 .name(name)
                 .password(password)
-                .nickName(nickname)
+                .nickname(nickname)
+                .babyDue(babyDue)
                 .build());
 
         String refreshToken = JwtFactory.builder()
@@ -90,5 +92,9 @@ public class TokenApiControllerTest {
         resultActions
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.accessToken").isNotEmpty());
+    }
+    @AfterEach
+    void deleteUserRepository(){
+        userRepository.deleteAll();
     }
 }

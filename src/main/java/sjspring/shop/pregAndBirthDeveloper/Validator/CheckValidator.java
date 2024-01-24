@@ -9,7 +9,7 @@ import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
 
 @Component
 @RequiredArgsConstructor
-public class CheckEmailValidator  extends AbstractValidator<AddUserRequest>{
+public class CheckValidator extends AbstractValidator<AddUserRequest>{
 
     private final UserRepository userRepository;
 
@@ -22,7 +22,7 @@ public class CheckEmailValidator  extends AbstractValidator<AddUserRequest>{
             errors.rejectValue("hp", "휴대폰 번호 중복 오류", "이미 사용 중인 번호 입니다.");
         }
 
-        if(userRepository.existsByNickName(dto.getNickName())){
+        if(userRepository.existsByNickname(dto.getNickname())){
             errors.rejectValue("nickname", "닉네임 중복 오류", "이미 사용 중인 닉네임 입니다.");
         }
 

@@ -23,7 +23,7 @@ public class AddUserRequest {
 
     @NotNull(message = "닉네임을 입력해주세요.")
     @Size(min = 2, max = 10, message = "닉네임은 2 ~ 10자 사이로 입력해주세요")
-    private String nickName;
+    private String nickname;
 
     private String hp;
 

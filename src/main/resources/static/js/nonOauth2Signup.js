@@ -8,6 +8,7 @@ if (signupForm) {
         const passwordInput = document.getElementById("signupPassword").value;
         const passwordConfirmInput = document.getElementById("signupPasswordConfirm").value;
         const passwordError = document.getElementById("passwordError");
+
         if(passwordInput !== passwordConfirmInput) {
             passwordError.textContent = "비밀번호가 일치하지 않습니다.";
             return;
@@ -23,7 +24,7 @@ if (signupForm) {
                     JSON.stringify({
                     email: document.getElementById("signupEmail").value,
                     name: document.getElementById("signupName").value,
-                    nickName: document.getElementById("signupNickname").value,
+                    nickname: document.getElementById("signupNickname").value,
                     hp: document.getElementById("signupHp").value,
                     babyDue: document.getElementById("signupBabyDue").value,
                     password: document.getElementById("signupPassword").value

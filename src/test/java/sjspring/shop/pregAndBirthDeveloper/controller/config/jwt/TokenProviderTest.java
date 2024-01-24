@@ -2,6 +2,7 @@ package sjspring.shop.pregAndBirthDeveloper.controller.config.jwt;
 
 
 import io.jsonwebtoken.Jwts;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,18 @@ class TokenProviderTest {
     @Autowired
     private JwtProperties jwtProperties;
 
+    @AfterEach
+    void deleteUserRepository(){
+        userRepository.deleteAll();
+    }
+
     @DisplayName("generateToken(): 유저 정보와 만료 기간을 전달해 토큰을 만들 수 있다.")
     @Test
     void generateToken(){
         //given
         User testUser = userRepository.save(User.builder()
                 .name("왕밤빵")
-                .nickName("쭈꾸미")
+                .nickname("쭈꾸미")
                 .email("user@gmail.com")
                 .hp("01042930092")
                 .password("test")

@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import sjspring.shop.pregAndBirthDeveloper.Validator.CheckEmailValidator;
+import sjspring.shop.pregAndBirthDeveloper.Validator.CheckValidator;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddUserRequest;
 import sjspring.shop.pregAndBirthDeveloper.dto.UpdateUserRequest;
 import sjspring.shop.pregAndBirthDeveloper.service.UserService;
@@ -24,12 +24,12 @@ import java.util.Map;
 @Controller
 public class UserApiController {
     private final UserService userService;
-    private final CheckEmailValidator checkEmailValidator;
+    private final CheckValidator checkValidator;
 
     //유효성 검증
     @InitBinder
     public void validatorBinder(WebDataBinder binder){
-        binder.addValidators(checkEmailValidator);
+        binder.addValidators(checkValidator);
     }
 
     @PostMapping("/users")

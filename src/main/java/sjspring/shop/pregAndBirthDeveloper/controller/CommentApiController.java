@@ -26,30 +26,26 @@ public class CommentApiController {
 
     //등록
     @PostMapping("/api/articles/comment/{board_id}")
-    public ResponseEntity<String> addComment(@PathVariable long board_id, @RequestPart String content, Principal principal) {
+    public ResponseEntity<String> addComment(@PathVariable long board_id, @RequestParam(value = "content", required = false) String content, Principal principal) {
         String userEmail = principal.getName();
         User user = userService.findByEmail(userEmail);
         Board board = boardService.findById(board_id);
-        String author = user.getNickName();
+        String author = user.getNickname();
         String email = user.getEmail();
 
         CommentRequestDto commentRequestDto = new CommentRequestDto(content, author, email, board, user);
+
         commentService.addComment(commentRequestDto);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-
-        String boardUrl = "/articles/" + board_id;
-
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(boardUrl);
+                .build();
     }
 
     //수정
     @PutMapping("/api/articles/comment/{id}")
     public ResponseEntity<Long> updateComment(
             @PathVariable long id,
-            @RequestPart String content){
+            @RequestParam(value = "content", required = false) String content){
 
         UpdateCommentRequest request = new UpdateCommentRequest(content);
         commentService.update(id, request);
@@ -66,22 +62,9 @@ public class CommentApiController {
         return ResponseEntity.ok()
                 .build();
     }
-
-//    @PostMapping("/api/articles/comment/{board_id}")
-//    public ResponseEntity<List<CommentResponseDto>> addComment(@PathVariable long board_id, @RequestPart String content, Principal principal){
-//        String userEmail = principal.getName();
-//        User user = userService.findByEmail(userEmail);
-//        Board board= boardService.findById(board_id);
-//
-//        CommentRequestDto commentRequestDto = new CommentRequestDto(content, board, user);
-//        commentService.addComment(commentRequestDto);
-//
-//        List<CommentResponseDto> boardComments = boardService.findById(board_id).getCommentList()
-//                .stream()
-//                .map(CommentResponseDto::new)
-//                .toList();
-//
-//        return ResponseEntity.ok()
-//                .body(boardComments);
-//    }
 }
+
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentPrincipalName = authentication.getName();
+//
+//        String boardUrl = "/articles/" + board_id;

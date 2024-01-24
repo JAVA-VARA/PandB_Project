@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@DisplayName("AdditionalInfoControllerTest 테스트")
+@DisplayName("AdditionalInfoControllerTest")
 class AdditionalInfoControllerTest {
     @Autowired
     protected MockMvc mockMvc;
@@ -72,7 +72,6 @@ class AdditionalInfoControllerTest {
         ResultActions result = mockMvc.perform(put(url)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(requestBody)
-//                .content(objectMapper.writeValueAsString(requestBody))
                 .principal(principal));
 
         //THEN
