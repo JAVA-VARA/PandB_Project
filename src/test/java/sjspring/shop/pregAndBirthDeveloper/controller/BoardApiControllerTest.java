@@ -20,8 +20,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
-import sjspring.shop.pregAndBirthDeveloper.dto.AddArticleRequest;
 import sjspring.shop.pregAndBirthDeveloper.dto.UpdateArticleRequest;
+import sjspring.shop.pregAndBirthDeveloper.repository.AttachedFileRepository;
 import sjspring.shop.pregAndBirthDeveloper.repository.BoardCategoryRepository;
 import sjspring.shop.pregAndBirthDeveloper.repository.BoardRepository;
 import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
@@ -53,6 +53,9 @@ class BoardApiControllerTest {
 
     @Autowired
     BoardCategoryRepository boardCategoryRepository;
+
+    @Autowired
+    AttachedFileRepository attachedFileRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -100,20 +103,15 @@ class BoardApiControllerTest {
         final String content = "content";
         final String author = "author";
         final String categoryName = "자유게시판";
-        final LocalDateTime createdAt = LocalDateTime.now();
         final int views = 0;
+
         final MockMultipartFile file = new MockMultipartFile(
                 "files", "test.txt", MediaType.TEXT_PLAIN_VALUE, "fileContent".getBytes());
 
-        //카테고리 저장 여부 확인
-        final BoardCategory boardCategory = categoryService.save(categoryName);
 
-        final AddArticleRequest userRequest = new AddArticleRequest(title,content,author,categoryName,boardCategory, views);
         Principal principal = Mockito.mock(Principal.class);
         Mockito.when(principal.getName()).thenReturn("username");
 
-        userRequest.toEntity(principal.getName());
-        userRequest.setBoardCategory(boardCategory);
 
         ResultActions result = mockMvc.perform(multipart(url)
                 .file(file)
@@ -133,6 +131,7 @@ class BoardApiControllerTest {
         assertThat(board.get(0).getAuthor()).isEqualTo(author);
         assertThat(board.get(0).getViews()).isEqualTo(views);
         assertThat(board.get(0).getCategory().getCategoryName()).isEqualTo("자유게시판");
+        assertThat(board.get(0).getAttachedFileList().get(0).getOriginalFileName()).isEqualTo("test.txt");
         assertThat(board.get(0).getCreatedAt()).isNotNull();
     }
 
@@ -237,10 +236,6 @@ class BoardApiControllerTest {
                 .principal(() -> email)
                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE));
 
-        //WHEN
-//        ResultActions result = mockMvc.perform(put(url, savedBoard.getBoardNo())
-//                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                .content(objectMapper.writeValueAsString(request)));
 
         //then
         result2.andExpect(status().isOk());
@@ -251,30 +246,7 @@ class BoardApiControllerTest {
         assertThat(board.get().getContent()).isEqualTo(newContent);
         assertThat(board.get().getCategory().getCategoryName()).isEqualTo(newCategory);
         assertThat(board.get().getUpdatedAt()).isNotNull();
-
     }
-
-//    @DisplayName("스크랩")
-//    @Test
-//    public void scrapArticle() throws Exception {
-//        //given
-//        final String url = "/api/articles/scrap/{board_id}";
-//        Board savedBoard = createDefaultArticleAndCategoryMapping();
-//        long boardNo = savedBoard.getBoardNo();
-//
-//        Principal principal = Mockito.mock(Principal.class);
-//        Mockito.when(principal.getName()).thenReturn("test@email.com");
-//        String userEmail = principal.getName();
-//
-//        //when
-//        ResultActions result = mockMvc.perform(get("/api/articles/scrap/{board_id}", boardNo)
-//                .principal(principal));
-//
-//        //then
-//        result.andExpect(status().isOk());
-////        verify(boardService, times(1)).scrap(boardNo, "user@example.com");
-//
-//    }
 
     private Board createDefaultArticleAndCategoryMapping(){
         boardRepository.deleteAll();
@@ -301,6 +273,4 @@ class BoardApiControllerTest {
         String categoryName = "자유게시판";
         return categoryService.save(categoryName);
     }
-
-
 }

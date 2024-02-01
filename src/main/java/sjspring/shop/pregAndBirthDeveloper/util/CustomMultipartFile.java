@@ -67,8 +67,7 @@ public class CustomMultipartFile implements MultipartFile {
     }
 
     @Override
-    public void transferTo(File dest) throws IOException, IllegalStateException {
-        FileCopyUtils.copy(this.content, dest);
+    public void transferTo(File destination) throws IOException, IllegalStateException {
+        FileCopyUtils.copy(this.content, destination);
     }
-
 }

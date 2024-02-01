@@ -34,8 +34,7 @@ public class BoardApiController {
             @RequestParam String content,
 //            @RequestPart(required = false) MultipartFile files, => 단일 파일 저장.
             @RequestPart(name = "files", required = false) List<MultipartFile> files,
-            Principal principal) throws IOException
-    {
+            Principal principal) throws IOException, InterruptedException {
         AddArticleRequest request = new AddArticleRequest(category, title, content, files);
 
         //카테고리 저장.

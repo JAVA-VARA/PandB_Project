@@ -8,6 +8,7 @@ import com.drew.metadata.MetadataException;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import lombok.RequiredArgsConstructor;
 import marvin.image.MarvinImage;
+import net.coobird.thumbnailator.Thumbnails;
 import org.imgscalr.Scalr;
 import org.marvinproject.image.transform.scale.Scale;
 import org.springframework.http.HttpStatus;
@@ -15,13 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import sjspring.shop.pregAndBirthDeveloper.dto.AttachedFileDto;
 
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -29,41 +26,67 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 public class LocalUploadUtil {
-    public AttachedFileDto fileUplodToLocalDir(MultipartFile multipartFile) throws IOException {
+    public AttachedFileDto fileUploadToLocalDir(MultipartFile multipartFile) throws IOException, InterruptedException {
 
         String originalFilename = multipartFile.getOriginalFilename();
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + originalFilename;
 
         //프로젝트의 경로 지정
-        String savedPath = System.getProperty("user.dir") + "\\files";
-        String relativePath = "src/main/resources/files";
+//        String savedPath = System.getProperty("user.dir") + "\\files"; //절대 경로
+        String relativePath = "src/main/resources/files/";
 
         //directory 생성
         if(!new File(relativePath).exists()){
             try {
-                new File(relativePath).mkdir();
+                File relativePatchCheck = new File(relativePath);
+                relativePatchCheck.mkdirs();
             }
             catch (Exception e){
                 e.getStackTrace();
             }
         }
-        String filePath = relativePath + "\\" + fileName;
+        //
+
+        String filePath = relativePath + fileName;
+        String fileFormat = extractFileFormat(multipartFile); //파일 확장자명 추출
 
         //1.multipartFile을 buffered image type으로 변환
-        if(Objects.requireNonNull(multipartFile.getContentType()).contains("image")){
+        if(Objects.requireNonNull(multipartFile.getContentType()).contains("image") && !originalFilename.endsWith("gif")) {
             //파일 확장자명 추출
-            String fileFormat = extractFileFormat(multipartFile); //파일 확장자명 추출
             MultipartFile resizedImage = resizer(fileName, fileFormat, multipartFile, 400);
-
             resizedImage.transferTo(new File(filePath));
-            return new AttachedFileDto(originalFilename, fileName,filePath);
 
+        } else if(originalFilename.endsWith("heic") || originalFilename.endsWith("HEIC")) {
+
+            //1 변환
+            ImageProcessingUtil imageProcessingUtil = new ImageProcessingUtil();
+            MultipartFile convertedMultipartFile = imageProcessingUtil.convertHEICtoPNG(multipartFile);
+
+            //2 변환된 file을 image reszier에 넣고 리사이징
+            fileFormat = extractFileFormat(convertedMultipartFile);
+            filePath = relativePath + "\\" + uuid + "_" + convertedMultipartFile.getOriginalFilename();
+            fileName = convertedMultipartFile.getOriginalFilename();
+            MultipartFile convertedImage = resizer(fileName, fileFormat, convertedMultipartFile, 400);
+
+
+
+
+            convertedImage.transferTo(new File(filePath));
         }
 
-        //첨부파일 저장
-        multipartFile.transferTo(new File(filePath));
+        else if(originalFilename.endsWith("gif") || originalFilename.endsWith("GIF")){
+            ImageMagicKResizing imageMagicKResizing = new ImageMagicKResizing();
+            imageMagicKResizing.resizeGif(multipartFile, fileName, 400, 400, filePath);
+        }
+
+        else {
+            CustomMultipartFile customMultipartFile =  new CustomMultipartFile(fileName,fileFormat,multipartFile.getContentType(), multipartFile.getBytes());
+            customMultipartFile.transferTo(new File(filePath));
+        }
+
         return new AttachedFileDto(originalFilename, fileName,filePath);
+
     }
     public MultipartFile resizer(String fileName, String fileFormat, MultipartFile originalImage, int width){
         try{
@@ -159,4 +182,34 @@ public class LocalUploadUtil {
 
         return rotatedImage;
     }
+
+//    private static BufferedImage resizeHECIImage(byte[] originalImageBytes, int targetWidth, int targetHeight) throws IOException {
+//        ByteArrayInputStream bais = new ByteArrayInputStream(originalImageBytes);
+//
+//        return Thumbnails.of(bais)
+//                .size(targetWidth, targetHeight)
+//                .outputQuality(1.0)
+//                .asBufferedImage();
+//    }
 }
+
+//        try {
+//            File directory = new File(relativePath);
+//        }
+
+//첨부파일 저장
+//        multipartFile.transferTo(new File(filePath));
+
+
+
+
+//        multipartFile.transferTo(savedFile);
+
+
+//        return new AttachedFileDto(originalFilename, fileName,filePath);
+
+
+//        //파일의 저장 경로 확인
+//        File savedFile = new File(filePath);
+//        String absolutePath = savedFile.getAbsolutePath();
+//        System.out.println("File saved at: " + absolutePath);

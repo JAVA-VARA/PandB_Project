@@ -63,20 +63,25 @@ dependencies {
 
     implementation 'com.drewnoakes:metadata-extractor:2.18.0'
 
-
-
-
-//    implementation 'javax.validation:validation-api:2.0.1.Final'
-//    implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final'
-//    implementation 'org.glassfish:jakarta.el:5.0.0-M1'
-//    implementation 'javax.el:el-api:2.2'
-
     implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
 
     implementation group: 'org.imgscalr', name: 'imgscalr-lib', version: '4.2'
 
     implementation 'com.github.downgoon:marvin:1.5.5'
     implementation 'com.github.downgoon:MarvinPlugins:1.5.5'
+    implementation 'org.springframework:spring-test'
+
+    //webp확장자 추가
+//    implementation group: 'com.twelvemonkeys.imageio', name: 'imageio-jpeg', version: '3.9.4'
+    implementation group: 'org.sejda.imageio', name: 'webp-imageio', version: '0.1.6'
+//    implementation 'com.twelvemonkeys.imageio:imageio-heic:3.7.1'
+
+    //heic 이미지 리사이징을 위한 썸네일 의존성 추가
+    implementation 'net.coobird:thumbnailator:0.4.14'
+
+    //gif 리사이징
+    implementation 'org.im4java:im4java:1.4.0'
+
 
 
 }
@@ -87,4 +92,5 @@ jar{
 
 test {
     useJUnitPlatform()
+    maxHeapSize = "1g" // maximum heap size
 }

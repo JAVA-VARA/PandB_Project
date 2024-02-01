@@ -41,3 +41,10 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+##ETC
+gradlew
+gradlew.bat
+.gitignore
+gradle-wrapper.jar
+gradle-wrapper.properties

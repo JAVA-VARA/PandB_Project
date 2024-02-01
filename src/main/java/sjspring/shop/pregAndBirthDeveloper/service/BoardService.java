@@ -32,7 +32,7 @@ public class BoardService {
     @Value("${aws.bucket}")
     private String bucketName;
 
-    public Board save(AddArticleRequest request, String userName) throws IOException {
+    public Board save(AddArticleRequest request, String userName) throws IOException, InterruptedException {
 
 
         List<AttachedFileDto> attachedFileDtos = new ArrayList<>();
@@ -43,7 +43,7 @@ public class BoardService {
             LocalUploadUtil localUploadUtil = new LocalUploadUtil();
 
             for(MultipartFile file : request.getFile()){
-                AttachedFileDto attachedFileDto = localUploadUtil.fileUplodToLocalDir(file);
+                AttachedFileDto attachedFileDto = localUploadUtil.fileUploadToLocalDir(file);
                 attachedFileDtos.add(attachedFileDto);
             }
         }
