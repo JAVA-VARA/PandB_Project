@@ -8,7 +8,6 @@ import com.drew.metadata.MetadataException;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import lombok.RequiredArgsConstructor;
 import marvin.image.MarvinImage;
-import net.coobird.thumbnailator.Thumbnails;
 import org.imgscalr.Scalr;
 import org.marvinproject.image.transform.scale.Scale;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,10 @@ import sjspring.shop.pregAndBirthDeveloper.dto.AttachedFileDto;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -41,8 +43,7 @@ public class LocalUploadUtil {
             try {
                 File relativePatchCheck = new File(relativePath);
                 relativePatchCheck.mkdirs();
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.getStackTrace();
             }
         }
