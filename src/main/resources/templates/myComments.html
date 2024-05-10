@@ -12,7 +12,7 @@
 
 <body class="p-3 m-0 border-0 bd-example m-0 border-0">
 
-<h1 th:text ="${myComments.getUser().getNickName()}" style="font-weight: bold"></h1>
+<h1 th:text ="${myComments.getUser().getNickname()}" style="font-weight: bold"></h1>
 
 
 <a href ="/mypage/my-articles" style="text-decoration: none" >
@@ -49,6 +49,7 @@
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
                     <label class="form-check-label" for="flexCheckIndeterminate">
                 </div>
+
             </td>
 
             <td th:text="${myComment.id}"></td>

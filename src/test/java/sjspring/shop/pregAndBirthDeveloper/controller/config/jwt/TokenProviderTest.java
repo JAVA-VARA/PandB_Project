@@ -123,7 +123,4 @@ class TokenProviderTest {
         //then
         assertThat(userIdByToken).isEqualTo(userId);
     }
-
-
-
 }
