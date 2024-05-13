@@ -77,7 +77,7 @@ public class BoardApiController {
                                                @RequestParam String category,
                                                @RequestParam String title,
                                                @RequestParam String content,
-                                               @RequestPart(required = false) MultipartFile files) throws IOException {
+                                               @RequestPart(required = false) List<MultipartFile> files) throws IOException, InterruptedException {
 
         UpdateArticleRequest request = new UpdateArticleRequest(category, title, content, files);
 

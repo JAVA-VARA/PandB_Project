@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,9 +16,9 @@ public class UpdateArticleRequest {
     private String content;
     private String category;
     private LocalDateTime updatedAt;
-    private MultipartFile files;
+    private List<MultipartFile> files;
 
-    public UpdateArticleRequest(String category, String title, String content, MultipartFile files) {
+    public UpdateArticleRequest(String category, String title, String content, List<MultipartFile> files) {
         this.category =category;
         this.title = title;
         this.content = content;

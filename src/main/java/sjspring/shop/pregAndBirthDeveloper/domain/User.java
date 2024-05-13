@@ -50,7 +50,7 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Comment> commentList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonManagedReference
     @OrderBy("boardNo asc")
     private List<Board> boardList = new ArrayList<>();

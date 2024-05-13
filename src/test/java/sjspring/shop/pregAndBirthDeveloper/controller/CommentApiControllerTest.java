@@ -177,7 +177,7 @@ class CommentApiControllerTest {
     }
     //카테고리 저장 여부 확인 메서드
     private BoardCategory createDefalutCategory() {
-        String categoryName = "정보";
+        String categoryName = "자유게시판";
         return categoryService.save(categoryName);
     }
 }

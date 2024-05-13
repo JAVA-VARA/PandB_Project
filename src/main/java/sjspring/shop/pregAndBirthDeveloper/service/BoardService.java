@@ -118,32 +118,30 @@ public class BoardService {
     //수정
     @Transactional
     public Board update(long boardId, UpdateArticleRequest request) throws IOException, InterruptedException {
-
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()-> new IllegalArgumentException("not found:" + boardId));
 
         authorizeArticleAuthor(board);
 
         BoardCategory boardCategory = (BoardCategory) boardCategoryRepository.findByCategoryName(request.getCategory());
-        if(boardCategory == null){
-
-            boardCategory = BoardCategory.builder()
-                    .categoryName(request.getCategory())
-                    .build();
-
-            boardCategoryRepository.save(boardCategory);
-            board.update(request.getTitle(), request.getContent(), boardCategory);
-            boardCategory.mappingBoard(board);
-
-            return board;
-
-        }
 
         //첨부파일 저장.
-        if(request.getFiles() != null){
+        List<AttachedFileDto> attachedFileDtos = new ArrayList<>();
+        if(request.getFiles() != null && !request.getFiles().isEmpty()){
             LocalUploadUtil localUploadUtil = new LocalUploadUtil();
-            AttachedFileDto attachedFileDto = localUploadUtil.fileUploadToLocalDir(request.getFiles());
-            attachedFileRepository.save(attachedFileDto.toEntity());
+
+            for(MultipartFile file : request.getFiles()){
+                AttachedFileDto attachedFileDto = localUploadUtil.fileUploadToLocalDir(file);
+                attachedFileDtos.add(attachedFileDto);
+            }
+            for(AttachedFileDto attachedFileDto : attachedFileDtos){
+
+                attachedFileDto.setBoard(board);
+                attachedFileRepository.save(attachedFileDto.toEntity());
+
+                AttachedFile attachedFile = attachedFileRepository.findAttachedFileByFileName(attachedFileDto.getFileName());
+                board.mappingAttachedFileToBoard(attachedFile);
+            }
         }
 
         board.update(request.getTitle(), request.getContent(), boardCategory);
