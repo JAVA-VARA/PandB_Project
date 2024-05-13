@@ -23,7 +23,7 @@ public class FindApiController {
 
         try {
             String findUserEmail = findUserService.findEmail(findUserInfoDto);
-            findUserInfoDto.setMessage("귀하의 아이디는" + findUserEmail + "입니다.");
+            findUserInfoDto.setMessage("귀하의 아이디는" + findUserEmail + " 입니다.");
             model.addAttribute("FindUserInfo", findUserInfoDto);
 
         } catch (Exception e){

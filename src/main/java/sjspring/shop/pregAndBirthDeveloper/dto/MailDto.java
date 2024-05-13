@@ -15,6 +15,6 @@ public class MailDto {
 
     public MailDto(FindUserInfo findUserInfo){
         this.receiver = findUserInfo.getEmail();
-        this.message =  "안녕하세요 쭈주르입니다." + findUserInfo.getName() + " 회원님의 임시 비밀번호는 " + findUserInfo.getPassword() + " 입니다.";
+        this.message =  "회원님의 임시 비밀번호는 " + findUserInfo.getPassword() + "입니다.";
     }
 }
