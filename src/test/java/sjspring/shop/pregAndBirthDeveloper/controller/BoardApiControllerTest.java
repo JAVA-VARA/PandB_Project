@@ -212,22 +212,13 @@ class BoardApiControllerTest {
 
         final String newTitle = "new title";
         final String newContent = "new content";
-        final String newCategory = "new category";
+        final String newCategory = "자유게시판";
         final MockMultipartFile file = new MockMultipartFile(
                 "files", "test.txt", MediaType.TEXT_PLAIN_VALUE, "fileContent".getBytes());
         final LocalDateTime updatedAt = LocalDateTime.now();
         final String email = "test@email.com";
 
         UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newContent, newCategory, updatedAt);
-
-        //when
-        ResultActions result1 = mockMvc.perform(multipart(url,savedBoard.getBoardNo())
-                .file(file)
-                .param("category", newCategory)
-                .param("title", newTitle)
-                .param("content", newContent)
-                .principal(() -> email)
-                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE));
 
         ResultActions result2 = mockMvc.perform(put(url, savedBoard.getBoardNo())
                 .param("category", newCategory)

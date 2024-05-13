@@ -2,6 +2,7 @@ package sjspring.shop.pregAndBirthDeveloper.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
 import sjspring.shop.pregAndBirthDeveloper.domain.Comment;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
@@ -9,7 +10,6 @@ import sjspring.shop.pregAndBirthDeveloper.dto.CommentRequestDto;
 import sjspring.shop.pregAndBirthDeveloper.dto.UpdateCommentRequest;
 import sjspring.shop.pregAndBirthDeveloper.repository.BoardRepository;
 import sjspring.shop.pregAndBirthDeveloper.repository.CommentRepository;
-import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
 
 @RequiredArgsConstructor
 @Service
@@ -18,6 +18,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
 
+    @Transactional
     public Comment addComment(CommentRequestDto commentRequestDto){
 
         //comment 저장
