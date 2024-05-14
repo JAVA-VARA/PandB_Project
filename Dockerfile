@@ -2,7 +2,15 @@
 FROM gradle:7.6-jdk-alpine as build
 WORKDIR /app
 COPY . .
+
 #1-1. Gradle Wrapper 스크립트에 실행 권한을 부여
+#RUN chmod +x ./gradlew
+
+#COPY gradlew .
+#COPY gradle gradle
+#COPY build.gradle .
+#COPY settings.gradle .
+#COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew clean build -x test
 
