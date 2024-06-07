@@ -2,13 +2,13 @@ steps:
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t',
-           'asia-northeast3-docker.pkg.dev/pandbproject/cloud-run-source-deploy/test',
+           'asia-northeast3-docker.pkg.dev/pandbproject/docker-cloud-source-deploy-pandb/test',
            '.']
 
   # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push',
-           'asia-northeast3-docker.pkg.dev/PAndBProject/cloud-run-source-deploy/test']
+           'asia-northeast3-docker.pkg.dev/pandbproject/docker-cloud-source-deploy-pandb/test',]
 
   # Entrypoint, timeout and environment variables
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -17,7 +17,9 @@ steps:
     args: ['compute', 'instances',
            'create-with-container', 'my-vm-name',
            '--container-image',
-           'asia-northeast3-docker.pkg.dev/pandbproject/cloud-run-source-deploy/test']
+           'asia-northeast3-docker.pkg.dev/pandbproject/docker-cloud-source-deploy-pandb/test',]
     env:
       - 'CLOUDSDK_COMPUTE_REGION=asia-northeast3'
       - 'CLOUDSDK_COMPUTE_ZONE=asia-northeast3-a'
+
+

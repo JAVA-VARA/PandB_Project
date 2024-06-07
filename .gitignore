@@ -48,4 +48,4 @@ gradlew.bat
 .gitignore
 gradle-wrapper.jar
 gradle-wrapper.properties
-**/application.yml
+#**/application.yml

@@ -3,14 +3,8 @@ FROM gradle:7.6-jdk-alpine as build
 WORKDIR /app
 COPY . .
 
-#1-1. Gradle Wrapper 스크립트에 실행 권한을 부여
-#RUN chmod +x ./gradlew
+#1. Gradle Wrapper 스크립트에 실행 권한을 부여
 
-#COPY gradlew .
-#COPY gradle gradle
-#COPY build.gradle .
-#COPY settings.gradle .
-#COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew clean build -x test
 
@@ -24,3 +18,10 @@ EXPOSE 8080
 
 # 4. Docker 컨테이너 시작 시 Spring Boot 애플리케이션 실행
 CMD ["java", "-jar", "app.jar"]
+
+#RUN chmod +x ./gradlew
+#COPY gradlew .
+#COPY gradle gradle
+#COPY build.gradle .
+#COPY settings.gradle .
+#COPY src src
