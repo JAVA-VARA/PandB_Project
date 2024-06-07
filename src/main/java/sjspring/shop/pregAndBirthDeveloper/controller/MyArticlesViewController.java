@@ -23,54 +23,80 @@ public class MyArticlesViewController {
 
     @GetMapping("/mypage/my-articles")
     public String myArticlesViewer(Model model, Principal principal){
-        String userEmail = principal.getName();
-        User user = userService.findByEmail(userEmail);
-        List<Board> boardList = user.getBoardList();
 
-        MyArticlesDto myArticlesDto = new MyArticlesDto(user, boardList);
-        model.addAttribute("myArticles" , myArticlesDto);
+        if(principal != null){
+            String userEmail = principal.getName();
+            User user = userService.findByEmail(userEmail);
+            List<Board> boardList = user.getBoardList();
 
-        return "myArticles";
+            MyArticlesDto myArticlesDto = new MyArticlesDto(user, boardList);
+            model.addAttribute("myArticles" , myArticlesDto);
+
+            return "myArticles";
+        }
+        else {
+            return "redirect:/show-login-popup";
+        }
+
     }
 
     @GetMapping("/mypage/my-comments")
     public String myCommentsViewer(Model model, Principal principal){
-        String userEmail = principal.getName();
-        User user = userService.findByEmail(userEmail);
-        List<Comment> commentList = user.getCommentList();
+        if(principal != null) {
+            String userEmail = principal.getName();
+            User user = userService.findByEmail(userEmail);
+            List<Comment> commentList = user.getCommentList();
 
-        MyCommentsDto myCommentsDto = new MyCommentsDto(user, commentList);
-        model.addAttribute("myComments" , myCommentsDto);
+            MyCommentsDto myCommentsDto = new MyCommentsDto(user, commentList);
+            model.addAttribute("myComments", myCommentsDto);
 
-        return "myComments";
+            return "myComments";
+        }
+        else {
+            return "redirect:/show-login-popup";
+        }
     }
 
     @GetMapping("/mypage/my-info")
     public String myInformation(Model model, Principal principal){
-        String userEmail = principal.getName();
-        User user = userService.findByEmail(userEmail);
+        if(principal != null) {
+            String userEmail = principal.getName();
+            User user = userService.findByEmail(userEmail);
 
-        MyCommentsDto myCommentsDto = new MyCommentsDto(user);
-        model.addAttribute("myInfo" , myCommentsDto);
+            MyCommentsDto myCommentsDto = new MyCommentsDto(user);
+            model.addAttribute("myInfo", myCommentsDto);
 
-        return "myPage";
+            return "myPage";
+        }
+        else {
+            return "redirect:/show-login-popup";
+        }
     }
 
     @GetMapping("/mypage/my-scraps")
     public String myScrapViewer(Model model, Principal principal){
+        if(principal != null) {
+            String userEmail = principal.getName();
+            User user = userService.findByEmail(userEmail);
 
-        String userEmail = principal.getName();
-        User user = userService.findByEmail(userEmail);
+            String nickname = user.getNickname();
+            int numberOfArticles = user.getBoardList().size();
+            int numberOfComments = user.getCommentList().size();
+            List<ScrapArticle> scrapArticles = user.getScrapedArticles();
 
-        String nickname = user.getNickname();
-        int numberOfArticles = user.getBoardList().size();
-        int numberOfComments = user.getCommentList().size();
-        List<ScrapArticle> scrapArticles = user.getScrapedArticles();
+            MyPageResponse myPageResponse = new MyPageResponse(nickname, numberOfArticles, numberOfComments, scrapArticles);
 
-        MyPageResponse myPageResponse = new MyPageResponse(nickname, numberOfArticles, numberOfComments, scrapArticles);
+            model.addAttribute("myPageResponse", myPageResponse);
 
-        model.addAttribute("myPageResponse" , myPageResponse);
+            return "myScrapedArticles";
+        }else {
+            return "redirect:/show-login-popup";
+        }
 
-        return "myScrapedArticles";
+    }
+
+    @GetMapping("/show-login-popup")
+    public String showLoginPopup() {
+        return "loginPopup";
     }
 }
