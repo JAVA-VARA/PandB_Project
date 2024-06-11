@@ -171,11 +171,11 @@ public class LocalUploadUtil {
 
         BufferedImage rotatedImage;
 
-        if(orientation == 6 ) {
+        if (orientation == 6) {
             rotatedImage = Scalr.rotate(bufferedImage, Scalr.Rotation.CW_90);
         } else if (orientation == 3) {
             rotatedImage = Scalr.rotate(bufferedImage, Scalr.Rotation.CW_180);
-        } else if(orientation == 8) {
+        } else if (orientation == 8) {
             rotatedImage = Scalr.rotate(bufferedImage, Scalr.Rotation.CW_270);
         } else {
             rotatedImage = bufferedImage;
@@ -183,34 +183,4 @@ public class LocalUploadUtil {
 
         return rotatedImage;
     }
-
-//    private static BufferedImage resizeHECIImage(byte[] originalImageBytes, int targetWidth, int targetHeight) throws IOException {
-//        ByteArrayInputStream bais = new ByteArrayInputStream(originalImageBytes);
-//
-//        return Thumbnails.of(bais)
-//                .size(targetWidth, targetHeight)
-//                .outputQuality(1.0)
-//                .asBufferedImage();
-//    }
 }
-
-//        try {
-//            File directory = new File(relativePath);
-//        }
-
-//첨부파일 저장
-//        multipartFile.transferTo(new File(filePath));
-
-
-
-
-//        multipartFile.transferTo(savedFile);
-
-
-//        return new AttachedFileDto(originalFilename, fileName,filePath);
-
-
-//        //파일의 저장 경로 확인
-//        File savedFile = new File(filePath);
-//        String absolutePath = savedFile.getAbsolutePath();
-//        System.out.println("File saved at: " + absolutePath);

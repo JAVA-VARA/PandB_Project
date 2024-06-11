@@ -19,10 +19,6 @@ if (createButton) {
         formData.append('category', document.getElementById('category').value)
 
 
-
-        // alert('files: ' + JSON.stringify(Array.from(files)));
-        // console.log('files:', files);
-
         function success() {
             alert('등록 완료되었습니다.');
             window.history.back();

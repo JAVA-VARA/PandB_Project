@@ -27,7 +27,6 @@ public class UserService {
 
     public Long save(AddUserRequest dto){
 
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return userRepository.save(User.builder()
                 .email(dto.getEmail())
                 .nickname(dto.getNickname())
@@ -51,7 +50,6 @@ public class UserService {
         user.update(name, nickName, hp, babyDue);
 
         userRepository.save(user);
-        //Dirty check 알아보고 코드 수정하기 일단은 저장이 안되네??
     }
 
     public User findById(Long userId) {

@@ -58,31 +58,3 @@ public class ImageProcessingUtil {
 
 
 
-//magick설치 후 전체경로
-
-
-//원본이미지 전체경로
-//        String org_file = "C:\\Users\\sjyou\\OneDrive\\바탕 화면\\imageTest\\HeicTest.heic";
-//저장될 이미지 전체경로
-//        String new_file = "C:\\Users\\sjyou\\OneDrive\\바탕 화면\\imageTest\\HeicTest.png";
-//        try {
-//            Process process = new ProcessBuilder(
-//                    "cmd", "/c",
-//                    magick_path, "convert",
-//                    org_file, new_file)
-//                    .start();
-//
-//            // 외부 프로그램 출력 읽기
-//            BufferedReader stdOut   = new BufferedReader(new InputStreamReader(process.getInputStream()));
-//            BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-//
-//            // "표준 출력"과 "표준 에러 출력"을 출력
-//            String std_msg;
-//            while ((std_msg =   stdOut.readLine()) != null) System.out.println(std_msg);
-//            while ((std_msg = stdError.readLine()) != null) System.err.println(std_msg);
-//
-//
-//        }
-//        catch (IOException e) {
-//            e.printStackTrace();
-//        }

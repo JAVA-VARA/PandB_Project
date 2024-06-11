@@ -40,39 +40,3 @@ if (signupForm) {
             })
     });
 }
-
-
-// const emailInput = document.getElementById("signupEmail");
-// const emailError = document.getElementById("emailError");
-// const emailValue = emailInput.value.trim();
-
-// if (!emailValue) {
-//     emailError.textContent = "이메일을 입력하세요.";
-//     return;
-// }
-//
-// // 이메일 형식 검증
-// const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// if (!emailRegex.test(emailValue)) {
-//     emailError.textContent = "올바른 이메일 형식이 아닙니다.";
-//     return;
-// }
-//
-// //이름
-// const nameInput = document.getElementById("signupName")
-// const nameError = document.getElementById("nameError");
-// const nameValue = nameInput.value.trim();
-//
-// if (!nameValue) {
-//     nameError.textContent = "이름을 입력하세요.";
-//     return;
-// }
-//
-// const nicknameInput = document.getElementById("signupNickname")
-// const nicknameError = document.getElementById("nicknameError");
-// const nicknameValue = nicknameInput.value.trim();
-//
-// if (!nicknameValue) {
-//     nicknameError.textContent = "닉네임을 입력하세요.";
-//     return;
-// }
