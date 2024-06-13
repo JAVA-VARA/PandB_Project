@@ -92,5 +92,6 @@ jar{
 
 test {
     useJUnitPlatform()
-    maxHeapSize = "1g" // maximum heap size
+    minHeapSize = "1g" // initial heap size
+    maxHeapSize = "2g" // maximum heap size
 }

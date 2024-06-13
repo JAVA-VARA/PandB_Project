@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.*;
 import sjspring.shop.pregAndBirthDeveloper.dto.*;
 import sjspring.shop.pregAndBirthDeveloper.repository.*;
-import sjspring.shop.pregAndBirthDeveloper.util.LocalUploadUtil;
 
 
 import java.io.IOException;
@@ -26,6 +25,7 @@ public class BoardService {
     private final AttachedFileRepository attachedFileRepository;
     private final UserRepository userRepository;
     private final ScrapArticlesRepository scrapArticlesRepository;
+    private final AttachedFileUploadService attachedFileUploadService;
 
     public Board save(AddArticleRequest request, String userName) throws IOException, InterruptedException {
 
@@ -34,10 +34,8 @@ public class BoardService {
 
         //첨부파일 저장.
         if(request.getFile() != null && !request.getFile().isEmpty()){
-            LocalUploadUtil localUploadUtil = new LocalUploadUtil();
-
             for(MultipartFile file : request.getFile()){
-                AttachedFileDto attachedFileDto = localUploadUtil.fileUploadToLocalDir(file);
+                AttachedFileDto attachedFileDto = attachedFileUploadService.fileUploadToLocalDir(file);
                 attachedFileDtos.add(attachedFileDto);
             }
         }
@@ -123,15 +121,14 @@ public class BoardService {
 
         authorizeArticleAuthor(board);
 
-        BoardCategory boardCategory = (BoardCategory) boardCategoryRepository.findByCategoryName(request.getCategory());
+        BoardCategory boardCategory = boardCategoryRepository.findByCategoryName(request.getCategory());
 
         //첨부파일 저장.
         List<AttachedFileDto> attachedFileDtos = new ArrayList<>();
         if(request.getFiles() != null && !request.getFiles().isEmpty()){
-            LocalUploadUtil localUploadUtil = new LocalUploadUtil();
 
             for(MultipartFile file : request.getFiles()){
-                AttachedFileDto attachedFileDto = localUploadUtil.fileUploadToLocalDir(file);
+                AttachedFileDto attachedFileDto = attachedFileUploadService.fileUploadToLocalDir(file);
                 attachedFileDtos.add(attachedFileDto);
             }
             for(AttachedFileDto attachedFileDto : attachedFileDtos){
@@ -164,7 +161,7 @@ public class BoardService {
         }
     }
 
-    public ScrapArticle scrap(long boardId, String currentUserEmail){
+    public void scrap(long boardId, String currentUserEmail){
 
         User user = userRepository.findByEmail(currentUserEmail)
                 .orElseThrow(()-> new IllegalArgumentException("not found:"));
@@ -182,7 +179,7 @@ public class BoardService {
         ScrapRequestDto scrapRequestDto = new ScrapRequestDto(user, board);
         ScrapArticle scrapArticle = scrapRequestDto.toEntity();
 
-        return scrapArticlesRepository.save(scrapArticle);
+        scrapArticlesRepository.save(scrapArticle);
     }
 
     public List<Comment> findCommentListByBoardNo(Long boardNo){

@@ -22,4 +22,3 @@ steps:
       - 'CLOUDSDK_COMPUTE_REGION=asia-northeast3'
       - 'CLOUDSDK_COMPUTE_ZONE=asia-northeast3-a'
 
-
