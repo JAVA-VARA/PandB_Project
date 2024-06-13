@@ -35,6 +35,7 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserService userService;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Override
 //    정적 리소스 처리하는 핸들러 추가
@@ -85,6 +86,7 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .successHandler(formLoginSuccessHandler())
+                .failureHandler(customAuthenticationFailureHandler)
                 .failureUrl("/login");
 
         http.logout()
@@ -149,48 +151,3 @@ public class WebOAuthSecurityConfig implements WebMvcConfigurer {
 
 
 }
-
-//                .addResourceLocations("/src/main/resources/files/");
-//                .addResourceLocations("file:///" + System.getProperty("user.dir") + "/files/");
-//                .addResourceLocations("file:///C:/Users/sjyou/IdeaProjects/PandBproject/PandB_Project/files/");
-
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/files/**")
-//                .addResourceLocations("https://elasticbeanstalk-ap-northeast-2-944031405712.s3.ap-northeast-2.amazonaws.com/files/");
-//    }
-
-
-//                .addResourceLocations("file:///tmp/")
-//                .resourceChain(false)
-//                .addResolver(new S3ResourceResolver());
-
-
-//    private static class S3ResourceResolver extends AbstractResourceResolver{
-//        private final S3Client s3Client;
-//
-//        public S3ResourceResolver(){
-//            this.s3Client = S3Client.builder()
-//                    .region(Region.of("ap-northeast-2"))
-//                    .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(
-//                            "your-access-key-id", "your-secret-access-key")))
-//                    .build();
-//
-//        }
-//        @Override
-//        protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath, List<? extends Resource> locations, ResourceResolverChain chain) {
-//            // S3 경로에서 파일을 읽어와 Resource 객체로 반환
-//            // requestPath에는 "/photo/**" 에 해당하는 실제 파일 경로가 들어옵니다.
-//            String s3Path = "elasticbeanstalk-ap-northeast-2-944031405712/files" + requestPath.substring("/photo".length());
-//            S3Resource s3Resource = new S3Resource(s3Client, s3Path);
-//            return s3Resource.exists() ? s3Resource : null;
-//        }
-//
-//        @Override
-//        protected String resolveUrlPathInternal(String resourceUrlPath, List<? extends Resource> locations, ResourceResolverChain chain) {
-//            // 이 메서드에서는 null을 반환합니다.
-//            // Resource의 URL을 해석하는 로직은 S3에서 직접 가져오기 때문에 필요하지 않습니다.
-//            return null;
-//        }
-//
-//    }

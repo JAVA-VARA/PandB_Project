@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import sjspring.shop.pregAndBirthDeveloper.dto.CommentRequestDto;
 
 import java.time.LocalDateTime;
 
@@ -63,23 +62,6 @@ public class Comment {
     public void update(String content) {
         this.content = content;
     }
-
-
-//대댓글 기능 나중에 추가할 예정
-//    @ManyToOne(fetch = LAZY)
-//    @JoinColumn(name = "parent_id")
-//    private Comment parent;
-//
-//    @OneToMany(mappedBy = "parent", orphanRemoval = true)
-//    private List<Comment> children = new ArrayList<>();
-//
-//    @Column
-//    @ColumnDefault("FALSE")
-//    private boolean isDeleted;
-
-//    public Comment(String content){
-//        this.content = content;
-//    }
 
     public void updateAuthor(User user){
         this.user = user;

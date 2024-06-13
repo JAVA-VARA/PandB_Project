@@ -2,6 +2,7 @@ package sjspring.shop.pregAndBirthDeveloper.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
 import sjspring.shop.pregAndBirthDeveloper.repository.UserRepository;
@@ -14,6 +15,6 @@ public class UserDetailService implements UserDetailsService {
     @Override
     public User loadUserByUsername(String email)  {
         return userRepository.findByEmail(email)
-                .orElseThrow(()-> new IllegalArgumentException(email));
+                .orElseThrow(()-> new UsernameNotFoundException("User not found"));
     }
 }
