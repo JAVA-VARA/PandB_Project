@@ -16,6 +16,8 @@ import sjspring.shop.pregAndBirthDeveloper.repository.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -29,53 +31,55 @@ public class BoardService {
 
     public Board save(AddArticleRequest request, String userName) throws IOException, InterruptedException {
 
-
-        List<AttachedFileDto> attachedFileDtos = new ArrayList<>();
-
         //첨부파일 저장.
-        if(request.getFile() != null && !request.getFile().isEmpty()){
-            for(MultipartFile file : request.getFile()){
-                AttachedFileDto attachedFileDto = attachedFileUploadService.fileUploadToLocalDir(file);
-                attachedFileDtos.add(attachedFileDto);
-            }
-        }
+        List<AttachedFileDto> attachedFileDtos = saveAttachedFiles(request.getFile());
 
         //글 저장
         Board board = request.toEntity(userName);
         request.getBoardCategory().mappingBoard(board);
 
-        for(AttachedFileDto attachedFileDto : attachedFileDtos){
-
-            attachedFileDto.setBoard(board);
-            attachedFileRepository.save(attachedFileDto.toEntity());
-
-            AttachedFile attachedFile = attachedFileRepository.findAttachedFileByFileName(attachedFileDto.getFileName());
-            board.mappingAttachedFileToBoard(attachedFile);
-        }
+        //생성된 글에 첨부 파일 저장.
+        saveAttachedFilesToBoard(board, attachedFileDtos);
 
         return boardRepository.save(board);
     }
 
-    //ReadAll
+    private List<AttachedFileDto> saveAttachedFiles(List<MultipartFile> files) {
+        return Optional.ofNullable(files)
+                .orElse(List.of())
+                .stream()
+                .map(file -> {
+                    try {
+                        return attachedFileUploadService.fileUploadToLocalDir(file);
+                    } catch (IOException | InterruptedException e) {
+                        throw new RuntimeException("Failed to upload file", e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
+    private void saveAttachedFilesToBoard(Board board, List<AttachedFileDto> attachedFileDtos){
+        attachedFileDtos.forEach(attachedFileDto -> {
+            attachedFileDto.setBoard(board);
+            attachedFileRepository.save(attachedFileDto.toEntity());
+            AttachedFile attachedFile = attachedFileRepository.findAttachedFileByFileName(attachedFileDto.getFileName());
+            board.mappingAttachedFileToBoard(attachedFile);
+        });
+    }
+
     public List<Board> findAll() {
         return boardRepository.findAll();
     }
 
-
     public Page<ArticleViewResponse> getBoardList(Long  category_id, Pageable pageable){
-
         Page<Board> boardList;
-
         if(category_id ==4){
             boardList = boardRepository.findByViewsGreaterThanEqual(10, pageable);
         }else {
             boardList = boardRepository.findByCategory_Id(category_id, pageable);
         }
-
         return boardList.map(this::convertToDto);
-
     }
-
 
     private ArticleViewResponse convertToDto(Board board){
         ArticleViewResponse articleViewResponse = new ArticleViewResponse();
@@ -84,13 +88,11 @@ public class BoardService {
         return articleViewResponse;
     }
 
-    //ReadOne
     public Board findById(long boardId){
         return boardRepository.findById(boardId)
                 .orElseThrow(()-> new IllegalArgumentException("not found:" + boardId));
     }
 
-    //Searching
     public Page<ArticleViewResponse> boardSearchList(String searchKeyword, Pageable pageable){
 
         Page<Board> boardList = boardRepository.findByTitleContaining(searchKeyword, pageable);
@@ -98,7 +100,6 @@ public class BoardService {
         return boardList.map(this::convertToDto);
     }
 
-    //삭제
     public void delete(long boardId){
         Board board = boardRepository.findById(boardId)
                         .orElseThrow(()-> new IllegalArgumentException("NOT FOUND :" + boardId));
@@ -113,7 +114,6 @@ public class BoardService {
 
     }
 
-    //수정
     @Transactional
     public Board update(long boardId, UpdateArticleRequest request) throws IOException, InterruptedException {
         Board board = boardRepository.findById(boardId)
@@ -164,15 +164,15 @@ public class BoardService {
     public void scrap(long boardId, String currentUserEmail){
 
         User user = userRepository.findByEmail(currentUserEmail)
-                .orElseThrow(()-> new IllegalArgumentException("not found:"));
+                .orElseThrow(()-> new IllegalArgumentException("user not found:"));
 
         Board board = boardRepository.findByBoardNo(boardId)
-                .orElseThrow(()-> new IllegalArgumentException("not found:"));
+                .orElseThrow(()-> new IllegalArgumentException("board not found:"));
 
         //이미 스크랩한 글인 경우 알림
         for(ScrapArticle scrapArticle : user.getScrapedArticles()){
             if(scrapArticle.getBoard().getBoardNo() == boardId){
-                throw new RuntimeException("이미 저장되어 있는 게시글");
+                throw new RuntimeException("이미 저장되어 있는 게시글입니다.");
             }
         }
 

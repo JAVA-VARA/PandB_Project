@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.multipart.MultipartFile;
-import sjspring.shop.pregAndBirthDeveloper.domain.AttachedFile;
-import sjspring.shop.pregAndBirthDeveloper.domain.Board;
-import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
-import sjspring.shop.pregAndBirthDeveloper.domain.User;
+import sjspring.shop.pregAndBirthDeveloper.domain.*;
 
 import java.util.List;
 
@@ -55,7 +52,8 @@ public class AddArticleRequest {
     }
 
     public Board toEntity(String username){
-        Board board =  Board.builder()
+
+        return Board.builder()
                 .title(title)
                 .content(content)
                 .views(views)
@@ -64,7 +62,5 @@ public class AddArticleRequest {
                 .category(boardCategory)
                 .user(user)
                 .build();
-
-        return board;
     }
 }

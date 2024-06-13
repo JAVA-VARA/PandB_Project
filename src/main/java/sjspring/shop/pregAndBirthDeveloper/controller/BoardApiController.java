@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sjspring.shop.pregAndBirthDeveloper.domain.Board;
+import sjspring.shop.pregAndBirthDeveloper.domain.BoardCategory;
 import sjspring.shop.pregAndBirthDeveloper.domain.User;
 import sjspring.shop.pregAndBirthDeveloper.dto.AddArticleRequest;
 import sjspring.shop.pregAndBirthDeveloper.dto.FindArticle;
@@ -34,11 +35,15 @@ public class BoardApiController {
             @RequestParam String content,
             @RequestPart(name = "files", required = false) List<MultipartFile> files,
             Principal principal) throws IOException, InterruptedException {
+
+
         AddArticleRequest request = new AddArticleRequest(category, title, content, files);
 
         //카테고리 저장.
-        request.setBoardCategory(categoryService.save(category));
+        BoardCategory boardCategory = categoryService.save(category);
+        request.setBoardCategory(boardCategory);
 
+        // 사용자 정보 설정
         String email = principal.getName();
         User user = userService.findByEmail(email);
         String author = user.getNickname();
