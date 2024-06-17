@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import sjspring.shop.pregAndBirthDeveloper.dto.AttachedFileDto;
 import sjspring.shop.pregAndBirthDeveloper.util.CustomMultipartFile;
-import sjspring.shop.pregAndBirthDeveloper.util.ImageMagicKResizing;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -96,8 +95,7 @@ public class AttachedFileUploadService {
     }
 
     private void resizeGif(MultipartFile file, String fileName, String filePath) throws IOException, InterruptedException {
-        ImageMagicKResizing imageMagicKResizing = new ImageMagicKResizing();
-        imageMagicKResizing.resizeGif(file, fileName, 400, 400, filePath);
+        imageConvertingService.resizeGif(file, fileName, 400, 400, filePath);
     }
 
     private void saveFile(MultipartFile file, String filePath) throws IOException {

@@ -38,7 +38,7 @@ public class BoardService {
         Board board = request.toEntity(userName);
         request.getBoardCategory().mappingBoard(board);
 
-        //생성된 글에 첨부 파일 저장.
+        //생성된 글에 첨부 파일 연결.
         saveAttachedFilesToBoard(board, attachedFileDtos);
 
         return boardRepository.save(board);
@@ -157,7 +157,7 @@ public class BoardService {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 
         if(!board.getEmail().equals(userName)){
-            throw new IllegalArgumentException("not authorized");
+            throw new IllegalArgumentException("not authorized user");
         }
     }
 
@@ -180,9 +180,5 @@ public class BoardService {
         ScrapArticle scrapArticle = scrapRequestDto.toEntity();
 
         scrapArticlesRepository.save(scrapArticle);
-    }
-
-    public List<Comment> findCommentListByBoardNo(Long boardNo){
-        return boardRepository.findCommentListByBoardNo(boardNo);
     }
 }
